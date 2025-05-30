@@ -1,0 +1,104 @@
+/* Container يملأ الشاشة ويصطف المحتوى في المنتصف */
+.profile-container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    /* يجعل البطاقة عمودياً في وسط الشاشة */
+    padding: 40px;
+    background: linear-gradient(135deg, #74ebd5 0%, #ACB6E5 100%);
+    /* تدرج خلفية لطيف */
+    min-height: 100vh;
+    box-sizing: border-box;
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+}
+
+/* البطاقة بارتفاع مناسب وعرض ثابت مع تدرج خفيف وظل */
+.profile-card {
+    background: white;
+    padding: 40px 30px;
+    border-radius: 24px;
+    box-shadow: 0 12px 40px rgba(0, 0, 0, 0.15);
+    text-align: center;
+    width: 400px;
+    max-width: 95vw;
+    /* responsive */
+    animation: fadeIn 1s ease;
+    transition: transform 0.3s ease;
+}
+
+/* تأثير عند المرور على البطاقة */
+.profile-card:hover {
+    transform: translateY(-8px);
+}
+
+/* الصورة الدائرية مع ظل ناعم */
+.avatar {
+    width: 140px;
+    height: 140px;
+    border-radius: 50%;
+    margin-bottom: 24px;
+    box-shadow: 0 6px 20px rgba(0, 0, 0, 0.25);
+    object-fit: cover;
+}
+
+/* العنوان */
+h2 {
+    margin: 0 0 12px 0;
+    font-size: 28px;
+    font-weight: 700;
+    color: #333;
+}
+
+/* نص التعريف */
+.bio {
+    color: #555;
+    margin-bottom: 28px;
+    font-size: 16px;
+    line-height: 1.5;
+    font-style: italic;
+}
+
+/* معلومات المستخدم */
+.info {
+    text-align: left;
+    margin-bottom: 32px;
+    font-size: 16px;
+    color: #444;
+}
+
+.info p {
+    margin: 8px 0;
+}
+
+/* زر التحديث */
+.update-btn {
+    padding: 14px 28px;
+    background: #3b82f6;
+    color: white;
+    border: none;
+    border-radius: 18px;
+    cursor: pointer;
+    font-size: 17px;
+    font-weight: 600;
+    letter-spacing: 0.05em;
+    box-shadow: 0 6px 14px rgba(59, 130, 246, 0.4);
+    transition: background 0.3s, box-shadow 0.3s;
+}
+
+.update-btn:hover {
+    background: #2563eb;
+    box-shadow: 0 10px 20px rgba(37, 99, 235, 0.6);
+}
+
+/* أنيميشن الظهور */
+@keyframes fadeIn {
+    from {
+        opacity: 0;
+        transform: translateY(20px);
+    }
+
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}

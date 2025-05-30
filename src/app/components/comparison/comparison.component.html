@@ -1,0 +1,46 @@
+<!-- comparison.component.html -->
+<div class="products">
+    <div class="product">
+        <h3>{{ product1.name }}</h3>
+        <button (click)="addToComparison(product1)">أضف للمقارنة</button>
+    </div>
+    <div class="product">
+        <h3>{{ product2.name }}</h3>
+        <button (click)="addToComparison(product2)">أضف للمقارنة</button>
+    </div>
+    <div class="product">
+        <h3>{{ product3.name }}</h3>
+        <button (click)="addToComparison(product3)">أضف للمقارنة</button>
+    </div>
+</div>
+
+<!-- صفحة المقارنة -->
+<div *ngIf="comparisonProducts.length > 0">
+    <h2>مقارنة المنتجات</h2>
+    <table>
+        <thead>
+            <tr>
+                <th>المنتج</th>
+                <th>السعر</th>
+                <th>الوصف</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr>
+                <td>{{ comparisonProducts[0].name }}</td>
+                <td>{{ comparisonProducts[0].price }}</td>
+                <td>{{ comparisonProducts[0].description }}</td>
+            </tr>
+            <tr *ngIf="comparisonProducts[1]">
+                <td>{{ comparisonProducts[1].name }}</td>
+                <td>{{ comparisonProducts[1].price }}</td>
+                <td>{{ comparisonProducts[1].description }}</td>
+            </tr>
+            <tr *ngIf="comparisonProducts[2]">
+                <td>{{ comparisonProducts[2].name }}</td>
+                <td>{{ comparisonProducts[2].price }}</td>
+                <td>{{ comparisonProducts[2].description }}</td>
+            </tr>
+        </tbody>
+    </table>
+</div>

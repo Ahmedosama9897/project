@@ -1,0 +1,46 @@
+/* Design for the sidebar navigation items */
+a {
+    transition: background-color 0.3s ease;
+}
+
+/* Active Tab */
+.bg-blue-700 {
+    background-color: #1d4ed8;
+}
+
+.bg-gray-100 {
+    background-color: #f3f4f6;
+}
+
+/* Content Section */
+.p-6 {
+    padding: 1.5rem;
+}
+
+.bg-gray-50 {
+    background-color: #f9fafb;
+}
+
+.text-gray-500 {
+    color: #6b7280;
+}
+
+.dark:text-gray-400 {
+    color: #9ca3af;
+}
+
+.dark:bg-gray-800 {
+    background-color: #1f2937;
+}
+
+.text-medium {
+    font-weight: 500;
+}
+
+.hidden {
+    display: none;
+}
+
+.block {
+    display: block;
+}

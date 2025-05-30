@@ -1,0 +1,17 @@
+<div class="profile-container">
+    <div class="profile-card">
+        <div class="flex items-center justify-center">
+            <img [src]="user.avatar" alt="Avatar" class="avatar">
+        </div>
+        <h2>{{ user.name }}</h2>
+        <p class="bio">{{ user.bio }}</p>
+
+        <div class="info">
+            <p><strong>Email:</strong> {{ user.email }}</p>
+            <p><strong>Phone:</strong> {{ user.phone }}</p>
+            <p><strong>Address:</strong> {{ user.address }}</p>
+        </div>
+
+        <!-- <button (click)="updateprof()" class="update-btn">Update Profile</button> -->
+    </div>
+</div>

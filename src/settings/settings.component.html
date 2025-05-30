@@ -1,0 +1,21 @@
+<div class="settings-container">
+    <h2>Settings</h2>
+
+    <div class="setting-item">
+        <label>
+            <input type="checkbox" [checked]="notificationsEnabled"
+                (change)="toggleNotifications(($any($event.target)).checked)">
+            Enable Notifications
+        </label>
+    </div>
+
+    <div class="setting-item">
+        <label>
+            <input type="checkbox" [checked]="darkModeEnabled"
+                (change)="toggleNotifications(($any($event.target)).checked)">
+            Dark Mode
+        </label>
+    </div>
+
+    <button (click)="saveSettings()" class="save-btn">Save Settings</button>
+</div>

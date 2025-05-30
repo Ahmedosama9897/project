@@ -1,0 +1,19 @@
+@keyframes cartBounce {
+
+    0%,
+    100% {
+        transform: translateX(0);
+    }
+
+    25% {
+        transform: translateX(-5px);
+    }
+
+    75% {
+        transform: translateX(5px);
+    }
+}
+
+.animate-cart-bounce {
+    animation: cartBounce 1s ease-in-out infinite;
+}

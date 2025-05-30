@@ -1,0 +1,47 @@
+<!-- زرار فتح الشات -->
+<button class="chat-button" (click)="toggleChat()">💬</button>
+
+<!-- صندوق الشات -->
+<div class="chat-box" [class.open]="isOpen">
+    <div class="chat-header">
+        ChatBot 🦾
+        <button class="clear-btn" (click)="clearChat()">🗑️</button>
+    </div>
+
+    <div class="chat-messages" #messageContainer>
+        <div [innerHTML]="renderMessages()"></div>
+
+        <div class="recommended-container" *ngIf="recommendedItems.length">
+            <div class="product-card" *ngFor="let item of recommendedItems">
+                <div *ngIf="item.Discount" class="discount-badge">-{{item.Discount}}%</div>
+                <img [src]="item.Image_Cover" alt="{{item.Item_Name}}" class="product-image">
+                <div class="product-details">
+                    <h4>{{item.Item_Name}}</h4>
+                    <p>{{item.Description.split(" ",2).join(" ")}}</p>
+                    <div class="price-discount">
+                        <span class="price">${{item.Price_out}}</span>
+                    </div>
+                    <div class="sold-rate">
+                        <span>🔥 {{item.Sold_Count}} sold</span>
+                        <span class="stars">⭐ {{item.Rate}}</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+
+
+
+        <div class="typing-dots" [class.show]="isTyping">
+            <span>.</span><span>.</span><span>.</span>
+        </div>
+    </div>
+
+    <div class="chat-input">
+        <input [value]="newMessage" (input)="onInputChange($event)" placeholder="Send message..." />
+        <button (click)="sendMessage()">Send</button>
+    </div>
+
+
+
+</div>

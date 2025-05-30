@@ -1,0 +1,22 @@
+<section class="bg-blue-100 rounded-xl shadow p-4 w-3/4 mx-auto">
+    <h1 class="text-center text-xl font-bold text-blue-600">Shipping Address</h1>
+
+    <form [formGroup]="orders" class="space-y-4">
+        <div>
+            <label for="details" class="block text-blue-700 font-medium">Details</label>
+            <textarea formControlName="details" id="details" class="w-full p-2 border border-blue-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"></textarea>
+        </div>
+       
+        <div>
+            <label for="phone" class="block text-blue-700 font-medium">Phone</label>
+            <input formControlName="phone" id="phone" type="tel" class="w-full p-2 border border-blue-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500">
+        </div>
+      
+        <div>
+            <label for="city" class="block text-blue-700 font-medium">City</label>
+            <input formControlName="city" id="city" type="text" class="w-full p-2 border border-blue-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500">
+        </div>
+
+        <button class="bg-blue-500 text-white px-4 py-2 rounded-md hover:bg-blue-600 transition duration-300" type="submit">Check Out</button>
+    </form>
+</section>

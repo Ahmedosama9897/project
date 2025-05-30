@@ -1,0 +1,15 @@
+/* تأثير hover على الأيقونة */
+.icon-container svg {
+    width: 64px;
+    height: 75px;
+    clip-path: ellipse(50% 60% at 50% 50%);
+    /* شكل اللمبة (يمكن تعديل القيم حسب الحاجة) */
+    transition: filter 0.3s ease-in-out, box-shadow 0.3s ease-in-out;
+}
+
+.icon-container svg:hover {
+    filter: brightness(1.5);
+    /* تضيء الأيقونة */
+    box-shadow: 5px 5px 20px rgba(0, 250, 67, 0.71);
+    /* توهج حول الأيقونة */
+}

@@ -1,0 +1,156 @@
+.image {
+    width: 110.83px;
+    height: 388px;
+    left: 2px;
+    padding: 4px 10.83px 4px 11px;
+    gap: 0px;
+    opacity: 0px;
+
+}
+
+.image2 {
+    width: 506.16px;
+    height: auto;
+    left: 100.83px;
+    padding: 0px 9.16px 0px 10px;
+    gap: 0px;
+    opacity: 0px;
+
+}
+
+.Lollipop {
+    width: 458.31px;
+    height: 81.6px;
+    top: -0.11px;
+    gap: 0px;
+    opacity: 0px;
+    font-family: Public Sans;
+    font-size: 16px;
+    font-weight: 400;
+    line-height: 27.2px;
+    text-align: left;
+    text-underline-position: from-font;
+    text-decoration-skip-ink: none;
+
+}
+
+.type {
+    width: auto;
+    height: auto;
+    top: 102.37px;
+    padding: 14.25px 15px 15px 15px;
+    gap: 0px;
+    border-radius: 12px 0px 0px 0px;
+    opacity: 0px;
+    background: #F9F9F9;
+
+}
+
+.type2 {
+    width: auto;
+    height: auto;
+    top: 102.37px;
+    gap: 0px;
+    border-radius: 12px 0px 0px 0px;
+    opacity: 0px;
+    background: #F9F9F9;
+
+}
+
+
+.p-type {
+    color: #777777;
+    margin-bottom: 10px;
+
+}
+
+.noodles {
+    width: auto;
+    height: auto;
+    left: 1230px;
+    gap: 0px;
+    opacity: 0px;
+    background: #F8F8F8;
+
+}
+
+.p-noodles {
+    width: auto;
+    height: auto;
+    top: -0.9px;
+    gap: 0px;
+    opacity: 0px;
+    font-family: Public Sans;
+    font-size: 18px;
+    font-weight: 400;
+    line-height: 23.8px;
+    text-align: left;
+    text-underline-position: from-font;
+    text-decoration-skip-ink: none;
+
+    color: #4A5568;
+
+}
+
+.s-noodles {
+    color: #4A5568;
+
+}
+
+.Trending {
+    width: auto;
+    height: auto;
+    top: 346.58px;
+    left: 1230px;
+    padding: 33px 0px 0px 0px;
+    gap: 0px;
+    border-radius: 5px 0px 0px 0px;
+    opacity: 0px;
+    background: #F8F8F8;
+
+}
+
+.h-Trending {
+    width: auto;
+    height: auto;
+    gap: 0px;
+    opacity: 0px;
+    font-family: Public Sans;
+    font-size: 20px;
+    font-weight: 600;
+    line-height: 24px;
+    text-align: left;
+    text-underline-position: from-font;
+    text-decoration-skip-ink: none;
+
+}
+
+
+.description {
+    color: #4A5568;
+    /* margin-left: 20px; */
+    margin-top: auto;
+    width: auto;
+    height: 763.67px;
+    top: 1261.78px;
+    left: 12px;
+    gap: 0px;
+    opacity: 0px;
+
+}
+
+.h-Related {
+    width: auto;
+    height: auto;
+    left: 160px;
+    gap: 0px;
+    opacity: 0px;
+    font-family: Public Sans;
+    font-size: 28px;
+    font-weight: 700;
+    line-height: 28px;
+    text-align: left;
+    text-underline-position: from-font;
+    text-decoration-skip-ink: none;
+
+}

@@ -1,0 +1,452 @@
+<!-- <section class="my-2">
+    <h2 class="fw-bold">popular categories</h2>
+
+    <owl-carousel-o [options]="customOptionsCat">
+
+        @for ( cat of categoriesList; track cat._id) {
+        <ng-template carouselSlide>
+            <div>
+                <img [src]="cat.image" height="250px" class="w-100" [alt]="cat.name">
+                <h3 class="h6 text-main fw-bold">{{cat.name}}</h3>
+            </div>
+        </ng-template>
+        }
+
+    </owl-carousel-o>
+</section> -->
+
+
+
+<section class="my-5">
+    <div class="flex flex-wrap p-5 ">
+        <div class="w-full md:w-8/12">
+            <div>
+                <owl-carousel-o [options]="customOptionsMain">
+                    <ng-template carouselSlide>
+                        <img src="./assets/images/slider-2.jpeg" class="w-full h-[300px] object-fill" alt="">
+                    </ng-template>
+                    <ng-template carouselSlide>
+                        <img src="../../../assets/images/pexels-elletakesphotos-1660030.jpg"
+                            class="w-full h-[300px] object-fill" alt="">
+                    </ng-template>
+                    <ng-template carouselSlide>
+                        <img src="./assets/images/blog-img-2.jpeg" class="w-full h-[300px] object-fill" alt="">
+                    </ng-template>
+                    <ng-template carouselSlide>
+                        <img src="../../../assets/images/pexels-ella-olsson-572949-1640777.jpg"
+                            class="w-full h-[300px] object-fill" alt="">
+                    </ng-template>
+                    <ng-template carouselSlide>
+                        <img src="./assets/images/slider-image-3.jpeg" class="w-full h-[300px] object-fill" alt="">
+                    </ng-template>
+                    <ng-template carouselSlide>
+                        <img src="./assets/images/slider-image-2.jpeg" class="w-full h-[300px] object-fill" alt="">
+                    </ng-template>
+                    <ng-template carouselSlide>
+                        <img src="./assets/images/slider-image-1.jpeg" class="w-full h-[300px] object-fill" alt="">
+                    </ng-template>
+                </owl-carousel-o>
+            </div>
+        </div>
+        <div class="w-full md:w-4/12 flex flex-col gap-0">
+
+            <img src="../../../assets/images/pexels-element5-775031.jpg" class="w-full h-[150px] object-fill" alt="">
+            <img src="../../../assets/images/the-fruit-splash-wallpapers-hd-wallpapers_274326-695.avif"
+                class="w-full h-[150px] object-fill" alt="">
+        </div>
+    </div>
+
+
+</section>
+<section>
+    <h2 class="font-bold fa-2x p-5">popular categories</h2>
+    <div class="px-5">
+
+        <!-- <owl-carousel-o [options]="customOptionsCat">
+            <ng-template carouselSlide>
+                <img src="./assets/images/pexels-garrettmorrow-610945.jpg" class="w-full h-[300px] object-cover" alt="">
+                <h3 class="h6 text-main font-bold text-center ">Headphone</h3>
+            </ng-template>
+            <ng-template carouselSlide>
+                <img src="../../../assets/images/pexels-hasanalbari-1275229.jpg" class="w-full h-[300px] object-cover"
+                    alt="">
+                <h3 class="h6 text-main font-bold text-center ">Iphone</h3>
+            </ng-template>
+            <ng-template carouselSlide>
+                <img src="./assets/images/slider-image-1.jpeg" class="w-full h-[300px] object-cover" alt="">
+                <h3 class="h6 text-main font-bold text-center ">Suber Market</h3>
+            </ng-template>
+            <ng-template carouselSlide>
+                <img src="../../../assets/images/pexels-veeterzy-303383.jpg" class="w-full h-[300px] object-cover"
+                    alt="">
+                <h3 class="h6 text-main font-bold text-center ">Labtop</h3>
+            </ng-template>
+            <ng-template carouselSlide>
+                <img src="../../../assets/images/pexels-ivan-samkov-7671168.jpg" class="w-full h-[300px] object-cover"
+                    alt="">
+                <h3 class="h6 text-main font-bold text-center ">clothes</h3>
+            </ng-template>
+            <ng-template carouselSlide>
+                <img src="../../../assets/images/erik-mclean--iJgjj33eEk-unsplash.jpg"
+                    class="w-full h-[300px] object-cover" alt="">
+                <h3 class="h6 text-main font-bold text-center ">Shoes</h3>
+            </ng-template>
+            <ng-template carouselSlide>
+                <img src="../../../assets/images/pexels-martinpechy-1866149.jpg" class="w-full h-[300px] object-cover"
+                    alt="">
+                <h3 class="h6 text-main font-bold text-center ">Furnituer</h3>
+            </ng-template>
+
+        </owl-carousel-o> -->
+
+        <owl-carousel-o [options]="customOptionsCat">
+
+            @for ( cat of categoriesList; track cat.Category_ID) {
+            <ng-template carouselSlide>
+                <div>
+                    <img [src]="cat.Category_Image" height="250px" class="w-100" [alt]="cat.Category_Name">
+                    <h3 class="h6 text-main fw-bold">{{cat.Category_Name}}</h3>
+                </div>
+            </ng-template>
+            }
+
+        </owl-carousel-o>
+    </div>
+</section>
+<section>
+    <div class=" px-5">
+
+        <div>
+            <div>
+                <h1 class="top1  text-lg font-medium text-gray-900 dark:text-white">Top Save Today</h1>
+                <p class="py-5 ">Don't miss this opportunity at a special discount just for this week.</p>
+            </div>
+
+
+            <div class="product slick-list ">
+                <div class="grid gap-5  grid-cols-1 sm:grid-cols-2 lg:grid-cols-4">
+
+                    <!-- <input [(ngModel)]="text" type="search" placeholder="Search By Name...." class="form-control w-50 mx-auto my-3"> -->
+
+
+
+                    @for (product of productList.slice(0,20) ; track product.Data.Item_ID) {
+
+                    <div class=" productt ">
+
+                        <div [routerLink]="['/p-thumnail' , product.Data.Item_ID]">
+
+                            <img [attr.src]="'https://sm-ecommerce.runasp.net/' + product.Data.Image_Cover"
+                                class="w-full     rounded-md" [alt]="product.Data.Category_Name">
+                            <p class="text-sm text-blue-600 font-bold mt-2 mx-2">{{ product.Data.Item_Name }}</p>
+                            <p class="text-lg font-semibold mx-2"> {{ product.Data.Price_out | currency : 'GBP' }} </p>
+                            <p class="mx-2 text-green-600 font-medium ">In Stock : {{product.Data.Quantity}}</p>
+
+                            <div class="flex items-center mt-1 mx-2">
+                                @for (num of [1,2,3,4,5].slice(0,product.Data.Rate); track $index) {
+                                <span><i class="fa-solid fa-star text-yellow-200"></i></span>
+                                }
+                                @if (product.Data.Rate % 1 !== 0) {
+                                <i class="fa-solid fa-star-half-stroke text-yellow-200"></i>
+                                }
+                                <span class="text-gray-500 ml-1">{{ product.Data.Rate }}</span>
+                            </div>
+                        </div>
+
+
+
+
+
+
+
+
+
+                        <div class="flex flex-col space-y-2 mt-4 mx-2">
+                            <button type="button" class="btn-mainn text-green-700 hover:text-white border border-green-700 
+    hover:bg-green-800 font-medium rounded-lg text-sm px-5 py-2.5 text-center"
+                                (click)="addCart(userId, product.Data.Item_ID, 1)">
+                                Add To Cart +
+                            </button>
+
+                            <button type="button" class="btn-mainn text-green-700 hover:text-white border border-green-700 
+    hover:bg-green-800 font-medium rounded-lg text-sm px-5 py-2.5 text-center"
+                                (click)="addWish(userId, product.Data.Item_ID)">
+                                Add To Wish +
+                            </button>
+                        </div>
+
+                    </div>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+                    }
+
+                    <!-- <div class=" productt  col-span-1">
+
+                        <img src="./assets/images/slider-image-2.jpeg" class="m-auto" alt="">
+                        <p class="px-2">peanut Butter Bite Premium Butter Cookies 600 g</p>
+                        <p class="px-2">$26.69 </p>
+                        <p class="px-2"> In Stock</p>
+                        <button type="button"
+                            class="btn-mainn w-72 ms-10 text-green-700 hover:text-white border border-green-700 hover:bg-green-800 focus:ring-4 focus:outline-none focus:ring-green-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center me-2 mb-2 dark:border-green-500 dark:text-green-500 dark:hover:text-white dark:hover:bg-green-600 dark:focus:ring-green-800">Add
+                            To cart+</button>
+
+                    </div>
+
+                </div> -->
+                </div>
+
+            </div>
+        </div>
+
+
+    </div>
+</section>
+
+
+<section class="Bowse mt-10 px-5">
+    <div class="flex">
+        <div class="me-10 fresh1 ">
+            <img src="../../../assets/images/div.home-contain 3.png" class="w-full" alt="">
+        </div>
+        <div>
+
+            <div>
+                <h1 class="text-bowse ">Bowse by Categories</h1>
+                <p class="parg-bowse">Top Categories Of The Week</p>
+            </div>
+            <div class="grid grid-cols-2 md:grid-cols-2 lg:grid-cols-7  mt-10 gap-6 me-5 ">
+                <div class="ghost ">
+                    <div class="text-center">
+                        Vegetables & Fruit
+                    </div>
+                    <div class="mx-10 my-3">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="52" height="42" viewBox="0 0 24 24" fill="none"
+                            stroke="currentColor" stroke-width="1" stroke-linecap="round" stroke-linejoin="round"
+                            class="icon icon-tabler icons-tabler-outline icon-tabler-salad">
+                            <path stroke="none" d="M0 0h24v24H0z" fill="none" />
+                            <path
+                                d="M4 11h16a1 1 0 0 1 1 1v.5c0 1.5 -2.517 5.573 -4 6.5v1a1 1 0 0 1 -1 1h-8a1 1 0 0 1 -1 -1v-1c-1.687 -1.054 -4 -5 -4 -6.5v-.5a1 1 0 0 1 1 -1z" />
+                            <path
+                                d="M18.5 11c.351 -1.017 .426 -2.236 .5 -3.714v-1.286h-2.256c-2.83 0 -4.616 .804 -5.64 2.076" />
+                            <path
+                                d="M5.255 11.008a12.204 12.204 0 0 1 -.255 -2.008v-1h1.755c.98 0 1.801 .124 2.479 .35" />
+                            <path d="M8 8l1 -4l4 2.5" />
+                            <path d="M13 11v-.5a2.5 2.5 0 1 0 -5 0v.5" />
+                        </svg>
+                    </div>
+                </div>
+                <div class="ghost ">
+
+                    <div class="text-center">Beverages</div>
+                    <div class="mx-10 my-3 "><svg xmlns="http://www.w3.org/2000/svg" height="48px"
+                            viewBox="0 -960 960 960" width="48px" fill="#5f6368">
+                            <path
+                                d="M184-144v-43.77h592V-144H184Zm134-144.54q-57.06 0-95.53-37.27T184-418.46V-817h601.54q29.11 0 49.79 20.47Q856-776.06 856-747.85v107.7q0 28.98-20.67 49.57Q814.65-570 785.54-570H708v151.54q0 55.38-38.97 92.65T574-288.54H318Zm0-484.69H664.23 227.77 318Zm390 158.46h77.54q11.54 0 19.61-7.31 8.08-7.3 8.08-18.07v-107.7q0-10.77-8.08-18.07-8.07-7.31-19.61-7.31H708v158.46ZM574.02-331.31q36.66 0 63.44-26.44 26.77-26.44 26.77-61.02v-354.46H398.92v66.54l64.9 53.21q1.87 1.1 8.33 16.85v118.12q0 8.37-7.31 15.48-7.31 7.11-16.06 7.11H314.07q-10.22 0-16.8-7.2t-6.58-15.77v-117.2q0-3.29 8.23-17.29l65.23-53.31v-66.54H227.77v354.46q0 34.58 26.39 61.02 26.39 26.44 63.84 26.44h256.02ZM364.15-773.23h34.77-34.77Z" />
+                        </svg></div>
+                </div>
+                <div class="ghost ">
+                    <div class="text-center"> Meats & Seafood</div>
+                    <div class="mx-10 my-3 "><svg xmlns="http://www.w3.org/2000/svg" width="52" height="42"
+                            viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1"
+                            stroke-linecap="round" stroke-linejoin="round"
+                            class="icon icon-tabler icons-tabler-outline icon-tabler-meat">
+                            <path stroke="none" d="M0 0h24v24H0z" fill="none" />
+                            <path
+                                d="M13.62 8.382l1.966 -1.967a2 2 0 1 1 3.414 -1.415a2 2 0 1 1 -1.413 3.414l-1.82 1.821" />
+                            <path
+                                d="M5.904 18.596c2.733 2.734 5.9 4 7.07 2.829c1.172 -1.172 -.094 -4.338 -2.828 -7.071c-2.733 -2.734 -5.9 -4 -7.07 -2.829c-1.172 1.172 .094 4.338 2.828 7.071z" />
+                            <path d="M7.5 16l1 1" />
+                            <path
+                                d="M12.975 21.425c3.905 -3.906 4.855 -9.288 2.121 -12.021c-2.733 -2.734 -8.115 -1.784 -12.02 2.121" />
+                        </svg></div>
+                </div>
+                <div class="ghost ">
+                    <div class="text-center"> Breakfast</div>
+                    <div class="mx-10 my-3 "><svg xmlns="http://www.w3.org/2000/svg" width="52" height="42"
+                            viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1"
+                            stroke-linecap="round" stroke-linejoin="round"
+                            class="icon icon-tabler icons-tabler-outline icon-tabler-bread">
+                            <path stroke="none" d="M0 0h24v24H0z" fill="none" />
+                            <path
+                                d="M18 4a3 3 0 0 1 2 5.235v8.765a2 2 0 0 1 -2 2h-12a2 2 0 0 1 -2 -2v-8.764a3 3 0 0 1 1.824 -5.231h12.176v-.005z" />
+                        </svg></div>
+                </div>
+                <div class="ghost ">
+                    <div class="text-center"> Frozen Foods</div>
+                    <div class="mx-10 my-3 "><svg xmlns="http://www.w3.org/2000/svg" width="52" height="42"
+                            viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1"
+                            stroke-linecap="round" stroke-linejoin="round"
+                            class="icon icon-tabler icons-tabler-outline icon-tabler-ice-cream-2">
+                            <path stroke="none" d="M0 0h24v24H0z" fill="none" />
+                            <path d="M17.657 11a6 6 0 1 0 -11.315 0" />
+                            <path d="M6.342 11l5.658 11l5.657 -11z" />
+                        </svg></div>
+                </div>
+                <div class="ghost ">
+                    <div class="text-center"> Milk & Dairies
+                        <div class="mx-10 my-3 "><svg xmlns="http://www.w3.org/2000/svg" width="52" height="42"
+                                viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1"
+                                stroke-linecap="round" stroke-linejoin="round"
+                                class="icon icon-tabler icons-tabler-outline icon-tabler-milk">
+                                <path stroke="none" d="M0 0h24v24H0z" fill="none" />
+                                <path d="M8 6h8v-2a1 1 0 0 0 -1 -1h-6a1 1 0 0 0 -1 1v2z" />
+                                <path
+                                    d="M16 6l1.094 1.759a6 6 0 0 1 .906 3.17v8.071a2 2 0 0 1 -2 2h-8a2 2 0 0 1 -2 -2v-8.071a6 6 0 0 1 .906 -3.17l1.094 -1.759" />
+                                <path d="M12 16m-2 0a2 2 0 1 0 4 0a2 2 0 1 0 -4 0" />
+                                <path d="M10 10h4" />
+                            </svg>
+                        </div>
+                    </div>
+                </div>
+                <div class="ghost ">
+                    <div class="text-center"> Pet Food</div>
+                    <div class="mx-10 my-3 "><svg xmlns="http://www.w3.org/2000/svg" height="42px"
+                            viewBox="0 -960 960 960" width="52px" fill="#5f6368">
+                            <path
+                                d="M374.15-104q-49.15 0-77.53-26.3-28.39-26.3-23.39-70.19 1-17.43-1.85-35.51-2.84-18.08-10.46-24.92-6.84-7.62-24.92-11.23-18.08-3.62-35.51-2.62-43.89 5-70.19-22.61Q104-325 104-374.54q0-46.54 30.3-76.92 30.3-30.39 77.39-30.39 20.39 0 37.31 6.73 16.92 6.74 24.31 14.89 11.54 8.46 25.77 8.46t23.46-10l172.61-172.61q10-9.24 11.54-25 1.54-15.77-6.92-27.31-7.15-8.16-14.39-24.69-7.23-16.54-7.23-36.93 0-47.09 30.31-77.39 30.3-30.3 77.39-30.3 49.15 0 77.53 26.3 28.39 26.3 23.39 70.19-1 17.43 1.85 35.51 2.84 18.08 10.46 24.92 6.84 7.62 24.92 10.46 18.08 2.85 35.51 1.85 43.89-5 70.19 23.39Q856-635 856-585.46q0 46.54-30.3 76.92-30.3 30.39-77.39 30.39-20.39 0-36.93-7.73-16.53-7.74-24.69-14.89-11.54-7.69-26.54-6.54-15 1.16-24.23 11.16L463.85-324.08q-10 9.23-11.54 23.08-1.54 13.85 5.38 26.15 6.62 8.16 15.39 25.47 8.77 17.3 8.77 37.69 0 47.09-30.31 77.39-30.3 30.3-77.39 30.3Zm.39-44q26.68 0 45.11-18.12 18.43-18.11 18.43-45.57 0-15.31-6.66-27.69-6.65-12.39-12.34-21.62-15-20.31-12.39-45.54 2.62-25.23 21.93-44.54l180.07-180.07q18.12-19.42 43.29-21.6 25.17-2.17 47.02 11.83 9.23 5.69 21.62 12.34 12.38 6.66 27.69 6.66 27.26 0 45.59-18.33 18.33-18.33 18.33-45.6 0-26.29-18.33-44.72T748.31-649q-23.46 0-46.85-4.92-23.38-4.93-32.61-14.93-10-9.23-14.93-32.61-4.92-23.39-4.92-46.85 0-27.26-18.43-45.59-18.43-18.33-45.11-18.33t-45.11 18.33q-18.43 18.33-18.43 45.59 0 14.3 6.66 27.19 6.65 12.89 12.34 22.12 15 20.31 12.39 45.54-2.62 25.23-21.93 44.54l-179.3 180.07q-18.92 19.51-44.08 21.64-25.15 2.13-47-11.87-9.23-5.69-21.62-12.34-12.38-6.66-27.69-6.66-27.46 0-45.57 18.33Q148-401.42 148-374.15q0 26.29 18.12 43.95 18.11 17.66 45.57 17.66 23.46 0 46.85 5.69 23.38 5.7 32.61 15.7 10 9.23 14.93 33.38 4.92 24.15 4.92 47.62 0 27.46 18.43 44.8Q347.86-148 374.54-148Zm105.69-332.23Z" />
+                        </svg></div>
+                </div>
+            </div>
+
+            <div class="mt-16 grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-2 gap-4">
+                <div class="col-span-1 sm:col-span-2 lg:col-span-1">
+                    <img src="./assets/images/div.banner-contain (1).png" class="w-full" alt="">
+                </div>
+                <div class="col-span-1 sm:col-span-2 lg:col-span-1">
+                    <img src="./assets/images/div.banner-contain (1).png" class="w-full" alt="">
+                </div>
+            </div>
+        </div>
+    </div>
+
+</section>
+
+<!-- <section class="food my-10 px-5">
+    <div class="flex">
+        <div class="me-10 fresh2 ">
+            <img src="./assets/images/div.home-contain5.png" class="w-full" alt="">
+        </div>
+        <div>
+
+            <div>
+                <h1 class="text-bowse ">Food Cupboard</h1>
+                <p class="pb-5">A virtual assistant collects the products from your list</p>
+            </div>
+
+            <div class="dimo">
+
+            </div>
+
+            <div class="flex mt-10">
+                <div class="grid grid-cols-2 gap-96">
+                    <div class="banner-contain  ">
+                        <h1 class="banner-texth1">Get Ready To</h1>
+                        <h2 class="banner-texth2">TAKE ON THE DAY!</h2>
+                        <p class="banner-textp1">In publishing and graphic design, Lorem ipsum is a
+                            placeholder text commonly used to demonstrate.</p>
+                        <button></button>
+                    </div>
+                    <div class="banner-contain2">
+                        <h1 class="offer">20% Off</h1>
+                        <h2 class="offer2">SUMMRY</h2>
+                        <h3 class="offer3">Product</h3>
+
+
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section> -->
+
+<!-- ======= Featured ======== -->
+<section class="flex px-5">
+
+
+
+    <!-- <div class="grid grid-cols-12 gap-4">
+        <div class="col-span-12 lg:col-span-12 customer me-10">
+            <h1 class="m-10">Customer Comment</h1>
+            <p class="ms-10">We Care About Our Customer Experience</p>
+            <p class="ms-10 my-5">In publishing and graphic design, Lorem ipsum is
+                a placeholder text commonly used to demonstrate the visual form of a document or a
+                typeface without relying on meaningful content
+            </p>
+        </div>
+    </div> -->
+
+
+
+    <div>
+        <div>
+            <h1 class="Blog-h1 my-4">Featured Blog</h1>
+            <p class="pb-5">A virtual assistant collects the products from your list</p>
+        </div>
+        <div class="my-4">
+            <div class=" grid grid-cols-1 sm:grid-cols-2 md:grid-cols-4 gap-12">
+                <div>
+                    <img src="../../../assets/images/pexels-chanwalrus-958545.jpg" class="image-Blog">
+                    <p>20 March, 2022</p>
+                    <p>Fresh Vegetable Online</p>
+                </div>
+                <div>
+                    <img src="../../../assets/images/pexels-janetrangdoan-1099680.jpg" class="image-Blog">
+                    <p>20 March, 2022</p>
+                    <p>Fresh Vegetable Online</p>
+                </div>
+                <div>
+                    <img src="../../../assets/images/pexels-ozgomz-1667427.jpg" class="image-Blog">
+                    <p>20 March, 2022</p>
+                    <p>Fresh Vegetable Online</p>
+
+
+                </div>
+                <div>
+                    <img src="../../../assets/images/pexels-ella-olsson-572949-1640777.jpg" class="image-Blog">
+                    <p>20 March, 2022</p>
+                    <p>Fresh Vegetable Online </p>
+
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+
+<section class="px-5">
+    <div class="container mx-auto">
+        <div class="bg-gray-100 rounded-lg mt-2 p-4">
+            <div class="ml-5 p-3">
+                <h3 class="text-yellow-500">Send Mail</h3>
+                <div class="relative inline-flex items-center">
+                    <input type="email" placeholder="Enter Your Email"
+                        class="email p-2 rounded-l-md border border-gray-300 focus:outline-none focus:ring-2 focus:ring-yellow-500" />
+                    <button
+                        class="buttonEmail p-2 bg-yellow-500 text-white rounded-r-md hover:bg-yellow-600 transition-all">
+                        Subscribe <i class="fa-solid fa-arrow-right"></i>
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>

@@ -1,0 +1,322 @@
+<section>
+    <div class="mx-20">
+        <div class="flex">
+
+            <div class="flex flex-col image ">
+                <div class="my-1">
+                    <img src="./assets/images/1.jpg.png" alt="">
+                </div>
+                <div class="my-1">
+                    <img src="./assets/images/1.jpg.png" alt="">
+                </div>
+                <div class="my-1">
+                    <img src="./assets/images/1.jpg.png" alt="">
+                </div>
+                <div class="my-1">
+                    <img src="./assets/images/1.jpg.png" alt="">
+                </div>
+
+            </div>
+
+
+
+
+
+
+
+            <div class="image2">
+                <img [attr.src]=" 'http://sm-ecommerce.runasp.net/' +detailsProduct?.Data?.Image_Cover"
+                    class="w-full     rounded-md" [alt]="detailsProduct?.Data?.Category_Name">
+            </div>
+
+
+
+
+            <p class="text-sm text-blue-600 font-bold mt-2 mx-2">{{ detailsProduct?.Data?.Item_Name }}</p>
+
+
+
+
+
+
+            <div class="">
+                <h1 class="m-3">
+                    <!-- {{detailsProduct.Data.Item_Name}} -->
+                </h1>
+                <!-- <p class="m-3"> {{detailsProduct.Data.Price_out}} </p> -->
+
+                <p class="Lollipop m-3">Lollipop cake chocolate chocolate cake dessert jujubes.
+                    Shortbread sugar plum dessert powder cookie sweet brownie.
+                    Cake cookie apple pie dessert sugar plum muffin cheesecake.</p>
+                <p class="m-3">
+                    Hurry up! Sales Ends In
+                </p>
+
+                <p class="m-3">TIME</p>
+
+
+
+                <h2 class="m-3">Store Information</h2>
+                <p class="Lollipop m-3">Lollipop cake chocolate chocolate cake dessert jujubes. Shortbread
+                    sugar plum dessert powder cookie sweet brownie.</p>
+
+                <div class="flex">
+
+                    <a class="nav-link p-2" routerLink="compare" routerLinkActive="active-link">
+                        <button type="button"
+                            class="btn-mainn btn-mainn w-52  text-green-700 hover:text-white border border-green-700 hover:bg-green-800 focus:ring-4 focus:outline-none focus:ring-green-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center me-2 mb-2 dark:border-green-500 dark:text-green-500 dark:hover:text-white dark:hover:bg-green-600 dark:focus:ring-green-800">compare
+                            with similar</button>
+                    </a>
+                    <a class="nav-link p-2" routerLink="compare" routerLinkActive="active-link">
+                        <button type="button"
+                            class="btn-mainn btn-mainn w-52  text-green-700 hover:text-white border border-green-700 hover:bg-green-800 focus:ring-4 focus:outline-none focus:ring-green-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center me-2 mb-2 dark:border-green-500 dark:text-green-500 dark:hover:text-white dark:hover:bg-green-600 dark:focus:ring-green-800">Add
+                            to Cart +</button>
+                    </a>
+                </div>
+
+
+
+
+
+                <!-- <div class="type ">
+                    <p class="p-type">Type : <span class="text-black font-bold">Black Forest</span> </p>
+                    <p class="p-type">SKU : <span class="text-black font-bold">SDFVW65467</span> </p>
+                    <p class="p-type">MFG : <span class="text-black font-bold">Jun 4, 2022</span> </p>
+                    <p class="p-type">Stock : <span class="text-black font-bold">2 Items Left</span> </p>
+                    <p class="p-type">Tags : <span class="text-black font-bold">Cake, Backery</span> </p>
+                </div> -->
+
+                <!-- <div class="mt-10">
+                    <p>Guaranteed Safe Checkout</p>
+                    <div class="mt-2">
+                        <img src="./assets/images/List.png" alt="">
+                    </div>
+
+                </div> -->
+
+
+            </div>
+
+            <div>
+
+                <div class="p-10">
+                    <img src="./assets/images/div.vendor-contain.png" alt="">
+                    <p class="my-4 p-noodles">Noodles & Company is an American fast-casual
+                        restaurant that offers international and
+                        American noodle dishes and pasta.</p>
+                    <div>
+                        <p class="my-3">Address: <span class="s-noodles">1288 Franklin avenu </span> </p>
+                    </div>
+                    <div>
+                        <p>Contact Seller: <span class="s-noodles">(+1)-123-456-789</span></p>
+                    </div>
+
+
+                </div>
+            </div>
+
+        </div>
+
+        <div class="gap-10 grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-12 mb-5">
+            <div class="lg:col-span-8">
+                <div class="description w-auto">
+                    <p>Jelly beans carrot cake icing biscuit oat cake gummi bears tart. Lemon drops carrot cake pudding
+                        sweet gummi bears. Chocolate cake tart cupcake donut topping liquorice
+                        sugar plum chocolate bar. Jelly beans tiramisu caramels jujubes biscuit liquorice chocolate.
+                        Pudding
+                        toffee jujubes oat cake sweet roll. Lemon drops dessert croissant danish
+                        cake cupcake. Sweet roll candy chocolate toffee jelly sweet roll halvah brownie topping.
+                        Marshmallow
+                        powder candy sesame snaps jelly beans candy canes marshmallow
+                        gingerbread pie.</p>
+                    <div>
+                        <h2 class="text-black mt-8">Organic:</h2>
+                        <p>vitae et leo duis ut diam quam nulla porttitor massa id neque aliquam vestibulum morbi
+                            blandit cursus
+                            risus at ultrices mi tempus imperdiet nulla malesuada pellentesque
+                            elit eget gravida cum sociis natoque penatibus et magnis dis parturient montes nascetur
+                            ridiculus
+                            mus
+                            mauris vitae ultricies leo integer malesuada nunc vel risus commodo
+                            viverra maecenas accumsan lacus vel facilisis volutpat est velit egestas dui id ornare arcu
+                            odio ut
+                            sem
+                            nulla pharetra diam sit amet nisl suscipit adipiscing bibendum est
+                            ultricies integer quis auctor elit sed vulputate mi sit amet mauris commodo quis imperdiet
+                            massa
+                            tincidunt nunc pulvinar sapien et ligula ullamcorper malesuada proin libero
+                            nunc consequat interdum varius sit amet mattis vulputate enim nulla aliquet porttitor lacus
+                            luctus
+                            accumsan.</p>
+                    </div>
+
+                    <div class="my-4">
+                        <img src="../../../assets/images/div.banner-contain.png" alt="">
+                    </div>
+
+                    <div>
+                        <h2 class="text-black">From The Manufactuer:</h2>
+                        <p class="mt-2 mb-6">Jelly beans shortbread chupa chups carrot cake jelly-o halvah apple pie
+                            pudding
+                            gingerbread. Apple pie
+                            halvah cake tiramisu shortbread cotton candy croissant chocolate
+                            cake. Tart cupcake caramels gummi bears macaroon gingerbread fruitcake marzipan wafer.
+                            Marzipan
+                            dessert
+                            cupcake ice cream tootsie roll. Brownie chocolate cake
+                            pudding cake powder candy ice cream ice cream cake. Jujubes soufflé chupa chups cake candy
+                            halvah
+                            donut.
+                            Tart tart icing lemon drops fruitcake apple pie.</p>
+                        <p class="mt-2 mb-6"> Dessert liquorice tart soufflé chocolate bar apple pie pastry danish
+                            soufflé. Gummi bears
+                            halvah
+                            gingerbread jelly icing. Chocolate cake chocolate bar pudding chupa chups
+                            bear claw pie dragée donut halvah. Gummi bears cookie ice cream jelly-o jujubes sweet
+                            croissant.
+                            Marzipan cotton candy gummi bears lemon drops lollipop lollipop
+                            chocolate. Ice cream cookie dragée cake sweet roll sweet roll.Lemon drops cookie muffin
+                            carrot cake
+                            chocolate marzipan gingerbread topping chocolate bar. Soufflé
+                            tiramisu pastry sweet dessert.</p>
+                    </div>
+                </div>
+            </div>
+
+            <div class="lg:col-span-4">
+                <div class="type my-8">
+                    <p class="p-type">Type : <span class="text-black font-bold">Black Forest</span> </p>
+                    <p class="p-type">SKU : <span class="text-black font-bold">SDFVW65467</span> </p>
+                    <p class="p-type">MFG : <span class="text-black font-bold">Jun 4, 2022</span> </p>
+                    <p class="p-type">Stock : <span class="text-black font-bold">2 Items Left</span> </p>
+                    <p class="p-type">Tags : <span class="text-black font-bold">Cake, Backery</span> </p>
+
+
+                </div>
+                <div class="type2 mt-5">
+                    <div class="Fresh ">
+                        <div>
+                            <img src="./assets/images/div.home-contain 3.png" alt="">
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+
+    <div class="my-20 mx-5">
+        <div class=" Related py-5 mx-16 ">
+            <h1 class="h-Related text-black my-3">Related Product</h1>
+            <div class="flex gap-8 ">
+                <div class=" productt grid-cols-1 md:grid-cols-2 lg:grid-cols-5 w-full bgre">
+                    <div class="mx-10">
+                        <img src="../../../assets/images/Link → cake.png">
+                    </div>
+                    <p class="p-2">cake</p>
+                    <p class="p-2">Chocolate chip cookies 250g</p>
+                    <div class="p-2">
+                        <span> <i class="fa-solid fa-star rating-color"></i></span>
+                        <span> <i class="fa-solid fa-star rating-color"></i></span>
+                        <span> <i class="fa-solid fa-star rating-color"></i></span>
+                        <span> <i class="fa-solid fa-star rating-color"></i></span>
+                        <span> <i class="fa-solid fa-star rating-color"></i></span>
+                    </div>
+                    <p class="p-2">1 KG</p>
+                    <p class="px-2">$ 80.00</p>
+                    <div class="text-center">
+                        <button type="button"
+                            class="btn-mainn w-48 text-green-700 hover:text-white border border-green-700 hover:bg-green-800 focus:ring-4 focus:outline-none focus:ring-green-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center me-2 mb-2 dark:border-green-500 dark:text-green-500 dark:hover:text-white dark:hover:bg-green-600 dark:focus:ring-green-800">Add
+                            +</button>
+                    </div>
+                </div>
+                <div class="productt col-span-1 w-full">
+                    <div class="mx-10">
+                        <img src="../../../assets/images/pastry.png">
+                    </div>
+                    <p class="p-2">vegetable </p>
+                    <p class="p-2">Fresh Bread and Pastry Flour 200g </p>
+                    <div class="p-2">
+                        <span> <i class="fa-solid fa-star rating-color"></i></span>
+                        <span> <i class="fa-solid fa-star rating-color"></i></span>
+                        <span> <i class="fa-solid fa-star rating-color"></i></span>
+                        <span> <i class="fa-solid fa-star rating-color"></i></span>
+                        <span> <i class="fa-solid fa-star rating-color"></i></span>
+                    </div>
+                    <p class="p-2">1 KG</p>
+                    <p class="px-2">$ 80.00</p>
+                    <div class="text-center">
+                        <button type="button"
+                            class="btn-mainn w-48 text-green-700 hover:text-white border border-green-700 hover:bg-green-800 focus:ring-4 focus:outline-none focus:ring-green-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center me-2 mb-2 dark:border-green-500 dark:text-green-500 dark:hover:text-white dark:hover:bg-green-600 dark:focus:ring-green-800">Add
+                            +</button>
+                    </div>
+                </div>
+                <div class="productt col-span-1 w-full">
+                    <div class="mx-10">
+                        <img src="../../../assets/images/snacks.png">
+                    </div>
+                    <p class="p-2">vegetable</p>
+                    <p class="p-2">peanut Butter Bite Cookies 600 g </p>
+                    <div class="p-2">
+                        <span> <i class="fa-solid fa-star rating-color"></i></span>
+                        <span> <i class="fa-solid fa-star rating-color"></i></span>
+                        <span> <i class="fa-solid fa-star rating-color"></i></span>
+                        <span> <i class="fa-solid fa-star rating-color"></i></span>
+                        <span> <i class="fa-solid fa-star rating-color"></i></span>
+                    </div>
+                    <p class="p-2">1 KG</p>
+                    <p class="px-2">$ 80.00</p>
+                    <div class="text-center">
+                        <button type="button"
+                            class="btn-mainn w-48 text-green-700 hover:text-white border border-green-700 hover:bg-green-800 focus:ring-4 focus:outline-none focus:ring-green-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center me-2 mb-2 dark:border-green-500 dark:text-green-500 dark:hover:text-white dark:hover:bg-green-600 dark:focus:ring-green-800">Add
+                            +</button>
+                    </div>
+                </div>
+                <div class="productt col-span-1 w-full">
+                    <div class="mx-10">
+                        <img src="../../../assets/images/snacks2.png">
+                    </div>
+                    <p class="p-2">Snacks </p>
+                    <p class="p-2">SnackAmor Combo pack of Jower </p>
+                    <div class="p-2">
+                        <span> <i class="fa-solid fa-star rating-color"></i></span>
+                        <span> <i class="fa-solid fa-star rating-color"></i></span>
+                        <span> <i class="fa-solid fa-star rating-color"></i></span>
+                        <span> <i class="fa-solid fa-star rating-color"></i></span>
+                        <span> <i class="fa-solid fa-star rating-color"></i></span>
+                    </div>
+                    <p class="p-2">1 KG</p>
+                    <p class="px-2">$ 80.00</p>
+                    <div class="text-center">
+                        <button type="button"
+                            class="btn-mainn w-48 text-green-700 hover:text-white border border-green-700 hover:bg-green-800 focus:ring-4 focus:outline-none focus:ring-green-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center me-2 mb-2 dark:border-green-500 dark:text-green-500 dark:hover:text-white dark:hover:bg-green-600 dark:focus:ring-green-800">Add
+                            +</button>
+                    </div>
+
+                </div>
+                <div class="productt col-span-1 w-full">
+                    <div class="mx-10">
+                        <img src="../../../assets/images/chip.png">
+                    </div>
+                    <p class="p-2"> vegetable </p>
+                    <p class="p-2"> Fantasy Crunchy chip Cookies</p>
+                    <div class="p-2">
+                        <span> <i class="fa-solid fa-star rating-color"></i></span>
+                        <span> <i class="fa-solid fa-star rating-color"></i></span>
+                        <span> <i class="fa-solid fa-star rating-color"></i></span>
+                        <span> <i class="fa-solid fa-star rating-color"></i></span>
+                        <span> <i class="fa-solid fa-star rating-color"></i></span>
+                    </div>
+                    <p class="p-2">1 KG</p>
+                    <p class="px-2">$ 80.00</p>
+                    <div class="text-center">
+                        <button type="button"
+                            class="btn-mainn w-48 text-green-700 hover:text-white border border-green-700 hover:bg-green-800 focus:ring-4 focus:outline-none focus:ring-green-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center me-2 mb-2 dark:border-green-500 dark:text-green-500 dark:hover:text-white dark:hover:bg-green-600 dark:focus:ring-green-800">Add
+                            +</button>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+    </div>
+</section>
