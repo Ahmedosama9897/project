@@ -66,6 +66,7 @@ a:hover {
 }
 
 .productt {
+  width: 250px;
   border-radius: 5px;
   border: solid 1px var(--main);
   transition: box-shadow 0.5s;

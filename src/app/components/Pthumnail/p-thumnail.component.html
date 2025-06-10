@@ -32,7 +32,7 @@
 
 
 
-            <p class="text-sm text-blue-600 font-bold mt-2 mx-2">{{ detailsProduct?.Data?.Item_Name }}</p>
+            <!-- <p class="text-sm text-blue-600 font-bold mt-2 mx-2">{{ detailsProduct?.Data?.Item_Name }}</p> -->
 
 
 
@@ -41,13 +41,13 @@
 
             <div class="">
                 <h1 class="m-3">
-                    <!-- {{detailsProduct.Data.Item_Name}} -->
+                    {{detailsProduct?.Data?.Item_Name}}
                 </h1>
-                <!-- <p class="m-3"> {{detailsProduct.Data.Price_out}} </p> -->
+                <p class="m-3"> {{detailsProduct?.Data?.Price_out | currency: 'GBP'}} </p>
 
-                <p class="Lollipop m-3">Lollipop cake chocolate chocolate cake dessert jujubes.
+                <!-- <p class="Lollipop m-3">Lollipop cake chocolate chocolate cake dessert jujubes.
                     Shortbread sugar plum dessert powder cookie sweet brownie.
-                    Cake cookie apple pie dessert sugar plum muffin cheesecake.</p>
+                    Cake cookie apple pie dessert sugar plum muffin cheesecake.</p> -->
                 <p class="m-3">
                     Hurry up! Sales Ends In
                 </p>
@@ -57,8 +57,7 @@
 
 
                 <h2 class="m-3">Store Information</h2>
-                <p class="Lollipop m-3">Lollipop cake chocolate chocolate cake dessert jujubes. Shortbread
-                    sugar plum dessert powder cookie sweet brownie.</p>
+
 
                 <div class="flex">
 
@@ -120,7 +119,8 @@
         <div class="gap-10 grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-12 mb-5">
             <div class="lg:col-span-8">
                 <div class="description w-auto">
-                    <p>Jelly beans carrot cake icing biscuit oat cake gummi bears tart. Lemon drops carrot cake pudding
+                    <p class="m-3"> {{detailsProduct?.Data?.Description }} </p>
+                    <!-- <p>Jelly beans carrot cake icing biscuit oat cake gummi bears tart. Lemon drops carrot cake pudding
                         sweet gummi bears. Chocolate cake tart cupcake donut topping liquorice
                         sugar plum chocolate bar. Jelly beans tiramisu caramels jujubes biscuit liquorice chocolate.
                         Pudding
@@ -128,7 +128,7 @@
                         cake cupcake. Sweet roll candy chocolate toffee jelly sweet roll halvah brownie topping.
                         Marshmallow
                         powder candy sesame snaps jelly beans candy canes marshmallow
-                        gingerbread pie.</p>
+                        gingerbread pie.</p> -->
                     <div>
                         <h2 class="text-black mt-8">Organic:</h2>
                         <p>vitae et leo duis ut diam quam nulla porttitor massa id neque aliquam vestibulum morbi

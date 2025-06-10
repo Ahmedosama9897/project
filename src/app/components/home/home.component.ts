@@ -44,6 +44,7 @@ export class HomeComponent implements OnDestroy, OnInit {
 
 
   ngOnInit(): void {
+
     this._CategoriesService.getAllCategories().subscribe({
       next: (res) => {
         console.log(res);
@@ -73,15 +74,14 @@ export class HomeComponent implements OnDestroy, OnInit {
 
     this.getAllproductSub = this._ProductsService.getAllProducts().subscribe({
       next: (res) => {
-        console.log("Data received:", res.products);
-
+        console.log('عدد المنتجات:', res.products.length); // 👈 شوف دي تطبع إيه
         this.productList = res.products;
       },
       error: (err) => {
         console.log(err);
-
       }
-    })
+    });
+
 
   }
 
@@ -198,6 +198,8 @@ export class HomeComponent implements OnDestroy, OnInit {
   // }
 
   addWish(id: string, ItemId: string): void {
+    console.log("buyer", id);
+    console.log("item", ItemId);
     this._WishListService.addProductToWish(id, ItemId).subscribe({
       next: (res) => {
         console.log('✅ Response from API wishlist:', res);

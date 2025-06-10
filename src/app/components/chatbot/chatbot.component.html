@@ -11,22 +11,30 @@
     <div class="chat-messages" #messageContainer>
         <div [innerHTML]="renderMessages()"></div>
 
-        <div class="recommended-container" *ngIf="recommendedItems.length">
-            <div class="product-card" *ngFor="let item of recommendedItems">
-                <div *ngIf="item.Discount" class="discount-badge">-{{item.Discount}}%</div>
-                <img [src]="item.Image_Cover" alt="{{item.Item_Name}}" class="product-image">
-                <div class="product-details">
-                    <h4>{{item.Item_Name}}</h4>
-                    <p>{{item.Description.split(" ",2).join(" ")}}</p>
-                    <div class="price-discount">
-                        <span class="price">${{item.Price_out}}</span>
+
+        <!-- سلايدر المنتجات الموصى بها -->
+        <div *ngIf="recommendedItems.length > 0">
+            <owl-carousel-o [options]="customOptionsCat">
+                <ng-template carouselSlide *ngFor="let item of recommendedItems">
+                    <div class="recommended-container">
+                        <div class="product-card">
+                            <div *ngIf="item.Discount" class="discount-badge">-{{item.Discount}}%</div>
+                            <img [src]="item.Image_Cover" alt="{{item.Item_Name}}" class="product-image" />
+                            <div class="product-details">
+                                <h4>{{ item.Item_Name }}</h4>
+                                <p>{{ item.Description.split(' ', 2).join(' ') }}</p>
+                                <div class="price-discount">
+                                    <span class="price">${{ item.Price_out }}</span>
+                                </div>
+                                <div class="sold-rate">
+                                    <span>🔥 {{ item.Sold_Count }} sold</span>
+                                    <span class="stars">⭐ {{ item.Rate }}</span>
+                                </div>
+                            </div>
+                        </div>
                     </div>
-                    <div class="sold-rate">
-                        <span>🔥 {{item.Sold_Count}} sold</span>
-                        <span class="stars">⭐ {{item.Rate}}</span>
-                    </div>
-                </div>
-            </div>
+                </ng-template>
+            </owl-carousel-o>
         </div>
 
 

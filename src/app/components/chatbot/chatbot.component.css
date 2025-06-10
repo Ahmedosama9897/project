@@ -75,6 +75,8 @@
 
 /* تنسيق الرسائل */
 .chat-messages {
+    max-height: 400px;
+    scroll-behavior: smooth;
     flex: 1;
     padding: 12px;
     overflow-y: auto;
