@@ -2,12 +2,16 @@ import { NgFor, NgIf } from '@angular/common';
 import { Recommendeditem } from '../../core/interfaces/recommendeditem';
 import { ChatbotService } from './../../core/services/chatbot.service';
 import { Component, OnInit, ViewChild, ElementRef, ViewEncapsulation } from '@angular/core';
+import { Icart } from '../../core/interfaces/icart';
+import { Icategories } from '../../core/interfaces/icategories';
+import { CarouselModule, OwlOptions } from 'ngx-owl-carousel-o';
+import { FormsModule } from '@angular/forms';
 // import { ChatbotService } from './chatbot.service';
 @Component({
   selector: 'app-chatbot',
   templateUrl: './chatbot.component.html',
   styleUrls: ['./chatbot.component.css'],
-  imports: [NgIf, NgFor],
+  imports: [NgIf, NgFor, CarouselModule, FormsModule],
   standalone: true,
   encapsulation: ViewEncapsulation.None
 })
@@ -16,8 +20,42 @@ export class ChatbotComponent implements OnInit {
   newMessage = '';
   messages: { sender: string, text: string }[] = [];
   isTyping = false;
+  categoriesList: Icategories[] = [];
+
+
+
+
+  customOptionsCat: OwlOptions = {
+    loop: true,
+    mouseDrag: true,
+    touchDrag: true,
+    pullDrag: false,
+    autoplay: true,
+    autoplayTimeout: 3000,
+    dots: true,
+    navSpeed: 700,
+    margin: 10,
+    navText: ['<', '>'],
+    responsive: {
+      0: {
+        items: 1
+      },
+      400: {
+        items: 2
+      },
+      740: {
+        items: 3
+      },
+      940: {
+        items: 4
+      }
+    },
+    nav: false
+  }
 
   @ViewChild('messageContainer', { static: false }) messageContainer: any;
+
+
 
   constructor(private ChatbotService: ChatbotService) { }
   recommendedItems: Recommendeditem[] = [];
@@ -74,6 +112,9 @@ export class ChatbotComponent implements OnInit {
       }, 2000);
     }
   }
+
+
+
 
   updateLocalStorage() {
     localStorage.setItem('chatMessages', JSON.stringify(this.messages));

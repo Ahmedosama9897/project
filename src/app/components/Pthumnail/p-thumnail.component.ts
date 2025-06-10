@@ -6,10 +6,11 @@ import { log } from 'console';
 import { Iproduct } from '../../core/interfaces/iproduct';
 import { CartService } from '../../core/services/cart.service';
 import { ToastrService } from 'ngx-toastr';
+import { CurrencyPipe } from '@angular/common';
 @Component({
   selector: 'app-p-thumnail',
   standalone: true,
-  imports: [],
+  imports: [CurrencyPipe],
   templateUrl: './p-thumnail.component.html',
   styleUrl: './p-thumnail.component.css'
 })
@@ -32,7 +33,8 @@ export class PThumnailComponent implements OnInit {
         this._ProductsService.getSpecificProducts(idProduct).subscribe({
           next: (res) => {
             console.log(res.Data);
-            this.detailsProduct = res.Data
+            this.detailsProduct = res; // لو المنتج في res مباشرة
+
 
           },
           error: (err) => {
