@@ -44,9 +44,13 @@ export class WishListService {
     });
 
     return this._HttpClient.post(
-      `${environment.baseUrl}Wishlist/AddProduct?BuyerId=${id}&ItemId=${itemid}`,
-      {}, // 🟢 Body فاضي
-      { headers } // 🟢 Headers في المكان الصحيح
+      `${environment.baseUrl}Wishlist/AddProduct?BuyerId=${id}&ItemId=${itemid}`, {},
+      // 🟢 Body فاضي
+      {
+        headers,
+        responseType: 'text' as 'json' // 👈
+
+      } // 🟢 Headers في المكان الصحيح
     );
   }
 
