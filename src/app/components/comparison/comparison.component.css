@@ -1,15 +1,4 @@
-/* comparison.component.css */
-.products {
-    display: flex;
-    gap: 20px;
-    justify-content: space-around;
-}
-
-.product {
-    border: 1px solid #ddd;
-    padding: 10px;
-    text-align: center;
-}
+/* ✅ comparison.component.css (تحسين عرض الجدول والأنيميشن) */
 
 button {
     margin-top: 10px;
@@ -18,10 +7,26 @@ button {
     color: white;
     border: none;
     cursor: pointer;
+    border-radius: 4px;
 }
 
 button:hover {
     background-color: #45a049;
+}
+
+@media (prefers-color-scheme: dark) {
+    button {
+        background-color: #388e3c;
+    }
+
+    button:hover {
+        background-color: #2e7d32;
+    }
+}
+
+.table-wrapper {
+    overflow-x: auto;
+    width: 100%;
 }
 
 table {
@@ -38,4 +43,47 @@ td {
 
 th {
     background-color: #f4f4f4;
+}
+
+@keyframes fadeInSlideDown {
+    0% {
+        opacity: 0;
+        transform: translateY(-10px);
+    }
+
+    100% {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+.animated-row {
+    animation: fadeInSlideDown 0.5s ease-out both;
+}
+
+@keyframes fadeOut {
+    from {
+        opacity: 1;
+        transform: scale(1);
+    }
+
+    to {
+        opacity: 0;
+        transform: scale(0.95);
+    }
+}
+
+.product-row.removed {
+    animation: fadeOut 0.4s ease forwards;
+}
+
+/* تحسين شكل الأزرار داخل الجدول */
+td button {
+    margin-right: 8px;
+}
+
+/* Dark border تحسين للعرض الليلي */
+.dark th,
+.dark td {
+    border-color: #444;
 }

@@ -25,8 +25,10 @@
 
 
             <div class="image2">
-                <img [attr.src]=" 'http://sm-ecommerce.runasp.net/' +detailsProduct?.Data?.Image_Cover"
-                    class="w-full     rounded-md" [alt]="detailsProduct?.Data?.Category_Name">
+                <div class="my-7 w-64 h-64">
+                    <img [attr.src]=" 'http://sm-ecommerce.runasp.net/' +detailsProduct?.Data?.Image_Cover"
+                        class="w-full     rounded-md" [alt]="detailsProduct?.Data?.Category_Name">
+                </div>
             </div>
 
 

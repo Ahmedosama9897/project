@@ -28,10 +28,11 @@ export class AuthService {
 
 
   saveUserData(): void {
-    if (localStorage.getItem('userToken') !== null) {
-      this.userData = jwtDecode(localStorage.getItem('userToken')!)
-      console.log('userData', this.userData);
-
+    const token = localStorage.getItem('userToken');
+    if (token) {
+      const decoded = jwtDecode(token);
+      console.log('🔍 Decoded Token:', decoded); // ✅ اطبعه هنا
+      this.userData = decoded;
     }
   }
 

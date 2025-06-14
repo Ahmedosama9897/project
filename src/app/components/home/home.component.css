@@ -1,7 +1,3 @@
-/* section {
-    background-image: url("../../../assets/images/images2.jpg");
-} */
-
 .imagee {
 
     width: 1058.66px;
@@ -342,8 +338,8 @@
 }
 
 .image-Blog {
-    width: 385px;
-    height: 250.25px;
+    width: auto;
+    height: auto;
     left: 10px;
     gap: 0px;
     border-radius: 5px 0px 0px 0px;
@@ -362,3 +358,136 @@
     background: #F8F8F8;
 
 }
+
+
+
+/* General reset and base */
+
+
+/* Utility classes */
+.section-title {
+    font-size: 28px;
+    font-weight: 700;
+    line-height: 1.2;
+    color: #34364A;
+}
+
+.paragraph {
+    font-size: 16px;
+    line-height: 1.5;
+    color: #555;
+}
+
+/* Email & Button styles */
+/* .email {
+    width: 100%;
+    max-width: 400px;
+    height: 50px;
+    padding: 10px;
+    border: 1px solid #ccc;
+    border-radius: 5px 0 0 5px;
+} */
+/* 
+.buttonEmail {
+    background: linear-gradient(90deg, #22c55e 0%, #16a34a 100%);
+    color: white;
+    padding: auto;
+    border: none;
+    border-radius: 0 5px 5px 0;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+} */
+
+.buttonEmail:hover {
+    background-color: #15803d;
+}
+
+/* Blog Image */
+.image-Blog {
+    width: 100%;
+    max-width: 385px;
+    height: auto;
+    border-radius: 10px;
+    object-fit: cover;
+}
+
+/* Ghost Card / Categories Style */
+.ghost {
+    background: #F8F8F8;
+    border-radius: 10px;
+    padding: 20px 12px;
+    text-align: center;
+    transition: all 0.3s ease-in-out;
+}
+
+.ghost:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 8px 24px rgba(0, 0, 0, 0.1);
+}
+
+/* Banner Sections */
+.banner-contain,
+.banner-contain2 {
+    padding: 20px;
+    border-radius: 10px;
+    background-color: #fefce8;
+}
+
+.banner-contain2 {
+    background-color: #bbf7d0;
+}
+
+.banner-texth1,
+.banner-texth2,
+.banner-textp1 {
+    margin-bottom: 10px;
+}
+
+/* Customer Section */
+.customer {
+    background: #F8F8F8;
+    border-radius: 10px;
+    padding: 20px;
+    text-align: center;
+}
+
+/* Animation keyframes */
+@keyframes fadeInUp {
+    from {
+        transform: translateY(30px);
+        opacity: 0;
+    }
+
+    to {
+        transform: translateY(0);
+        opacity: 1;
+    }
+}
+
+.fade-in-up {
+    animation: fadeInUp 0.6s ease-out forwards;
+}
+
+/* Responsive Design */
+@media (max-width: 768px) {
+
+    .email,
+    .buttonEmail {
+        width: 100%;
+        display: block;
+        margin: 8px 0;
+        border-radius: 5px;
+    }
+}
+
+
+body::before {
+    content: "";
+    position: absolute;
+    inset: 0;
+    background-image: url('/assets/images/bg-pattern-light.png');
+    opacity: 0.05;
+    z-index: -1;
+}
+
+/* In your global styles (e.g. styles.css or tailwind base file) */

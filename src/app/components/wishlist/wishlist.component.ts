@@ -31,8 +31,9 @@ export class WishlistComponent implements OnInit {
   private readonly _WishListService = inject(WishListService);
 
   private readonly _AuthService = inject(AuthService);
-
+  private readonly _ToastrService = inject(ToastrService)
   // cartDetails: Icart = {} as Icart;
+
 
 
   cartDetails: Icart[] = []; // ✅ Array
@@ -40,6 +41,8 @@ export class WishlistComponent implements OnInit {
 
 
   userId: string = this._AuthService.userData.nameid; // أو ضع القيمة المناسبة
+
+
 
 
   ngOnInit(): void {
@@ -58,25 +61,24 @@ export class WishlistComponent implements OnInit {
   }
 
 
-  getCleanItemId(rawId: string): string {
-    return rawId.includes('-') ? rawId.split('-')[1] : rawId;
-  }
 
 
 
 
-  removeItem(id: string, itemId: string): void {
-    this._CartService.deleteSpecificCatrItem(id, itemId).subscribe({
-      next: (res) => {
-        console.log(res);
-        this.wishDetails = res.value;
-        // this._CartService.cartNumber.set(res.numOfCartItems);
+  removeWish(id: string, itemId: string): void {
+    this._WishListService.deleteSpecificWishItem(id, itemId).subscribe({
+      next: () => {
+        this.wishDetails = this.wishDetails.filter(item => item.Item_ID !== itemId);
+        this._WishListService.WishNumber.set(this.wishDetails.length);
+        this._ToastrService.success('Item removed from wishlist');
       },
       error: (err) => {
-        console.log(err);
+        console.error(err);
+        this._ToastrService.error('Failed to remove item');
       }
     });
   }
+
   UpdateCount(id: string, itemId: string, quantity: number): void {
     // تحقق من إذا كانت الكمية أكبر من 0 قبل إرسال الطلب
     if (quantity <= 0) {
@@ -136,4 +138,8 @@ export class WishlistComponent implements OnInit {
       }
     });
   }
+
+
+
+
 }

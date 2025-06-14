@@ -1,45 +1,81 @@
-<!-- comparison.component.html -->
-<div class="products">
-    <div class="product">
-        <h3>{{ product1.name }}</h3>
-        <button (click)="addToComparison(product1)">أضف للمقارنة</button>
-    </div>
-    <div class="product">
-        <h3>{{ product2.name }}</h3>
-        <button (click)="addToComparison(product2)">أضف للمقارنة</button>
-    </div>
-    <div class="product">
-        <h3>{{ product3.name }}</h3>
-        <button (click)="addToComparison(product3)">أضف للمقارنة</button>
-    </div>
+<!-- ✅ comparison.component.html -->
+<div class="mb-4 flex gap-4">
+    <button (click)="activeTab = 'phones'" [ngClass]="{ 'bg-blue-600 text-white': activeTab === 'phones' }"
+        class="px-4 py-2 border rounded-md">Phones</button>
+    <button (click)="activeTab = 'pcs'" [ngClass]="{ 'bg-blue-600 text-white': activeTab === 'pcs' }"
+        class="px-4 py-2 border rounded-md">PCs</button>
+    <button (click)="activeTab = 'laptops'" [ngClass]="{ 'bg-blue-600 text-white': activeTab === 'laptops' }"
+        class="px-4 py-2 border rounded-md">Laptops</button>
 </div>
 
-<!-- صفحة المقارنة -->
-<div *ngIf="comparisonProducts.length > 0">
-    <h2>مقارنة المنتجات</h2>
-    <table>
-        <thead>
+<!-- ✅ PCs Tab -->
+<div *ngIf="activeTab === 'pcs'" class="overflow-x-auto rounded-md shadow-lg border dark:border-gray-700">
+    <table class="min-w-full text-sm text-gray-800 dark:text-gray-300">
+        <thead class="text-xs bg-gray-200 dark:bg-gray-800">
             <tr>
-                <th>المنتج</th>
-                <th>السعر</th>
-                <th>الوصف</th>
+                <th class="p-4">Image</th>
+                <th class="px-6 py-3">Price</th>
+                <th class="px-6 py-3">Specs</th>
+                <th class="px-6 py-3">Actions</th>
             </tr>
         </thead>
         <tbody>
+            <tr *ngFor="let item of comparisonPcs; trackBy: trackByItemId"
+                class="bg-white dark:bg-gray-900 border-b dark:border-gray-700">
+                <td class="p-4 text-center">
+                    <img [src]="'https://sm-ecommerce.runasp.net/' + item.Image_Cover"
+                        class="w-16 h-16 object-contain rounded shadow-sm" />
+                    <div class="font-semibold mt-2">{{ item.Item_Name }}</div>
+                </td>
+                <td class="px-6 py-4 font-semibold">{{ item.Price | currency:'USD' }}</td>
+                <td class="px-6 py-4 text-sm">
+                    RAM: {{ item.RAM }}<br />
+                    Memory: {{ item.Memory }} {{ item.Memory_Type }}<br />
+                    CPU: {{ item.CPU }}
+                </td>
+                <td class="px-6 py-4">
+                    <button (click)="removeItem(userId, item.Item_ID)"
+                        class="text-red-600 hover:underline">Remove</button>
+                    <button (click)="openDetailsModal(item)"
+                        class="text-blue-600 hover:underline block mt-1">Details</button>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+</div>
+
+<!-- ✅ Laptops Tab -->
+<div *ngIf="activeTab === 'laptops'" class="overflow-x-auto rounded-md shadow-lg border dark:border-gray-700">
+    <table class="min-w-full text-sm text-gray-800 dark:text-gray-300">
+        <thead class="text-xs bg-gray-200 dark:bg-gray-800">
             <tr>
-                <td>{{ comparisonProducts[0].name }}</td>
-                <td>{{ comparisonProducts[0].price }}</td>
-                <td>{{ comparisonProducts[0].description }}</td>
+                <th class="p-4">Image</th>
+                <th class="px-6 py-3">Price</th>
+                <th class="px-6 py-3">Specs</th>
+                <th class="px-6 py-3">Actions</th>
             </tr>
-            <tr *ngIf="comparisonProducts[1]">
-                <td>{{ comparisonProducts[1].name }}</td>
-                <td>{{ comparisonProducts[1].price }}</td>
-                <td>{{ comparisonProducts[1].description }}</td>
-            </tr>
-            <tr *ngIf="comparisonProducts[2]">
-                <td>{{ comparisonProducts[2].name }}</td>
-                <td>{{ comparisonProducts[2].price }}</td>
-                <td>{{ comparisonProducts[2].description }}</td>
+        </thead>
+        <tbody>
+            <tr *ngFor="let item of comparisonLaptops; trackBy: trackByItemId"
+                class="bg-white dark:bg-gray-900 border-b dark:border-gray-700">
+                <td class="p-4 text-center">
+                    <img [src]="'https://sm-ecommerce.runasp.net/' + item.Image_Cover"
+                        class="w-16 h-16 object-contain rounded shadow-sm" />
+                    <div class="font-semibold mt-2">{{ item.Item_Name }}</div>
+                </td>
+                <td class="px-6 py-4 font-semibold">{{ item.Price | currency:'USD' }}</td>
+                <td class="px-6 py-4 text-sm">
+                    RAM: {{ item.RAM }}<br />
+                    Memory: {{ item.Memory }} {{ item.Memory_Type }}<br />
+                    CPU: {{ item.CPU }}<br />
+                    Screen: {{ item.Screen_Size }}", Weight: {{ item.Weight }}kg
+                </td>
+                <td class="px-6 py-4">
+                    <button (click)="removeItem(userId, item.Item_ID)"
+                        class="text-red-600 hover:underline">Remove</button>
+                    <button (click)="openDetailsModal(item)"
+                        class="text-blue-600 hover:underline block mt-1">Details</button>
+                </td>
             </tr>
         </tbody>
     </table>

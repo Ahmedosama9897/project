@@ -66,7 +66,7 @@ export const routes: Routes = [
       { path: 'pages', component: PagesComponent },
       { path: 'chatbot', component: ChatbotComponent },
       { path: 'cart/order', component: OrdersComponent },
-      { path: 'Comparison', component: ComparisonComponent },
+      { path: 'comparison', component: ComparisonComponent },
       {
         path: 'profile', component: ProfileComponent, children: [
 

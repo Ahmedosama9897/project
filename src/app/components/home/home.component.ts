@@ -1,4 +1,4 @@
-import { CurrencyPipe } from '@angular/common';
+import { CurrencyPipe, NgIf } from '@angular/common';
 import { Component, inject, OnDestroy, OnInit } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { CarouselModule, OwlOptions } from 'ngx-owl-carousel-o';
@@ -15,7 +15,7 @@ import { WishListService } from '../../core/services/wishlist.service';
 @Component({
   selector: 'app-home',
   standalone: true,
-  imports: [CarouselModule, FormsModule, CurrencyPipe, RouterLink],
+  imports: [CarouselModule, FormsModule, CurrencyPipe, RouterLink, NgIf],
   templateUrl: './home.component.html',
   styleUrl: './home.component.css'
 })
@@ -26,6 +26,9 @@ export class HomeComponent implements OnDestroy, OnInit {
   private readonly _AuthService = inject(AuthService)
   private readonly _ToastrService = inject(ToastrService)
   private readonly _WishListService = inject(WishListService)
+
+
+  wishlistIds = new Set<string>();
 
 
   userId: string = this._AuthService.userData.nameid; // أو ضع القيمة المناسبة
@@ -72,7 +75,8 @@ export class HomeComponent implements OnDestroy, OnInit {
 
 
 
-    this.getAllproductSub = this._ProductsService.getAllProducts().subscribe({
+
+    this.getAllproductSub = this._ProductsService.getAllProducts(40).subscribe({
       next: (res) => {
         console.log('عدد المنتجات:', res.products.length); // 👈 شوف دي تطبع إيه
         this.productList = res.products;
@@ -155,7 +159,7 @@ export class HomeComponent implements OnDestroy, OnInit {
     this._CartService.addProductToCart(buyerId, itemId, quantity).subscribe({
       next: (res) => {
         console.log('✅ Response from API:', res);
-        this._ToastrService.success('دارت يا صيييع', 'Inspire')
+        this._ToastrService.success(' Add to Cart 🛒 ', 'Inspire')
 
         // if (res && typeof res === 'number') {
         //   this._CartService.cartNumber.set(res);
@@ -197,30 +201,57 @@ export class HomeComponent implements OnDestroy, OnInit {
   //   return product.Data.Item_ID;
   // }
 
-  addWish(id: string, ItemId: string): void {
-    console.log("buyer", id);
-    console.log("item", ItemId);
-    this._WishListService.addProductToWish(id, ItemId).subscribe({
+
+
+
+  addWish(id: string, itemid: string): void {
+
+    // if (this.wishlistIds.has(itemid)) {
+    //   this._ToastrService.info('This product is already in your wishlist');
+    //   return;
+    // }
+
+
+    console.log('✅ Product added to wishlist:', id, itemid);
+
+    this._WishListService.addProductToWish(id, itemid).subscribe({
       next: (res) => {
-        console.log('✅ Response from API wishlist:', res);
-
-        // لو res فيه array أو object بتحوي wishlist items
-        if (res && res.products) {
-          this._WishListService.WishNumber.set(res.products.length);
-          console.log('🧮 عدد المنتجات في الـ Wishlist:', this._WishListService.WishNumber());
-        } else {
-          // أو تزود بعدد معين مؤقتًا
-          this._WishListService.WishNumber.set(this._WishListService.WishNumber() + 1);
-        }
-
-        this._ToastrService.success('Added to wishlist', 'FreshCart');
+        this._ToastrService.success('Added to wishlist', res.messageToUser);
+        // this.wishlistIds.add(itemid); // ✅ مهم تضيفه هنا
       },
       error: (err) => {
-        console.log('❌ Error:', err);
-        this._ToastrService.error('Error', 'Failed to add product to wishlist');
+        console.error('❌ Error:', err);
+        if (err.status === 500) {
+          this._ToastrService.error('Internal server error: please try again later.');
+        } else if (err.status === 404) {
+          this._ToastrService.warning('Product not found.');
+        } else {
+          this._ToastrService.error('Failed to add product to wishlist.');
+        }
       }
     });
+
+
   }
+
+
+
+
+
+
+
+  isNew(date: string): boolean {
+    const insertDate = new Date(date);
+    const today = new Date();
+    const diffInDays = Math.floor((today.getTime() - insertDate.getTime()) / (1000 * 60 * 60 * 24));
+    return diffInDays <= 7;
+  }
+
+
+  getCleanItemId(rawId: string): string {
+    return rawId.includes('-') ? rawId.split('-')[1] : rawId;
+  }
+
 
 
 

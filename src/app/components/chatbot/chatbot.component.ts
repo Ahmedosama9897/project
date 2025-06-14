@@ -2,7 +2,6 @@ import { NgFor, NgIf } from '@angular/common';
 import { Recommendeditem } from '../../core/interfaces/recommendeditem';
 import { ChatbotService } from './../../core/services/chatbot.service';
 import { Component, OnInit, ViewChild, ElementRef, ViewEncapsulation } from '@angular/core';
-import { Icart } from '../../core/interfaces/icart';
 import { Icategories } from '../../core/interfaces/icategories';
 import { CarouselModule, OwlOptions } from 'ngx-owl-carousel-o';
 import { FormsModule } from '@angular/forms';
@@ -29,29 +28,28 @@ export class ChatbotComponent implements OnInit {
     loop: true,
     mouseDrag: true,
     touchDrag: true,
-    pullDrag: false,
-    autoplay: true,
-    autoplayTimeout: 3000,
+    pullDrag: true,
+    autoplay: false,
     dots: true,
-    navSpeed: 700,
+    navSpeed: 600,
     margin: 10,
-    navText: ['<', '>'],
     responsive: {
       0: {
         items: 1
       },
-      400: {
+      500: {
         items: 2
       },
-      740: {
+      768: {
         items: 3
       },
-      940: {
+      1024: {
         items: 4
       }
     },
     nav: false
-  }
+  };
+
 
   @ViewChild('messageContainer', { static: false }) messageContainer: any;
 
