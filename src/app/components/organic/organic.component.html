@@ -340,34 +340,33 @@
                 <h1 class="font-bold text-xl text-green-800">Top Selling</h1>
                 <div class=" my-6">
 
-                    @for (product of productList.slice(0, 4); track product.Data.Item_ID){
-                    <div [routerLink]="['/p-thumnail', product.Data.Item_ID]" class="cursor-pointer">
+                    @for (product of TopSolddDetails; track product.Item_ID){
+                    <div [routerLink]="['/p-thumnail', product.Item_ID]" class="cursor-pointer">
 
                         <div class="flex my-6">
 
                             <div class="mx-2">
 
-                                <img [src]="'https://sm-ecommerce.runasp.net/' + product.Data.Image_Cover"
-                                    alt="{{ product.Data.Category_Name }}"
-                                    class="w-24 h-24 object-fill rounded-lg mb-3">
+                                <img [src]="'https://sm-ecommerce.runasp.net/' + product.Image_Cover"
+                                    alt="{{ product.Item_Name }}" class="w-24 h-24 object-fill rounded-lg mb-3">
                             </div>
                             <div>
-                                <p class="text-sm text-blue-700 font-semibold truncate mb-1">{{ product.Data.Item_Name
+                                <p class="text-sm text-blue-700 font-semibold truncate mb-1">{{ product.Item_Name
                                     }}
                                 <div class="my-1">
                                     <div class="flex items-center mt-2 space-x-1 text-yellow-400">
-                                        @for (num of [1,2,3,4,5].slice(0, product.Data.Rate); track $index) {
+                                        @for (num of [1,2,3,4,5].slice(0, product.Rate); track $index) {
                                         <i class="fa-solid fa-star text-sm"></i>
                                         }
-                                        @if (product.Data.Rate % 1 !== 0) {
+                                        @if (product.Rate % 1 !== 0) {
                                         <i class="fa-solid fa-star-half-stroke text-sm"></i>
                                         }
-                                        <span class="text-gray-500 text-xs ml-1">({{ product.Data.Rate }})</span>
+                                        <span class="text-gray-500 text-xs ml-1">({{ product.Rate }})</span>
                                     </div>
                                 </div>
-                                <p class="text-md font-bold text-gray-800">{{ product.Data.Price_out | currency: 'GBP'
+                                <!-- <p class="text-md font-bold text-gray-800">{{ product.Price_out | currency: 'GBP'
                                     }}
-                                </p>
+                                </p> -->
                             </div>
                         </div>
                     </div>
@@ -382,9 +381,9 @@
 
 
             <div class="Trending-p col-span-1  w-full">
-                <h1 class="font-bold text-xl">Trending products</h1>
+                <h1 class="font-bold text-xl text-green-800">Trending products</h1>
                 <div class=" my-6">
-                    @for (product of productList.slice(5, 9); track product.Data.Item_ID){
+                    @for (product of productList.slice(5, 11); track product.Data.Item_ID){
                     <div [routerLink]="['/p-thumnail', product.Data.Item_ID]" class="cursor-pointer">
 
                         <div class="flex my-6">
@@ -417,36 +416,35 @@
 
                 </div>
             </div>
-            <div class="Recently col-span-1  w-full">
-                <h1 class="font-bold text-xl">Recently added</h1>
+            <div class="MostView col-span-1  w-full">
+                <h1 class="font-bold text-xl text-green-800">Most View</h1>
                 <div class=" my-6">
-                    @for (product of productList.slice(0, 4 ); track product.Data.Item_ID){
-                    <div [routerLink]="['/p-thumnail', product.Data.Item_ID]" class="cursor-pointer">
-
+                    @for (product of TopMostviewedDetails ; track $index){
+                    <div [routerLink]="['/p-thumnail', ]" class="cursor-pointer">
+                        <!-- ^~ْْْ عايز هنا الid علشان اعرف اروح للمنتج   -->
                         <div class="flex my-6">
 
                             <div class="mx-2">
-                                <img [src]="'https://sm-ecommerce.runasp.net/' + product.Data.Image_Cover"
-                                    alt="{{ product.Data.Category_Name }}"
-                                    class="w-24 h-24 object-fill rounded-lg mb-3">
+                                <img [src]="'https://sm-ecommerce.runasp.net/' + product.Image_Cover"
+                                    alt="{{ product.Item_Name }}" class="w-24 h-24 object-fill rounded-lg mb-3">
                             </div>
                             <div>
-                                <p class="text-sm text-blue-700 font-semibold truncate mb-1">{{ product.Data.Item_Name
+                                <p class="text-sm text-blue-700 font-semibold truncate mb-1">{{ product.Item_Name
                                     }}
                                 <div class="my-1">
-                                    <div class="flex items-center mt-2 space-x-1 text-yellow-400">
-                                        @for (num of [1,2,3,4,5].slice(0, product.Data.Rate); track $index) {
+                                    <!-- <div class="flex items-center mt-2 space-x-1 text-yellow-400">
+                                        @for (num of [1,2,3,4,5].slice(0, product.Rate); track $index) {
                                         <i class="fa-solid fa-star text-sm"></i>
                                         }
-                                        @if (product.Data.Rate % 1 !== 0) {
+                                        @if (product.Rate % 1 !== 0) {
                                         <i class="fa-solid fa-star-half-stroke text-sm"></i>
                                         }
-                                        <span class="text-gray-500 text-xs ml-1">({{ product.Data.Rate }})</span>
-                                    </div>
+                                        <span class="text-gray-500 text-xs ml-1">({{ product.Rate }})</span>
+                                    </div> -->
                                 </div>
-                                <p class="text-md font-bold text-gray-800">{{ product.Data.Price_out | currency: 'GBP'
+                                <!-- <p class="text-md font-bold text-gray-800">{{ product.Price_out | currency: 'GBP'
                                     }}
-                                </p>
+                                </p> -->
                             </div>
                         </div>
                     </div>
@@ -457,32 +455,31 @@
 
 
             <div class="top-Rated col-span-1  w-full">
-                <h1 class="font-bold text-xl">Top Rated</h1>
+                <h1 class="font-bold text-xl text-green-800">Top Rated</h1>
                 <div class=" my-6">
-                    @for (product of productList.slice(6, 11 ); track product.Data.Item_ID){
-                    <div [routerLink]="['/p-thumnail', product.Data.Item_ID]" class="cursor-pointer">
+                    @for (product of TopRatedDetails.slice(0,6); track product.Item_ID){
+                    <div [routerLink]="['/p-thumnail', product.Item_ID]" class="cursor-pointer">
 
                         <div class="flex my-6">
                             <div class="mx-2">
-                                <img [src]="'https://sm-ecommerce.runasp.net/' + product.Data.Image_Cover"
-                                    alt="{{ product.Data.Category_Name }}"
-                                    class="w-24 h-24 object-fill rounded-lg mb-3">
+                                <img [src]="'https://sm-ecommerce.runasp.net/' + product.Image_Cover"
+                                    alt="{{ product.Item_Name }}" class="w-24 h-24 object-fill rounded-lg mb-3">
                             </div>
                             <div>
-                                <p class="text-sm text-blue-700 font-semibold truncate mb-1">{{ product.Data.Item_Name
+                                <p class="text-sm text-blue-700 font-semibold truncate mb-1">{{ product.Item_Name
                                     }}
                                 <div class="my-1">
                                     <div class="flex items-center mt-2 space-x-1 text-yellow-400">
-                                        @for (num of [1,2,3,4,5].slice(0, product.Data.Rate); track $index) {
+                                        @for (num of [1,2,3,4,5].slice(0, product.Rate); track $index) {
                                         <i class="fa-solid fa-star text-sm"></i>
                                         }
-                                        @if (product.Data.Rate % 1 !== 0) {
+                                        @if (product.Rate % 1 !== 0) {
                                         <i class="fa-solid fa-star-half-stroke text-sm"></i>
                                         }
-                                        <span class="text-gray-500 text-xs ml-1">({{ product.Data.Rate }})</span>
+                                        <span class="text-gray-500 text-xs ml-1">({{ product.Rate }})</span>
                                     </div>
                                 </div>
-                                <p class="text-md font-bold text-gray-800">{{ product.Data.Price_out | currency: 'GBP'
+                                <p class="text-md font-bold text-gray-800">{{ product.Price_out| currency: 'GBP'
                                     }}
                                 </p>
                             </div>

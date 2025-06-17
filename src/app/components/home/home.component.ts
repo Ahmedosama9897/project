@@ -28,10 +28,10 @@ export class HomeComponent implements OnDestroy, OnInit {
   private readonly _WishListService = inject(WishListService)
 
 
-  wishlistIds = new Set<string>();
 
 
-  userId: string = this._AuthService.userData.nameid; // أو ضع القيمة المناسبة
+
+  userId: string = '';
 
 
   productList: Iproduct[] = [];
@@ -46,48 +46,66 @@ export class HomeComponent implements OnDestroy, OnInit {
   datee = new Date();
 
 
+
+  showPopup: boolean = true;
+
   ngOnInit(): void {
 
+
+
+    setTimeout(() => {
+      this.showPopup = true;
+    }, 2000);
+
+    const storedUserId = localStorage.getItem('userID');
+
+    if (!storedUserId) {
+      console.warn('User ID not found in localStorage!');
+      return;
+    }
+
+    this.userId = storedUserId;
+
+    this.loadCategories();
+    this.loadCart();
+    this.loadProducts();
+  }
+
+
+  loadCategories(): void {
     this._CategoriesService.getAllCategories().subscribe({
       next: (res) => {
-        console.log(res);
-        this.categoriesList = res; //res.data
+        this.categoriesList = res;
       },
       error: (err) => {
         console.log(err);
-
       }
-    })
+    });
+  }
 
-
+  loadCart(): void {
     this._CartService.getProductCart(this.userId).subscribe({
       next: (res) => {
         console.log("cart", res);
-
-        // this.cartDetails = res.data
-
       },
       error: (err) => {
         console.log(err);
-
       }
-    })
+    });
+  }
 
-
-
-
+  loadProducts(): void {
     this.getAllproductSub = this._ProductsService.getAllProducts(40).subscribe({
       next: (res) => {
-        console.log('عدد المنتجات:', res.products.length); // 👈 شوف دي تطبع إيه
+        console.log('عدد المنتجات:', res.products.length);
         this.productList = res.products;
       },
       error: (err) => {
         console.log(err);
       }
     });
-
-
   }
+
 
 
   customOptionsMain: OwlOptions = {
@@ -104,6 +122,8 @@ export class HomeComponent implements OnDestroy, OnInit {
 
     nav: true
   }
+
+
 
 
 
@@ -148,31 +168,27 @@ export class HomeComponent implements OnDestroy, OnInit {
 
 
 
+  cartLoading = new Set<string>();
+  cartIds = new Set<string>(); // لو بتحفظ المنتجات اللي اتضافت للسلة مؤقتًا في الواجهة
 
+  addToCart(userId: string, itemid: string): void {
+    if (this.cartLoading.has(itemid)) return;
 
+    this.cartLoading.add(itemid);
 
-  addCart(buyerId: string, itemId: string, quantity: number): void {
-    console.log(buyerId);
-    console.log(itemId);
-    console.log(quantity);
-
-    this._CartService.addProductToCart(buyerId, itemId, quantity).subscribe({
+    this._CartService.addProductToCart(userId, itemid, 1).subscribe({
       next: (res) => {
-        console.log('✅ Response from API:', res);
-        this._ToastrService.success(' Add to Cart 🛒 ', 'Inspire')
-
-        // if (res && typeof res === 'number') {
-        //   this._CartService.cartNumber.set(res);
-        //   console.log('🛒 عدد المنتجات في السلة الآن:', this._CartService.cartNumber());
-        // } else {
-        //   console.log('⚠️ `cartCount` غير موجود في الـ API Response، تحقق من الاستجابة!');
-        // }
+        this._ToastrService.success('Added to cart', res.messageToUser);
+        this.cartIds.add(itemid); // علامة على الإضافة
+        this.cartLoading.delete(itemid);
       },
       error: (err) => {
-        console.error('❌ خطأ أثناء إضافة المنتج إلى السلة:', err);
+        this._ToastrService.error('Failed to add to cart');
+        this.cartLoading.delete(itemid);
       }
     });
   }
+
 
 
 
@@ -200,36 +216,33 @@ export class HomeComponent implements OnDestroy, OnInit {
   // productTrackBy(index: number, product: Iproduct): string {
   //   return product.Data.Item_ID;
   // }
-
-
-
+  wishlistIds = new Set<string>();
+  wishlistLoading = new Set<string>();
 
   addWish(id: string, itemid: string): void {
+    if (this.wishlistIds.has(itemid)) {
+      this._ToastrService.info('This item is already in your wishlist.');
+      return;
+    }
 
-    // if (this.wishlistIds.has(itemid)) {
-    //   this._ToastrService.info('This product is already in your wishlist');
-    //   return;
-    // }
+    if (this.wishlistLoading.has(itemid)) return;
 
-
-    console.log('✅ Product added to wishlist:', id, itemid);
+    this.wishlistLoading.add(itemid);
 
     this._WishListService.addProductToWish(id, itemid).subscribe({
       next: (res) => {
         this._ToastrService.success('Added to wishlist', res.messageToUser);
-        // this.wishlistIds.add(itemid); // ✅ مهم تضيفه هنا
+        this.wishlistIds.add(itemid);
+        this.wishlistLoading.delete(itemid);
       },
       error: (err) => {
         console.error('❌ Error:', err);
-        if (err.status === 500) {
-          this._ToastrService.error('Internal server error: please try again later.');
-        } else if (err.status === 404) {
-          this._ToastrService.warning('Product not found.');
-        } else {
-          this._ToastrService.error('Failed to add product to wishlist.');
-        }
+        this._ToastrService.info('This item is already in your wishlist.');
+        this.wishlistLoading.delete(itemid);
       }
     });
+
+
 
 
   }
@@ -248,9 +261,6 @@ export class HomeComponent implements OnDestroy, OnInit {
   }
 
 
-  getCleanItemId(rawId: string): string {
-    return rawId.includes('-') ? rawId.split('-')[1] : rawId;
-  }
 
 
 

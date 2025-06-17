@@ -5,12 +5,13 @@ import { Component, OnInit, ViewChild, ElementRef, ViewEncapsulation } from '@an
 import { Icategories } from '../../core/interfaces/icategories';
 import { CarouselModule, OwlOptions } from 'ngx-owl-carousel-o';
 import { FormsModule } from '@angular/forms';
+import { RouterLink } from '@angular/router';
 // import { ChatbotService } from './chatbot.service';
 @Component({
   selector: 'app-chatbot',
   templateUrl: './chatbot.component.html',
   styleUrls: ['./chatbot.component.css'],
-  imports: [NgIf, NgFor, CarouselModule, FormsModule],
+  imports: [NgIf, NgFor, CarouselModule, FormsModule, RouterLink],
   standalone: true,
   encapsulation: ViewEncapsulation.None
 })
@@ -21,7 +22,25 @@ export class ChatbotComponent implements OnInit {
   isTyping = false;
   categoriesList: Icategories[] = [];
 
+  @ViewChild('scrollContainer', { static: false }) scrollContainer: ElementRef | undefined;
 
+  scrollLeft() {
+    this.scrollContainer?.nativeElement.scrollBy({ left: -300, behavior: 'smooth' });
+  }
+
+  scrollRight() {
+    this.scrollContainer?.nativeElement.scrollBy({ left: 300, behavior: 'smooth' });
+  }
+
+  selectedProduct: Recommendeditem | null = null;
+
+  openPopup(item: Recommendeditem) {
+    this.selectedProduct = item;
+  }
+
+  closePopup() {
+    this.selectedProduct = null;
+  }
 
 
   customOptionsCat: OwlOptions = {

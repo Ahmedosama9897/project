@@ -30,25 +30,29 @@ export class CartComponent implements OnInit {
 
   cartDetails: Icart[] = []; // ✅ Array
 
-  userId: string = this._AuthService.userData.nameid; // أو ضع القيمة المناسبة
-
+  userId: string = '';
 
   ngOnInit(): void {
+    const storedUserId = localStorage.getItem('userID');
+
+    if (!storedUserId) {
+      console.warn('User ID not found in localStorage!');
+      return;
+    }
+
+    this.userId = storedUserId;
 
     this._CartService.getProductCart(this.userId).subscribe({
       next: (res) => {
         console.log("cart", res);
-        this.cartDetails = res
-
+        this.cartDetails = res;
       },
       error: (err) => {
         console.log(err);
-
       }
-    })
-
-
+    });
   }
+
 
 
 

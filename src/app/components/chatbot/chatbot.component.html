@@ -10,31 +10,49 @@
 
     <div class="chat-messages" #messageContainer>
         <div [innerHTML]="renderMessages()"></div>
+        <!-- منتجات موصى بها -->
+        <div *ngIf="recommendedItems.length > 0" class="recommended-scroll-wrapper">
+            <button class="scroll-btn left" (click)="scrollLeft()">←</button>
 
-
-        <!-- سلايدر المنتجات الموصى بها -->
-        <div *ngIf="recommendedItems.length > 0">
-            <owl-carousel-o [options]="customOptionsCat">
-                <ng-template carouselSlide *ngFor="let item of recommendedItems">
-                    <div class="recommended-container">
-                        <div class="product-card">
-                            <div *ngIf="item.Discount" class="discount-badge">-{{item.Discount}}%</div>
-                            <img [src]="item.Image_Cover" alt="{{item.Item_Name}}" class="product-image" />
-                            <div class="product-details">
-                                <h4>{{ item.Item_Name }}</h4>
-                                <p>{{ item.Description.split(' ', 2).join(' ') }}</p>
-                                <div class="price-discount">
-                                    <span class="price">${{ item.Price_out }}</span>
-                                </div>
-                                <div class="sold-rate">
-                                    <span>🔥 {{ item.Sold_Count }} sold</span>
-                                    <span class="stars">⭐ {{ item.Rate }}</span>
-                                </div>
-                            </div>
+            <div class="recommended-scroll" #scrollContainer>
+                <div class="product-card" *ngFor="let item of recommendedItems" (click)="openPopup(item)">
+                    <!-- <div *ngIf="item.Discount" class="discount-badge">-{{ item.Discount }}%</div> -->
+                    <img [src]="'https://sm-ecommerce.runasp.net/' + item.Image_Cover" alt="{{ item.Item_Name }}"
+                        class="product-image" />
+                    <div class="product-details">
+                        <h4>{{ item.Item_Name }}</h4>
+                        <p>{{ item.Description.split(' ', 2).join(' ') }}</p>
+                        <div class="price-discount">
+                            <span class="price">${{ item.Price_out }}</span>
+                        </div>
+                        <div class="sold-rate">
+                            <span>🔥 {{ item.Sold_Count }} sold</span>
+                            <span class="stars">⭐ {{ item.Rate }}</span>
                         </div>
                     </div>
-                </ng-template>
-            </owl-carousel-o>
+                </div>
+            </div>
+
+            <button class="scroll-btn right" (click)="scrollRight()">→</button>
+        </div>
+
+        <!-- Popup تفاصيل المنتج -->
+        <div *ngIf="selectedProduct" class="product-popup-backdrop" (click)="closePopup()">
+            <div class="product-popup" (click)="$event.stopPropagation()">
+                <h3>{{ selectedProduct.Item_Name }}</h3>
+                <p style="font-weight: bold;">{{ selectedProduct.Description }}</p>
+
+                <img [src]="'https://sm-ecommerce.runasp.net/' + selectedProduct.Image_Cover"
+                    alt="{{ selectedProduct.Item_Name }}" style="width: 100%; border-radius: 8px; margin: 12px 0;" />
+                <p>{{ selectedProduct.Description }}</p>
+                <p><strong>Price:</strong> ${{ selectedProduct.Price_out }}</p>
+                <p><strong>Sold:</strong> {{ selectedProduct.Sold_Count }}</p>
+                <p><strong>Rate:</strong> ⭐ {{ selectedProduct.Rate }}</p>
+                <button (click)="closePopup()"
+                    style="margin-top: 12px; padding: 8px 16px; background-color: #dc3545; color: white; border: none; border-radius: 6px; cursor: pointer;">
+                    Close
+                </button>
+            </div>
         </div>
 
 

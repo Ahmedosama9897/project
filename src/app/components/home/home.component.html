@@ -76,10 +76,11 @@
                     <div
                         class="group bg-white rounded-xl shadow-md p-4 hover:shadow-lg transition-all duration-300 flex flex-col justify-between relative overflow-hidden">
 
-                        <!-- Badge الخصم -->
+
                         <div *ngIf="product.Data.Discount"
                             class="absolute top-2 left-2 bg-red-600 text-white text-xs font-bold px-2 py-1 rounded">
-                            -{{ product.Data.Discount }}
+                            <span>sale</span>
+
                             <!-- طرح من ال price out -->
                         </div>
 
@@ -91,13 +92,19 @@
 
                         <!-- محتوى المنتج -->
                         <div [routerLink]="['/p-thumnail', product.Data.Item_ID]" class="cursor-pointer">
+
                             <img [src]="'https://sm-ecommerce.runasp.net/' + product.Data.Image_Cover"
                                 alt="{{ product.Data.Category_Name }}"
                                 class="w-full h-48 object-fill rounded-lg mb-3" />
 
                             <p class="text-sm text-blue-700 font-semibold truncate mb-1">{{ product.Data.Item_Name }}
                             </p>
-                            <p class="text-md font-bold text-gray-800">{{ product.Data.Price_out | currency: 'GBP' }}
+                            <p class="text-md font-bold text-gray-800">{{ product.Data.Price_out -
+                                product.Data.Discount | currency: 'GBP' }}
+                                <span class="line-through price-old">{{ product.Data.Price_out| currency: 'GBP' }}
+                                </span>
+                                <!-- <span class="line-through price-old">{{ item.Price }} EGP</span><br /> -->
+                                <!-- <span class="price-new">{{ item.Price_After_Sale }} EGP</span> -->
                             </p>
                             <p class="text-sm text-green-600 font-medium">In Stock: {{ product.Data.Quantity }}</p>
 
@@ -116,24 +123,51 @@
                         <!-- الأزرار -->
                         <div
                             class="absolute bottom-0 left-0 w-full bg-white px-4 py-3 flex justify-between items-center space-x-2 opacity-0 translate-y-full group-hover:opacity-100 group-hover:translate-y-0 transition-all duration-300 rounded-b-xl border-t">
-                            <button type="button" title="Add this product to your cart"
-                                class="flex-1 text-green-700 border border-green-700 hover:bg-green-700 hover:text-white font-medium rounded-md text-sm px-4 py-2 transition"
-                                (click)="addCart(userId, product.Data.Item_ID, 1)">
-                                Add To Cart
+                            <button type="button"
+                                class="relative flex items-center justify-center w-10 h-10 rounded-full transition-all duration-300 group hover:bg-green-600 hover:text-white"
+                                (click)="addToCart(userId, product.Data.Item_ID)"
+                                [disabled]="cartLoading.has(product.Data.Item_ID)" [attr.title]="cartLoading.has(product.Data.Item_ID)? 'Adding to cart...': cartIds.has(product.Data.Item_ID)? 
+                                'Already in cart': 'Add to cart'"
+                                [style.backgroundColor]="cartIds.has(product.Data.Item_ID) ? '#bbf7d0' : '#e5e7eb'"
+                                [style.color]="cartIds.has(product.Data.Item_ID) ? '#15803d' : '#22c55e' ">
+
+                                <!-- حالة التحميل -->
+                                <i *ngIf="cartLoading.has(product.Data.Item_ID)"
+                                    class="fas fa-spinner fa-spin text-green-600 group-hover:text-white transition-colors duration-300"></i>
+
+                                <!-- المنتج موجود في السلة -->
+                                <i *ngIf="!cartLoading.has(product.Data.Item_ID) && cartIds.has(product.Data.Item_ID)"
+                                    class="fa-solid fa-cart-shopping animate-ping-once"></i>
+
+                                <!-- المنتج مش في السلة -->
+                                <i *ngIf="!cartLoading.has(product.Data.Item_ID) && !cartIds.has(product.Data.Item_ID)"
+                                    class="fa-solid fa-cart-plus group-hover:text-white transition-colors duration-300"></i>
+
+                            </button>
+
+                            <button type="button"
+                                class="relative flex items-center justify-center w-10 h-10 rounded-full transition-all duration-300 group hover:bg-red-500 hover:text-white"
+                                (click)="addWish(userId, product.Data.Item_ID)"
+                                [disabled]="wishlistLoading.has(product.Data.Item_ID)" [attr.title]=" wishlistLoading.has(product.Data.Item_ID)  ? 'Adding...': wishlistIds.has(product.Data.Item_ID)
+                                    ? 'Added to Wishlist ' : 'Add to Wishlist'"
+                                [style.backgroundColor]="wishlistIds.has(product.Data.Item_ID) ? '#fee2e2' : '#e5e7eb'"
+                                [style.color]=" wishlistIds.has(product.Data.Item_ID) ? '#dc2626' : '#ef4444'">
+
+                                <!-- Spinner أثناء التحميل -->
+                                <i *ngIf="wishlistLoading.has(product.Data.Item_ID)"
+                                    class="fas fa-spinner fa-spin text-red-500 group-hover:text-white transition-colors duration-300"></i>
+
+                                <!-- المنتج في المفضلة -->
+                                <i *ngIf="!wishlistLoading.has(product.Data.Item_ID) && wishlistIds.has(product.Data.Item_ID)"
+                                    class="fa-solid fa-heart text-red-600 animate-ping-once"></i>
+
+                                <!-- المنتج مش في المفضلة -->
+                                <i *ngIf="!wishlistLoading.has(product.Data.Item_ID) && !wishlistIds.has(product.Data.Item_ID)"
+                                    class="fa-regular fa-heart text-red-500 group-hover:text-white transition-colors duration-300"></i>
+
                             </button>
 
 
-
-
-                            <button type="button" title="Add to Wishlist"
-                                class="text-red-600 border border-red-600 hover:bg-red-600 hover:text-white font-medium rounded-md text-sm px-3 py-2 transition"
-                                (click)="addWish(userId , product.Data.Item_ID)">
-                                <i class="fa-heart fa-lg"
-                                    [class.fa-solid]="wishlistIds.has(getCleanItemId(product.Data.Item_ID))"
-                                    [class.fa-regular]="!wishlistIds.has(getCleanItemId(product.Data.Item_ID))">
-                                </i>
-
-                            </button>
 
 
 
@@ -324,4 +358,17 @@
             </div>
         </div>
     </section>
+
+    <!-- ===== Popup Modal ===== -->
+    <!-- <div class="custom-popup" *ngIf="showPopup">
+        <div class="custom-popup-content">
+            <h2>Special Offer!</h2>
+            <p>Enjoy 20% off your first order. Use code: <strong>WELCOME20</strong></p>
+
+            <img src="../../../assets/images/farag.jpg" alt="">
+
+            <button class="popup-btn" (click)="showPopup = false">Got it</button>
+        </div>
+    </div> -->
+
 </div>
