@@ -21,7 +21,7 @@
         <!-- صورة المنتج -->
         <div class="col-span-1">
             <img [attr.src]="'http://sm-ecommerce.runasp.net/' + item.Image_Cover"
-                class="w-full rounded-xl shadow-md transition-transform hover:scale-105 duration-300"
+                class="w-1/2 rounded-xl shadow-md transition-transform hover:scale-105 duration-300"
                 [alt]="item.Item_Name" />
         </div>
 
@@ -39,7 +39,7 @@
                     </button>
 
                     <!-- زر المقارنة -->
-                    <button (click)="Addtocomparison(item.Item_Name, item.Item_ID)"
+                    <button (click)="Addtocomparison( item.Item_ID , userId )"
                         class="text-blue-600 border border-blue-600 hover:bg-blue-600 hover:text-white px-3 py-1 rounded transition-all duration-300 text-sm font-medium">
                         <i class="fa-solid fa-arrow-right-arrow-left mr-1"></i> Add to Compare
                     </button>

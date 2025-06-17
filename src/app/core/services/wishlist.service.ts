@@ -33,18 +33,27 @@ export class WishListService {
   }
 
 
-  userwishList: string[] = []
+  userwishList: string[] = [];
+
   addProductToWish(id: string, itemid: string): Observable<any> {
     const token = localStorage.getItem('userToken');
+    console.log('📦 Token being sent:', token); // للتأكد مؤقتًا
+
     const headers = new HttpHeaders({
       'Authorization': `Bearer ${token}`
     });
 
     return this._HttpClient.post(
-      `${environment.baseUrl}Wishlist/AddProduct?BuyerId=${id}&ItemId=${itemid}`,
-      { headers }
+      `${environment.baseUrl}Wishlist/AddProduct?BuyerId=${id}&ItemId=${itemid}`, {},
+      // 🟢 Body فاضي
+      {
+        headers,
+        responseType: 'text' as 'json' // 👈
+
+      } // 🟢 Headers في المكان الصحيح
     );
   }
+
 
 
 
@@ -66,8 +75,16 @@ export class WishListService {
   }
 
 
-  deleteSpecificWishItem(id: string): Observable<any> {
-    return this._HttpClient.delete(`${environment.baseUrl}/api/v1/wishlist/${id}`,
+  deleteSpecificWishItem(id: string, itemId: string): Observable<any> {
+    const token = localStorage.getItem('userToken');
+
+    const headers = new HttpHeaders({
+      'Authorization': `Bearer ${token}`
+    });
+    return this._HttpClient.delete(`${environment.baseUrl}Wishlist/RemoveProduct?BuyerId=${id}&ItemId=${itemId}`,
+      {
+        headers
+      }
 
     )
   }

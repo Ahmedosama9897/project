@@ -8,13 +8,22 @@ import { WishListService } from '../../core/services/wishlist.service';
 import { AuthService } from '../../core/services/auth.service';
 import { Iproduct } from '../../core/interfaces/iproduct';
 import { Icart } from '../../core/interfaces/icart';
+import { animate, style, transition, trigger } from '@angular/animations';
 
 @Component({
   selector: 'app-wishlist',
   standalone: true,
   imports: [],
   templateUrl: './wishlist.component.html',
-  styleUrl: './wishlist.component.css'
+  styleUrl: './wishlist.component.css',
+  animations: [
+    trigger('fadeSlide', [
+      transition(':enter', [
+        style({ opacity: 0, transform: 'translateY(30px)' }),
+        animate('400ms ease-out', style({ opacity: 1, transform: 'translateY(0)' }))
+      ])
+    ])
+  ]
 })
 export class WishlistComponent implements OnInit {
 
@@ -22,24 +31,33 @@ export class WishlistComponent implements OnInit {
   private readonly _WishListService = inject(WishListService);
 
   private readonly _AuthService = inject(AuthService);
-
+  private readonly _ToastrService = inject(ToastrService)
   // cartDetails: Icart = {} as Icart;
+
 
 
   cartDetails: Icart[] = []; // ✅ Array
   wishDetails: Iwish[] = [] // ✅ Array
 
 
-  userId: string = this._AuthService.userData.nameid; // أو ضع القيمة المناسبة
+  userId: string = '';
+
 
 
   ngOnInit(): void {
+    const storedUserId = localStorage.getItem('userID');
+
+    if (!storedUserId) {
+      console.warn('User ID not found in localStorage!');
+      return;
+    }
+
+    this.userId = storedUserId;
+
     this._WishListService.getProductWish(this.userId).subscribe({
       next: (res) => {
         console.log("wish", res);
-        this.wishDetails = res;
-
-        // ✅ تحديث العدد
+        this.wishDetails = res.data;
         this._WishListService.WishNumber.set(res.length);
       },
       error: (err) => {
@@ -53,18 +71,20 @@ export class WishlistComponent implements OnInit {
 
 
 
-  removeItem(id: string, itemId: string): void {
-    this._CartService.deleteSpecificCatrItem(id, itemId).subscribe({
-      next: (res) => {
-        console.log(res);
-        this.cartDetails = res.value;
-        // this._CartService.cartNumber.set(res.numOfCartItems);
+  removeWish(id: string, itemId: string): void {
+    this._WishListService.deleteSpecificWishItem(id, itemId).subscribe({
+      next: () => {
+        this.wishDetails = this.wishDetails.filter(item => item.Item_ID !== itemId);
+        this._WishListService.WishNumber.set(this.wishDetails.length);
+        this._ToastrService.success('Item removed from wishlist');
       },
       error: (err) => {
-        console.log(err);
+        console.error(err);
+        this._ToastrService.error('Failed to remove item');
       }
     });
   }
+
   UpdateCount(id: string, itemId: string, quantity: number): void {
     // تحقق من إذا كانت الكمية أكبر من 0 قبل إرسال الطلب
     if (quantity <= 0) {
@@ -124,4 +144,8 @@ export class WishlistComponent implements OnInit {
       }
     });
   }
+
+
+
+
 }

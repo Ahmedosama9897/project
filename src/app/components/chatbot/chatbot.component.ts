@@ -2,12 +2,16 @@ import { NgFor, NgIf } from '@angular/common';
 import { Recommendeditem } from '../../core/interfaces/recommendeditem';
 import { ChatbotService } from './../../core/services/chatbot.service';
 import { Component, OnInit, ViewChild, ElementRef, ViewEncapsulation } from '@angular/core';
+import { Icategories } from '../../core/interfaces/icategories';
+import { CarouselModule, OwlOptions } from 'ngx-owl-carousel-o';
+import { FormsModule } from '@angular/forms';
+import { RouterLink } from '@angular/router';
 // import { ChatbotService } from './chatbot.service';
 @Component({
   selector: 'app-chatbot',
   templateUrl: './chatbot.component.html',
   styleUrls: ['./chatbot.component.css'],
-  imports: [NgIf, NgFor],
+  imports: [NgIf, NgFor, CarouselModule, FormsModule, RouterLink],
   standalone: true,
   encapsulation: ViewEncapsulation.None
 })
@@ -16,8 +20,59 @@ export class ChatbotComponent implements OnInit {
   newMessage = '';
   messages: { sender: string, text: string }[] = [];
   isTyping = false;
+  categoriesList: Icategories[] = [];
+
+  @ViewChild('scrollContainer', { static: false }) scrollContainer: ElementRef | undefined;
+
+  scrollLeft() {
+    this.scrollContainer?.nativeElement.scrollBy({ left: -300, behavior: 'smooth' });
+  }
+
+  scrollRight() {
+    this.scrollContainer?.nativeElement.scrollBy({ left: 300, behavior: 'smooth' });
+  }
+
+  selectedProduct: Recommendeditem | null = null;
+
+  openPopup(item: Recommendeditem) {
+    this.selectedProduct = item;
+  }
+
+  closePopup() {
+    this.selectedProduct = null;
+  }
+
+
+  customOptionsCat: OwlOptions = {
+    loop: true,
+    mouseDrag: true,
+    touchDrag: true,
+    pullDrag: true,
+    autoplay: false,
+    dots: true,
+    navSpeed: 600,
+    margin: 10,
+    responsive: {
+      0: {
+        items: 1
+      },
+      500: {
+        items: 2
+      },
+      768: {
+        items: 3
+      },
+      1024: {
+        items: 4
+      }
+    },
+    nav: false
+  };
+
 
   @ViewChild('messageContainer', { static: false }) messageContainer: any;
+
+
 
   constructor(private ChatbotService: ChatbotService) { }
   recommendedItems: Recommendeditem[] = [];
@@ -74,6 +129,9 @@ export class ChatbotComponent implements OnInit {
       }, 2000);
     }
   }
+
+
+
 
   updateLocalStorage() {
     localStorage.setItem('chatMessages', JSON.stringify(this.messages));

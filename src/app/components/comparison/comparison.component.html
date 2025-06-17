@@ -1,46 +1,71 @@
-<!-- comparison.component.html -->
-<div class="products">
-    <div class="product">
-        <h3>{{ product1.name }}</h3>
-        <button (click)="addToComparison(product1)">أضف للمقارنة</button>
+<div class="p-4 space-y-6 fade-in">
+    <!-- Tabs -->
+    <div class="flex justify-center gap-4 mb-6">
+        <button (click)="selectedTab = 'phones'" [class.active-tab]="selectedTab === 'phones'"
+            class="tab-btn">Phones</button>
+        <button (click)="selectedTab = 'laptops'" [class.active-tab]="selectedTab === 'laptops'"
+            class="tab-btn">Laptops</button>
+        <button (click)="selectedTab = 'pcs'" [class.active-tab]="selectedTab === 'pcs'" class="tab-btn">PCs</button>
     </div>
-    <div class="product">
-        <h3>{{ product2.name }}</h3>
-        <button (click)="addToComparison(product2)">أضف للمقارنة</button>
-    </div>
-    <div class="product">
-        <h3>{{ product3.name }}</h3>
-        <button (click)="addToComparison(product3)">أضف للمقارنة</button>
-    </div>
-</div>
 
-<!-- صفحة المقارنة -->
-<div *ngIf="comparisonProducts.length > 0">
-    <h2>مقارنة المنتجات</h2>
-    <table>
-        <thead>
-            <tr>
-                <th>المنتج</th>
-                <th>السعر</th>
-                <th>الوصف</th>
-            </tr>
-        </thead>
-        <tbody>
-            <tr>
-                <td>{{ comparisonProducts[0].name }}</td>
-                <td>{{ comparisonProducts[0].price }}</td>
-                <td>{{ comparisonProducts[0].description }}</td>
-            </tr>
-            <tr *ngIf="comparisonProducts[1]">
-                <td>{{ comparisonProducts[1].name }}</td>
-                <td>{{ comparisonProducts[1].price }}</td>
-                <td>{{ comparisonProducts[1].description }}</td>
-            </tr>
-            <tr *ngIf="comparisonProducts[2]">
-                <td>{{ comparisonProducts[2].name }}</td>
-                <td>{{ comparisonProducts[2].price }}</td>
-                <td>{{ comparisonProducts[2].description }}</td>
-            </tr>
-        </tbody>
-    </table>
+    <!-- Clear All -->
+    <div *ngIf="selectedTabData().length > 0" class="text-center mb-4">
+        <button (click)="clearAll()" class="clear-btn">
+            Clear All
+        </button>
+    </div>
+
+    <!-- Comparison Table -->
+    <div class="overflow-x-auto">
+        <div *ngIf="selectedTabData().length > 0" class="min-w-full overflow-x-auto">
+            <table class="comparison-table">
+                <thead>
+                    <tr>
+                        <th class="feature-col">Feature</th>
+                        <th *ngFor="let item of selectedTabData()" class="product-col fade-in">
+                            <div class="product-card">
+                                <img [src]="'https://sm-ecommerce.runasp.net/' + item.Image_Cover"
+                                    class="product-image" />
+                                <div class="product-name">{{ item.Item_Name }}</div>
+                                <button (click)="removeItem(item.Item_ID)" class="remove-btn">Remove</button>
+
+                                <button (click)="addCart(userId, item.Item_ID , 1)" class="add-btn">
+                                    Add to Cart
+                                </button>
+                            </div>
+                        </th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td class="feature">CPU</td>
+                        <td *ngFor="let item of selectedTabData()" class="value">{{ item.CPU }}</td>
+                    </tr>
+                    <tr>
+                        <td class="feature">RAM</td>
+                        <td *ngFor="let item of selectedTabData()" class="value">{{ item.RAM }} GB</td>
+                    </tr>
+                    <tr *ngIf="selectedTab !== 'phones'">
+                        <td class="feature">Graphics</td>
+                        <td *ngFor="let item of selectedTabData()" class="value">{{ item.Graphics_Card || '—' }}</td>
+                    </tr>
+                    <tr *ngIf="selectedTab === 'phones'">
+                        <td class="feature">Storage</td>
+                        <td *ngFor="let item of selectedTabData()" class="value">{{ item.Memory }} GB</td>
+                    </tr>
+                    <tr>
+                        <td class="feature">Price</td>
+                        <td *ngFor="let item of selectedTabData()" class="value">
+                            <span class="line-through price-old">{{ item.Price }} EGP</span><br />
+                            <span class="price-new">{{ item.Price_After_Sale }} EGP</span>
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+
+        <div *ngIf="selectedTabData().length === 0" class="text-center text-gray-500 mt-6">
+            No products to compare in this category.
+        </div>
+    </div>
 </div>

@@ -26,8 +26,10 @@
     "flowbite": "^2.5.2",
     "jwt-decode": "^4.0.0",
     "ngx-owl-carousel-o": "^17.0.0",
+    "ngx-swiper-wrapper": "^10.0.0",
     "ngx-toastr": "^19.0.0",
     "rxjs": "~7.8.0",
+    "swiper": "^11.2.8",
     "tslib": "^2.3.0",
     "zone.js": "~0.14.3"
   },

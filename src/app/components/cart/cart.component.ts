@@ -2,8 +2,10 @@ import { Component, inject, OnInit } from '@angular/core';
 import { CartService } from '../../core/services/cart.service';
 import { Icart } from '../../core/interfaces/icart';
 import { CurrencyPipe, NgIf } from '@angular/common';
-import { RouterLink } from '@angular/router';
 import { AuthService } from '../../core/services/auth.service';
+import { CompareService } from '../../core/services/compare.service';
+import { ComparisonService } from '../../core/services/comparison.service';
+import { ToastrService } from 'ngx-toastr';
 
 @Component({
   selector: 'app-cart',
@@ -16,6 +18,8 @@ export class CartComponent implements OnInit {
 
   private readonly _CartService = inject(CartService);
   private readonly _AuthService = inject(AuthService);
+  private readonly _ComparisonService = inject(ComparisonService);
+  private readonly _ToastrService = inject(ToastrService);
 
   // cartDetails: Icart = {} as Icart;
 
@@ -26,25 +30,29 @@ export class CartComponent implements OnInit {
 
   cartDetails: Icart[] = []; // ✅ Array
 
-  userId: string = this._AuthService.userData.nameid; // أو ضع القيمة المناسبة
-
+  userId: string = '';
 
   ngOnInit(): void {
+    const storedUserId = localStorage.getItem('userID');
+
+    if (!storedUserId) {
+      console.warn('User ID not found in localStorage!');
+      return;
+    }
+
+    this.userId = storedUserId;
 
     this._CartService.getProductCart(this.userId).subscribe({
       next: (res) => {
         console.log("cart", res);
-        this.cartDetails = res
-
+        this.cartDetails = res;
       },
       error: (err) => {
         console.log(err);
-
       }
-    })
-
-
+    });
   }
+
 
 
 
@@ -122,23 +130,19 @@ export class CartComponent implements OnInit {
     });
   }
 
+  Addtocomparison(itemId: string, buyerId: string): void {
 
-  // cart.component.ts
+    console.log('✅ Product added to comparison:', buyerId, itemId);
 
+    this._ComparisonService.Addtocomparison(itemId, buyerId).subscribe({
+      next: (res) => {
+        console.log('🟢 Server response:', res)
+        this._ToastrService.success('added to compare')
 
-  // قائمة العناصر
-  cartItems = [
-    { Item_ID: 1, name: 'منتج 1', Price_out: '100 جنيه', Image_Cover: 'product1.jpg' },
-    { Item_ID: 2, name: 'منتج 2', Price_out: '200 جنيه', Image_Cover: 'product2.jpg' },
-    { Item_ID: 3, name: 'منتج 3', Price_out: '300 جنيه', Image_Cover: 'product3.jpg' }
-  ];
-
-
-
-  // دالة لإضافة المنتج إلى المقارنة
-  Addtocomparison(ItemId: string, buyerid: string) {
-    console.log('تم إضافة المنتج للمقارنة:', ItemId, buyerid);
-    // منطق إضافة المنتج للمقارنة هنا
+      },
+      error: (err) => console.error('❌ Failed to add to comparison:', err)
+    });
   }
+
 }
 

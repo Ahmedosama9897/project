@@ -1,4 +1,4 @@
-import { CurrencyPipe } from '@angular/common';
+import { CurrencyPipe, NgIf } from '@angular/common';
 import { Component, inject, OnDestroy, OnInit } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { CarouselModule, OwlOptions } from 'ngx-owl-carousel-o';
@@ -15,7 +15,7 @@ import { WishListService } from '../../core/services/wishlist.service';
 @Component({
   selector: 'app-home',
   standalone: true,
-  imports: [CarouselModule, FormsModule, CurrencyPipe, RouterLink],
+  imports: [CarouselModule, FormsModule, CurrencyPipe, RouterLink, NgIf],
   templateUrl: './home.component.html',
   styleUrl: './home.component.css'
 })
@@ -28,7 +28,10 @@ export class HomeComponent implements OnDestroy, OnInit {
   private readonly _WishListService = inject(WishListService)
 
 
-  userId: string = this._AuthService.userData.nameid; // أو ضع القيمة المناسبة
+
+
+
+  userId: string = '';
 
 
   productList: Iproduct[] = [];
@@ -43,47 +46,66 @@ export class HomeComponent implements OnDestroy, OnInit {
   datee = new Date();
 
 
+
+  showPopup: boolean = true;
+
   ngOnInit(): void {
+
+
+
+    setTimeout(() => {
+      this.showPopup = true;
+    }, 2000);
+
+    const storedUserId = localStorage.getItem('userID');
+
+    if (!storedUserId) {
+      console.warn('User ID not found in localStorage!');
+      return;
+    }
+
+    this.userId = storedUserId;
+
+    this.loadCategories();
+    this.loadCart();
+    this.loadProducts();
+  }
+
+
+  loadCategories(): void {
     this._CategoriesService.getAllCategories().subscribe({
       next: (res) => {
-        console.log(res);
-        this.categoriesList = res; //res.data
+        this.categoriesList = res;
       },
       error: (err) => {
         console.log(err);
-
       }
-    })
+    });
+  }
 
-
+  loadCart(): void {
     this._CartService.getProductCart(this.userId).subscribe({
       next: (res) => {
         console.log("cart", res);
-
-        // this.cartDetails = res.data
-
       },
       error: (err) => {
         console.log(err);
-
       }
-    })
+    });
+  }
 
-
-
-    this.getAllproductSub = this._ProductsService.getAllProducts().subscribe({
+  loadProducts(): void {
+    this.getAllproductSub = this._ProductsService.getAllProducts(40).subscribe({
       next: (res) => {
-        console.log("Data received:", res.products);
-
+        console.log('عدد المنتجات:', res.products.length);
         this.productList = res.products;
       },
       error: (err) => {
         console.log(err);
-
       }
-    })
-
+    });
   }
+
 
 
   customOptionsMain: OwlOptions = {
@@ -100,6 +122,8 @@ export class HomeComponent implements OnDestroy, OnInit {
 
     nav: true
   }
+
+
 
 
 
@@ -144,31 +168,27 @@ export class HomeComponent implements OnDestroy, OnInit {
 
 
 
+  cartLoading = new Set<string>();
+  cartIds = new Set<string>(); // لو بتحفظ المنتجات اللي اتضافت للسلة مؤقتًا في الواجهة
 
+  addToCart(userId: string, itemid: string): void {
+    if (this.cartLoading.has(itemid)) return;
 
+    this.cartLoading.add(itemid);
 
-  addCart(buyerId: string, itemId: string, quantity: number): void {
-    console.log(buyerId);
-    console.log(itemId);
-    console.log(quantity);
-
-    this._CartService.addProductToCart(buyerId, itemId, quantity).subscribe({
+    this._CartService.addProductToCart(userId, itemid, 1).subscribe({
       next: (res) => {
-        console.log('✅ Response from API:', res);
-        this._ToastrService.success('دارت يا صيييع', 'Inspire')
-
-        // if (res && typeof res === 'number') {
-        //   this._CartService.cartNumber.set(res);
-        //   console.log('🛒 عدد المنتجات في السلة الآن:', this._CartService.cartNumber());
-        // } else {
-        //   console.log('⚠️ `cartCount` غير موجود في الـ API Response، تحقق من الاستجابة!');
-        // }
+        this._ToastrService.success('Added to cart', res.messageToUser);
+        this.cartIds.add(itemid); // علامة على الإضافة
+        this.cartLoading.delete(itemid);
       },
       error: (err) => {
-        console.error('❌ خطأ أثناء إضافة المنتج إلى السلة:', err);
+        this._ToastrService.error('Failed to add to cart');
+        this.cartLoading.delete(itemid);
       }
     });
   }
+
 
 
 
@@ -196,29 +216,52 @@ export class HomeComponent implements OnDestroy, OnInit {
   // productTrackBy(index: number, product: Iproduct): string {
   //   return product.Data.Item_ID;
   // }
+  wishlistIds = new Set<string>();
+  wishlistLoading = new Set<string>();
 
-  addWish(id: string, ItemId: string): void {
-    this._WishListService.addProductToWish(id, ItemId).subscribe({
+  addWish(id: string, itemid: string): void {
+    if (this.wishlistIds.has(itemid)) {
+      this._ToastrService.info('This item is already in your wishlist.');
+      return;
+    }
+
+    if (this.wishlistLoading.has(itemid)) return;
+
+    this.wishlistLoading.add(itemid);
+
+    this._WishListService.addProductToWish(id, itemid).subscribe({
       next: (res) => {
-        console.log('✅ Response from API wishlist:', res);
-
-        // لو res فيه array أو object بتحوي wishlist items
-        if (res && res.products) {
-          this._WishListService.WishNumber.set(res.products.length);
-          console.log('🧮 عدد المنتجات في الـ Wishlist:', this._WishListService.WishNumber());
-        } else {
-          // أو تزود بعدد معين مؤقتًا
-          this._WishListService.WishNumber.set(this._WishListService.WishNumber() + 1);
-        }
-
-        this._ToastrService.success('Added to wishlist', 'FreshCart');
+        this._ToastrService.success('Added to wishlist', res.messageToUser);
+        this.wishlistIds.add(itemid);
+        this.wishlistLoading.delete(itemid);
       },
       error: (err) => {
-        console.log('❌ Error:', err);
-        this._ToastrService.error('Error', 'Failed to add product to wishlist');
+        console.error('❌ Error:', err);
+        this._ToastrService.info('This item is already in your wishlist.');
+        this.wishlistLoading.delete(itemid);
       }
     });
+
+
+
+
   }
+
+
+
+
+
+
+
+  isNew(date: string): boolean {
+    const insertDate = new Date(date);
+    const today = new Date();
+    const diffInDays = Math.floor((today.getTime() - insertDate.getTime()) / (1000 * 60 * 60 * 24));
+    return diffInDays <= 7;
+  }
+
+
+
 
 
 

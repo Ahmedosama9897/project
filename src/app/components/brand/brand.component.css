@@ -1,0 +1,18 @@
+.slick-list {
+
+    width: auto;
+    height: auto;
+    top: 22px;
+    left: 12px;
+    /* padding: 1px 0px 0px 0px; */
+    gap: 0px;
+    /* border-radius: 10px 10px 10px 10px; */
+    /* border: 1px 0px 0px 0px; */
+    opacity: 0px;
+    /* border: 1px solid #4A55684D */
+}
+
+.group {
+
+    background-color: #dee2e6;
+}

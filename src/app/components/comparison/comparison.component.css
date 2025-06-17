@@ -1,15 +1,4 @@
-/* comparison.component.css */
-.products {
-    display: flex;
-    gap: 20px;
-    justify-content: space-around;
-}
-
-.product {
-    border: 1px solid #ddd;
-    padding: 10px;
-    text-align: center;
-}
+/* ✅ comparison.component.css (تحسين عرض الجدول والأنيميشن) */
 
 button {
     margin-top: 10px;
@@ -18,10 +7,26 @@ button {
     color: white;
     border: none;
     cursor: pointer;
+    border-radius: 4px;
 }
 
 button:hover {
     background-color: #45a049;
+}
+
+@media (prefers-color-scheme: dark) {
+    button {
+        background-color: #388e3c;
+    }
+
+    button:hover {
+        background-color: #2e7d32;
+    }
+}
+
+.table-wrapper {
+    overflow-x: auto;
+    width: 100%;
 }
 
 table {
@@ -38,4 +43,201 @@ td {
 
 th {
     background-color: #f4f4f4;
+}
+
+@keyframes fadeInSlideDown {
+    0% {
+        opacity: 0;
+        transform: translateY(-10px);
+    }
+
+    100% {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+.animated-row {
+    animation: fadeInSlideDown 0.5s ease-out both;
+}
+
+@keyframes fadeOut {
+    from {
+        opacity: 1;
+        transform: scale(1);
+    }
+
+    to {
+        opacity: 0;
+        transform: scale(0.95);
+    }
+}
+
+.product-row.removed {
+    animation: fadeOut 0.4s ease forwards;
+}
+
+/* تحسين شكل الأزرار داخل الجدول */
+td button {
+    margin-right: 8px;
+}
+
+/* Dark border تحسين للعرض الليلي */
+.dark th,
+.dark td {
+    border-color: #444;
+}
+
+/* Animation */
+.fade-in {
+    animation: fadeIn 0.4s ease-out;
+}
+
+@keyframes fadeIn {
+    from {
+        opacity: 0;
+        transform: translateY(10px);
+    }
+
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+/* Buttons */
+.tab-btn {
+    background-color: #6b7280;
+    color: white;
+    padding: 0.5rem 1rem;
+    border-radius: 9999px;
+    transition: 0.3s;
+    border: none;
+    cursor: pointer;
+}
+
+.tab-btn:hover {
+    background-color: #2563eb;
+}
+
+.active-tab {
+    background-color: #2563eb !important;
+}
+
+.clear-btn {
+    background-color: #dc2626;
+    color: white;
+    padding: 0.4rem 1rem;
+    font-size: 0.875rem;
+    border-radius: 0.375rem;
+    border: none;
+    transition: 0.3s;
+    cursor: pointer;
+}
+
+.clear-btn:hover {
+    background-color: #b91c1c;
+}
+
+/* Table */
+.comparison-table {
+    width: 100%;
+    border-collapse: collapse;
+    background-color: white;
+    border: 1px solid #e5e7eb;
+    border-radius: 0.75rem;
+    overflow: hidden;
+}
+
+.feature-col {
+    text-align: left;
+    font-weight: bold;
+    padding: 1rem;
+    background-color: #f9fafb;
+    min-width: 150px;
+}
+
+.product-col {
+    text-align: center;
+    min-width: 250px;
+    padding: 1rem;
+    vertical-align: top;
+}
+
+.feature {
+    font-weight: 600;
+    padding: 0.75rem;
+    background-color: #f3f4f6;
+}
+
+.value {
+    text-align: center;
+    padding: 0.75rem;
+}
+
+.product-card {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 0.5rem;
+    background-color: #ffffff;
+    border-radius: 0.75rem;
+    padding: 1rem;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.05);
+    transition: 0.3s;
+}
+
+.product-card:hover {
+    box-shadow: 0 4px 14px rgba(0, 0, 0, 0.1);
+}
+
+.product-image {
+    width: 96px;
+    height: 96px;
+    object-fit: cover;
+    border-radius: 0.5rem;
+}
+
+.product-name {
+    font-size: 0.875rem;
+    font-weight: 600;
+}
+
+.remove-btn,
+.add-btn {
+    font-size: 0.75rem;
+    padding: 0.3rem 0.6rem;
+    border: none;
+    border-radius: 0.375rem;
+    cursor: pointer;
+    transition: 0.2s;
+}
+
+.remove-btn {
+    background-color: #ef4444;
+    color: white;
+}
+
+.remove-btn:hover {
+    background-color: #dc2626;
+}
+
+.add-btn {
+    background-color: #22c55e;
+    color: white;
+}
+
+.add-btn:hover {
+    background-color: #16a34a;
+}
+
+.line-through {
+    text-decoration: line-through;
+    font-size: 0.8rem;
+    color: #9ca3af;
+}
+
+.price-new {
+    color: #16a34a;
+    font-weight: bold;
 }
