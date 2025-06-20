@@ -2,14 +2,7 @@
 @tailwind components;
 @tailwind utilities;
 @import 'ngx-toastr/toastr';
-
-/* You can add global styles to this file, and also import other style files */
 @import url("https://fonts.googleapis.com/css2?family=Encode+Sans+Expanded:wght@300&display=swap");
-
-/* body {
-  @apply bg-gradient-to-b from-emerald-50 via-white to-gray-100 dark:from-gray-900 dark:via-gray-800 dark:to-gray-900;
-} */
-
 
 :root {
   --main-color: #052C3C;
@@ -22,15 +15,74 @@
   --rating-color: #ffc908;
 }
 
+/* 💡 الوضع الافتراضي (Light Mode) */
+body {
+  font-family: var(--font-family) !important;
+  transition: background-color 0.5s ease, color 0.5s ease;
 
-
-.testt {
-  /* background-image: url("../../../assets/images/restaurant.webp"); */
-
-  background-color: #e9ecef;
 }
 
+body.dark-mode {
+  background-color: #121212;
+  transition: background-color 0.5s ease, color 0.5s ease;
 
+  color: #ffffff;
+}
+
+body.dark-mode .setting-item label {
+  color: #ffffff;
+}
+
+body.dark-mode .save-btn {
+  background-color: #333;
+  color: #fff;
+}
+
+/* 🎨 دعم المكونات للدارك مود */
+body.dark-mode .testt {
+  background-color: #2a2a2a;
+}
+
+body.dark-mode p,
+body.dark-mode h3,
+body.dark-mode .nav-link,
+body.dark-mode .btn-main,
+body.dark-mode .product,
+body.dark-mode .productt,
+body.dark-mode .active-link,
+body.dark-mode .text-main,
+body.dark-mode a,
+body.dark-mode a:hover {
+  color: #ffffff !important;
+}
+
+body.dark-mode .bg-main,
+body.dark-mode .btn-main {
+  background-color: #006666 !important;
+}
+
+body.dark-mode .btn-main:hover {
+  background-color: #11bd11;
+}
+
+body.dark-mode .bg-main-light {
+  background-color: #2f2f2f !important;
+}
+
+body.dark-mode .product,
+body.dark-mode .productt {
+  border-color: #666;
+}
+
+body.dark-mode .product:hover,
+body.dark-mode .productt:hover {
+  box-shadow: 0 0 10px #00ff8c54;
+}
+
+/* ✨ ستايلات عامة */
+.testt {
+  background-color: #e9ecef;
+}
 
 p {
   font-family: Verdana, Geneva, Tahoma, sans-serif;
@@ -39,10 +91,6 @@ p {
 h3 {
   font-family: sans-serif;
   font-size: larger;
-}
-
-body {
-  font-family: var(--font-family) !important;
 }
 
 .nav-link {
@@ -71,7 +119,6 @@ a:hover {
 
 .product {
   border-radius: 5px;
-  /* border: solid 1px var(--main-color); */
   transition: box-shadow 0.5s;
   overflow: hidden;
 }

@@ -130,9 +130,11 @@
           </div>
           <label for="remember" class="ms-2 text-sm font-medium text-gray-900 dark:text-gray-300">Remember me</label>
         </div>
-        <a routerLink="/forget"
-          class=" cursor-pointer text-sm font-medium text-primary-600 hover:underline dark:text-primary-500">Forgot
-          password?</a>
+        <a routerLink="/reset-password"
+          class="text-sm font-medium text-primary-600 hover:underline dark:text-primary-500">
+          Forgot password?
+        </a>
+
 
       </div>
       <button [disabled]="loginForm.invalid || isLoding" type="submit" class="btn-main mx-auto block"

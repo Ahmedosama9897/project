@@ -1,22 +1,40 @@
-<section class="bg-blue-100 rounded-xl shadow p-4 w-3/4 mx-auto">
-    <h1 class="text-center text-xl font-bold text-blue-600">Shipping Address</h1>
+<div class="p-6 bg-white rounded-xl shadow">
+    <h2 class="text-2xl font-bold mb-6 text-green-700">🧾 Your Orders</h2>
 
-    <form [formGroup]="orders" class="space-y-4">
-        <div>
-            <label for="details" class="block text-blue-700 font-medium">Details</label>
-            <textarea formControlName="details" id="details" class="w-full p-2 border border-blue-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"></textarea>
-        </div>
-       
-        <div>
-            <label for="phone" class="block text-blue-700 font-medium">Phone</label>
-            <input formControlName="phone" id="phone" type="tel" class="w-full p-2 border border-blue-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500">
-        </div>
-      
-        <div>
-            <label for="city" class="block text-blue-700 font-medium">City</label>
-            <input formControlName="city" id="city" type="text" class="w-full p-2 border border-blue-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500">
+    <div *ngIf="orders.length === 0" class="text-center text-gray-600">No orders found.</div>
+
+    <div *ngFor="let order of orders" class="border rounded-lg p-4 mb-6 shadow-md animate-fade-in">
+        <p class="text-sm text-gray-500 mb-1">Order ID: <span class="font-medium text-black">{{ order.IDFromPaymob
+                }}</span></p>
+        <p class="font-semibold text-green-700">Total Price: {{ order.Total_Price }} EGP</p>
+        <p>Status: <span class="text-blue-600 font-medium">{{ order.Status }}</span></p>
+        <p class="text-sm text-gray-500 mb-2">Delivery: {{ order.Delivery_Date }}</p>
+
+        <div *ngIf="orderItemsMap[order.IDFromPaymob]?.length" class="mt-4 border-t pt-3">
+            <h4 class="text-md font-bold mb-2 text-gray-700">Items:</h4>
+
+            <div *ngFor="let item of orderItemsMap[order.IDFromPaymob]" class="flex items-center gap-4 mb-3 order-card">
+                <img [src]="'http://sm-ecommerce.runasp.net/' + item.Image_Cover"
+                    class="w-16 h-16 rounded shadow-md border border-gray-200" />
+
+                <div class="flex-1">
+                    <p class="font-semibold text-gray-800">{{ item.Item_Name }}</p>
+                    <p class="text-sm text-gray-600">
+                        Quantity: <span class="text-black font-medium">{{ item.Quantity }}</span> |
+                        Price: <span class="text-black font-medium">{{ item.Price_out }} EGP</span>
+                    </p>
+                    <p class="text-sm text-gray-500">SubCategory: {{ item.Sub_Category_Name }}</p>
+                </div>
+            </div>
         </div>
 
-        <button class="bg-blue-500 text-white px-4 py-2 rounded-md hover:bg-blue-600 transition duration-300" type="submit">Check Out</button>
-    </form>
-</section>
+        <!-- ✅ View Details Button -->
+        <div class="text-right mt-4">
+            <a [routerLink]="['/profile/order-details', order.IDFromPaymob]"
+                class="inline-block text-sm font-medium text-white bg-green-700 hover:bg-green-800 px-4 py-2 rounded-lg transition">
+                View Details
+            </a>
+
+        </div>
+    </div>
+</div>

@@ -1,0 +1,56 @@
+/* Fade and Slide animation for items */
+@keyframes fadeSlideUp {
+    0% {
+        opacity: 0;
+        transform: translateY(30px);
+    }
+
+    100% {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+.order-item {
+    animation: fadeSlideUp 0.5s ease forwards;
+    background-color: #fff;
+    border-radius: 1rem;
+    box-shadow: 0 4px 12px rgba(0, 128, 0, 0.08);
+    padding: 1rem;
+    transition: transform 0.3s ease;
+}
+
+.order-item:hover {
+    transform: translateY(-4px);
+    box-shadow: 0 6px 15px rgba(0, 128, 0, 0.15);
+}
+
+img {
+    border-radius: 0.5rem;
+    object-fit: cover;
+}
+
+h3 {
+    font-weight: 600;
+    color: #1f2937;
+}
+
+.text-sm {
+    color: #6b7280;
+}
+
+.text-green-700 {
+    color: #047857;
+}
+
+.text-center {
+    text-align: center;
+}
+
+.text-red-500 {
+    color: #ef4444;
+}
+
+.text-gray-500 {
+    color: #6b7280;
+}

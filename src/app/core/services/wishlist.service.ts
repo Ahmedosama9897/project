@@ -1,6 +1,6 @@
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Injectable, WritableSignal, effect, signal } from '@angular/core';
-import { Observable } from 'rxjs';
+import { Observable, tap } from 'rxjs';
 import { environment } from '../environments/environment';
 
 @Injectable({
@@ -37,20 +37,18 @@ export class WishListService {
 
   addProductToWish(id: string, itemid: string): Observable<any> {
     const token = localStorage.getItem('userToken');
-    console.log('📦 Token being sent:', token); // للتأكد مؤقتًا
-
-    const headers = new HttpHeaders({
-      'Authorization': `Bearer ${token}`
-    });
+    const headers = new HttpHeaders({ 'Authorization': `Bearer ${token}` });
 
     return this._HttpClient.post(
-      `${environment.baseUrl}Wishlist/AddProduct?BuyerId=${id}&ItemId=${itemid}`, {},
-      // 🟢 Body فاضي
-      {
-        headers,
-        responseType: 'text' as 'json' // 👈
-
-      } // 🟢 Headers في المكان الصحيح
+      `${environment.baseUrl}Wishlist/AddProduct?BuyerId=${id}&ItemId=${itemid}`,
+      {},
+      { headers, responseType: 'text' as 'json' }
+    ).pipe(
+      tap(() => {
+        this.getProductWish(id).subscribe(res => {
+          this.WishNumber.set(res.data.length); // ✅ تحديث العدد اللحظي
+        });
+      })
     );
   }
 
@@ -73,21 +71,22 @@ export class WishListService {
 
     )
   }
-
-
   deleteSpecificWishItem(id: string, itemId: string): Observable<any> {
     const token = localStorage.getItem('userToken');
+    const headers = new HttpHeaders({ 'Authorization': `Bearer ${token}` });
 
-    const headers = new HttpHeaders({
-      'Authorization': `Bearer ${token}`
-    });
-    return this._HttpClient.delete(`${environment.baseUrl}Wishlist/RemoveProduct?BuyerId=${id}&ItemId=${itemId}`,
-      {
-        headers
-      }
-
-    )
+    return this._HttpClient.delete(
+      `${environment.baseUrl}Wishlist/RemoveProduct?BuyerId=${id}&ItemId=${itemId}`,
+      { headers }
+    ).pipe(
+      tap(() => {
+        this.getProductWish(id).subscribe(res => {
+          this.WishNumber.set(res.data.length); // ✅ تحديث مباشر بعد الحذف
+        });
+      })
+    );
   }
+
 
 
 

@@ -11,7 +11,6 @@ import { CompareComponent } from './components/compare/compare.component';
 import { PagesComponent } from './components/pages/pages.component';
 import { BrandComponent } from './components/brand/brand.component';
 import { authGuard } from './core/guards/auth.guard';
-import { OrdersComponent } from './components/order/order.component';
 import { ChatbotComponent } from './components/chatbot/chatbot.component';
 import { ProfileComponent } from './components/profile/profile.component';
 import { WishlistComponent } from './components/wishlist/wishlist.component';
@@ -21,30 +20,41 @@ import { PaymentComponent } from './components/payment/payment.component';
 import { FaqsComponent } from './components/faqs/faqs.component';
 import { ProfComponent } from './components/prof/prof.component';
 import { ComparisonComponent } from './components/comparison/comparison.component';
+import { OrderComponent } from './components/order/order.component';
+import { AddressComponent } from './components/address/address.component';
+import { CheckoutComponent } from './components/checkout/checkout.component';
+import { ThankYouComponent } from './components/thank-you/thank-you.component';
+import { PaymentRedirectComponent } from './components/payment-redirect/payment-redirect.component';
+import { OrderDetailsComponent } from './components/order-details/order-details.component';
+import { BrandDetailsComponent } from './components/brand-details/brand-details.component';
 
 // إضافة المكونات الجديدة
 
 export const routes: Routes = [
   {
-    path: '', component: AuthLayoutComponent,
+    path: '',
+    component: AuthLayoutComponent,
     children: [
       { path: '', redirectTo: 'login', pathMatch: 'full' },
-      { path: 'login', component: LoginComponent },
+
       {
-        path: 'login', title: 'login',
+        path: 'login',
+        title: 'Login',
         loadComponent: () =>
-          import('./components/login/login.component').then(
-            (C) => C.LoginComponent
-          )
+          import('./components/login/login.component').then(m => m.LoginComponent)
       },
-      { path: 'register', component: RegisterComponent },
       {
-        path: 'register', title: 'register',
+        path: 'register',
+        title: 'Register',
         loadComponent: () =>
-          import('./components/register/register.component').then(
-            (C) => C.RegisterComponent
-          )
-      }
+          import('./components/register/register.component').then(m => m.RegisterComponent)
+      },
+      {
+        path: 'reset-password',
+        title: 'Reset Password',
+        loadComponent: () =>
+          import('./components/reset-password/reset-password.component').then(m => m.ResetPasswordComponent)
+      },
     ]
   },
   {
@@ -65,17 +75,25 @@ export const routes: Routes = [
       { path: 'cart/compare', component: CompareComponent },
       { path: 'pages', component: PagesComponent },
       { path: 'chatbot', component: ChatbotComponent },
-      { path: 'cart/order', component: OrdersComponent },
+      { path: 'cart/checkout', component: CheckoutComponent },
       { path: 'comparison', component: ComparisonComponent },
+      { path: 'brand-details/:id', component: BrandDetailsComponent },
       {
         path: 'profile', component: ProfileComponent, children: [
 
           // إضافة التوجيهات للمكونات الجديدة
+          { path: 'thank-you', component: ThankYouComponent },
+
           { path: 'prof', component: ProfComponent },
           { path: 'details', component: DetailsComponent },
           { path: 'settings', component: SettingsComponent },
+          { path: 'address', component: AddressComponent },
+          { path: 'order', component: OrderComponent },
           { path: 'payment', component: PaymentComponent },
           { path: 'faqs', component: FaqsComponent },
+          { path: 'payment-redirect', component: PaymentRedirectComponent },
+          { path: 'order-details/:id', component: OrderDetailsComponent }
+
 
         ]
       },

@@ -8,14 +8,13 @@
             Enable Notifications
         </label>
     </div>
-
     <div class="setting-item">
         <label>
-            <input type="checkbox" [checked]="darkModeEnabled"
-                (change)="toggleNotifications(($any($event.target)).checked)">
-            Dark Mode
+            <input type="checkbox" [checked]="darkModeEnabled" (change)="toggleDarkMode(($any($event.target)).checked)">
+            {{ darkModeLabel }}
         </label>
     </div>
+
 
     <button (click)="saveSettings()" class="save-btn">Save Settings</button>
 </div>

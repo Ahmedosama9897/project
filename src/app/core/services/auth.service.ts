@@ -39,6 +39,8 @@ export class AuthService {
 
 
   logOut(): void {
+    localStorage.removeItem('welcomeShown'); // ✅ امسحها علشان تشتغل تاني بعد تسجيل الدخول
+
     localStorage.removeItem('userToken');
     this.userData = null;
     this._Router.navigate(['/login'])
@@ -59,10 +61,20 @@ export class AuthService {
   // }
 
 
+  sendOTP(data: object): Observable<any> {
+    return this._HttpClient.post(`${environment.baseUrl}Auth/SendOTP`, data);
+  }
 
-  // setResetpassword(data:object):Observable<any>{
-  //   return this._HttpClient.post(`${environment.baseUrl}/api/v1/auth/resetPassword` , data)
-  // }
+  verifyOtpAndResetPassword(data: object): Observable<any> {
+    return this._HttpClient.post(`${environment.baseUrl}Auth/VerifyOTPAndResetPassword`, data);
+  }
+
+
+
+
+  setResetpassword(data: object): Observable<any> {
+    return this._HttpClient.post(`${environment.baseUrl}/api/v1/auth/resetPassword`, data)
+  }
 
 
 

@@ -6,6 +6,7 @@ import { AuthService } from '../../core/services/auth.service';
 import { CompareService } from '../../core/services/compare.service';
 import { ComparisonService } from '../../core/services/comparison.service';
 import { ToastrService } from 'ngx-toastr';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-cart',
@@ -22,6 +23,10 @@ export class CartComponent implements OnInit {
   private readonly _ToastrService = inject(ToastrService);
 
   // cartDetails: Icart = {} as Icart;
+
+  constructor(private router: Router) { }
+
+
 
   get totalPrice(): number {
     return this.cartDetails.reduce((acc, item) => acc + (item.Price_out * item.Quantity), 0);
@@ -144,5 +149,18 @@ export class CartComponent implements OnInit {
     });
   }
 
+
+
+  // داخل الكلاس
+
+  goToCheckout(): void {
+    this.router.navigate(['cart/checkout'], {
+      state: {
+        cartDetails: this.cartDetails,
+        totalPrice: this.totalPrice,
+        userId: this.userId
+      }
+    });
+  }
 }
 

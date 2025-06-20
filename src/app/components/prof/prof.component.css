@@ -31,6 +31,8 @@
     transform: translateY(-8px);
 }
 
+
+
 /* الصورة الدائرية مع ظل ناعم */
 .avatar {
     width: 140px;
@@ -101,4 +103,45 @@ h2 {
         opacity: 1;
         transform: translateY(0);
     }
+}
+
+img.selected {
+    border-color: #1d4ed8;
+    box-shadow: 0 0 0 3px rgba(29, 78, 216, 0.4);
+}
+
+img.avatar-choice {
+    width: 64px;
+    height: 64px;
+    border-radius: 50%;
+    border: 2px solid transparent;
+    transition: border 0.3s, box-shadow 0.3s;
+    cursor: pointer;
+}
+
+img.avatar-choice:hover {
+    border-color: #60a5fa;
+}
+
+img.avatar-choice.selected {
+    border-color: #1d4ed8;
+    box-shadow: 0 0 0 3px rgba(29, 78, 216, 0.3);
+}
+
+.avatar-choice {
+    width: 64px;
+    height: 64px;
+    border-radius: 50%;
+    border: 2px solid transparent;
+    transition: border 0.3s, box-shadow 0.3s;
+    cursor: pointer;
+}
+
+.avatar-choice:hover {
+    border-color: #60a5fa;
+}
+
+.avatar-choice.selected {
+    border-color: #1d4ed8;
+    box-shadow: 0 0 0 3px rgba(29, 78, 216, 0.3);
 }

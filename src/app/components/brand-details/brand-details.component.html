@@ -1,0 +1,11 @@
+<div class="flex justify-center items-center min-h-screen bg-gray-100 px-4 py-8">
+    <div class="bg-white rounded-xl shadow-lg p-6 max-w-2xl w-full text-center">
+        @for (item of brandData; track item.Brand_ID) {
+        <h2 class="text-3xl font-bold text-main mb-4">Brand # {{ item.Brand_ID }}</h2>
+        <img [src]="'https://sm-ecommerce.runasp.net/' + item.Brand_Image" alt="Brand Image"
+            class="mx-auto rounded-md shadow-md w-full max-w-xs h-auto mb-4">
+        <p class="text-lg font-semibold text-gray-800">: {{ item.Brand_Name }}</p>
+        }
+        <div *ngIf="!brandData" class="text-gray-500">Loading brand details...</div>
+    </div>
+</div>

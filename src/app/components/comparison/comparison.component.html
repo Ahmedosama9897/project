@@ -60,6 +60,27 @@
                             <span class="price-new">{{ item.Price_After_Sale }} EGP</span>
                         </td>
                     </tr>
+
+                    <tr>
+                        <td class="feature">Weight</td>
+                        <td *ngFor="let item of selectedTabData()" class="value">{{ item.Weight ? (item.Weight + ' kg')
+                            : '—' }}</td>
+                    </tr>
+                    <tr>
+                        <td class="feature">Color</td>
+                        <td *ngFor="let item of selectedTabData()" class="value">{{ item.Color || '—' }}</td>
+                    </tr>
+                    <tr>
+                        <td class="feature">Screen Size</td>
+                        <td *ngFor="let item of selectedTabData()" class="value">{{ item.Screen_Size ? (item.Screen_Size
+                            + ' inches') : '—' }}</td>
+                    </tr>
+
+                    <tr>
+                        <td class="feature">Model</td>
+                        <td *ngFor="let item of selectedTabData()" class="value">{{ item.Model || '—' }}</td>
+                    </tr>
+
                 </tbody>
             </table>
         </div>

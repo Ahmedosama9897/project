@@ -1,11 +1,34 @@
-export interface Chatbot {
 
-    recommended_items: Recommendeditem[];
+export interface Chatbot {
+    message: string;
+    pageNumber: number;
+    pageSize: number;
+    products: Product[];
     reply: string;
+    totalItems: number;
+    totalPages: number;
 }
 
-interface Recommendeditem {
-    Brand_ID: number;
+export interface Product {
+    Brand: Brand;
+    Data: Data;
+    Detilas: Detilas;
+    Rating: Rating;
+    images: Detilas;
+}
+
+interface Rating {
+    AverageRating: number;
+    FirstReviewDate: null | string;
+    LastReviewDate: null | string;
+    TotalReviews: number;
+}
+
+interface Detilas {
+}
+
+interface Data {
+    Brand_ID: null | number;
     Category_ID: number;
     Crate_Date: string;
     Description: string;
@@ -18,8 +41,14 @@ interface Recommendeditem {
     Quantity: number;
     Rate: number;
     Seller_ID: number;
+    SoftDelete: boolean;
     Sold_Count: number;
     Sub_Category_ID: number;
     View_Count: number;
 }
 
+interface Brand {
+    Brand_ID: string;
+    Brand_Image: string;
+    Brand_Name: string;
+}

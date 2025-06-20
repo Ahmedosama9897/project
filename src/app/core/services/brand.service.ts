@@ -34,4 +34,25 @@ export class BrandService {
 
   }
 
+  getSpecificBrand(id: string): Observable<any> {
+
+
+
+    const token = localStorage.getItem('userToken');
+
+    const headers = new HttpHeaders({
+      'Authorization': `Bearer ${token}`
+    });
+
+
+    return this._HttpClient.get(`${environment.baseUrl}Brand/GetSpecificBrand?id=${id}`,
+
+      {
+        headers
+      });
+
+
+
+  }
+
 }

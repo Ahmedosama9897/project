@@ -1,4 +1,4 @@
-import { HttpClient, HttpHeaders } from '@angular/common/http';
+import { HttpClient, HttpHeaders, HttpParams } from '@angular/common/http';
 import { inject, Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
 import { environment } from '../environments/environment';
@@ -122,4 +122,42 @@ export class ProductsService {
       { headers }
     );
   }
+
+
+
+  getrecommendlist(id: string): Observable<any> {
+    const token = localStorage.getItem('userToken');
+    const headers = new HttpHeaders({
+      'Authorization': `Bearer ${token}`
+    });
+
+    return this._HttpClient.get(
+      `https://recommendedlist.up.railway.app/recommend_list?user_id=${id}`,
+      { headers }
+    );
+  }
+
+
+  private baseUrl = `${environment.baseUrl}Products/GetFilteredProducts`;
+
+  getFilteredProducts(filters: any): Observable<any> {
+    const token = localStorage.getItem('userToken'); // استرجاع التوكن من Local Storage
+
+    const headers = new HttpHeaders({
+      'Authorization': `Bearer ${token}` // إضافة التوكن في الهيدر بشكل صحيح
+    });
+
+    let params = new HttpParams();
+    Object.entries(filters).forEach(([key, value]) => {
+      if (value !== null && value !== undefined && value !== '' && value !== false) {
+        params = params.set(key, value.toString());
+      }
+    });
+
+    return this._HttpClient.get<any[]>(this.baseUrl, { params, headers });
+  }
+
+
+
+
 }
