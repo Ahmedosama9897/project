@@ -1,3 +1,238 @@
+/* ===== Scrollable Recommended Section ===== */
+.recommended-scroll-wrapper {
+    position: relative;
+    margin-top: 10px;
+    padding: 0 10px;
+}
+
+.recommended-scroll {
+    display: flex;
+    overflow-x: auto;
+    scroll-behavior: smooth;
+    padding-bottom: 8px;
+    gap: 12px;
+    max-width: 100%;
+    box-sizing: border-box;
+}
+
+.recommended-scroll::-webkit-scrollbar {
+    height: 6px;
+}
+
+.recommended-scroll::-webkit-scrollbar-thumb {
+    background-color: #007bff;
+    border-radius: 10px;
+}
+
+
+.product-card {
+    /* ... */
+    animation: fadeInZoom 0.4s ease forwards;
+    opacity: 0;
+}
+
+@keyframes fadeInZoom {
+    from {
+        transform: scale(0.9) translateY(20px);
+        opacity: 0;
+    }
+
+    to {
+        transform: scale(1) translateY(0);
+        opacity: 1;
+    }
+}
+
+.product-popup {
+    /* ... */
+    animation: popupFade 0.3s ease;
+}
+
+@keyframes popupFade {
+    from {
+        transform: scale(0.85);
+        opacity: 0;
+    }
+
+    to {
+        transform: scale(1);
+        opacity: 1;
+    }
+}
+
+.scroll-btn {
+    position: absolute;
+    top: 50%;
+    transform: translateY(-50%);
+    z-index: 2;
+    background-color: #007bff;
+    color: white;
+    border: none;
+    font-size: 20px;
+    border-radius: 50%;
+    width: 32px;
+    height: 32px;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+}
+
+.scroll-btn:hover {
+    background-color: #0056b3;
+}
+
+.scroll-btn.left {
+    left: 0;
+}
+
+.scroll-btn.right {
+    right: 0;
+}
+
+.product-card {
+    flex: 0 0 auto;
+    background: #fff;
+    border-radius: 16px;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+    overflow: hidden;
+    width: 150px;
+    max-width: 45%;
+    min-width: 130px;
+    transition: transform 0.3s ease;
+    display: flex;
+    flex-direction: column;
+    animation: fadeInUp 0.4s ease forwards;
+    opacity: 0;
+    cursor: pointer;
+}
+
+.product-card:hover {
+    transform: translateY(-5px);
+}
+
+@keyframes fadeInUp {
+    from {
+        transform: translateY(10px);
+        opacity: 0;
+    }
+
+    to {
+        transform: translateY(0);
+        opacity: 1;
+    }
+}
+
+
+/* Popup overlay */
+.product-popup-backdrop {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100vw;
+    height: 100vh;
+    background-color: rgba(0, 0, 0, 0.6);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    z-index: 2000;
+    padding: 16px;
+    overflow-y: auto;
+}
+
+.product-popup {
+    background: white;
+    padding: 20px;
+    border-radius: 12px;
+    width: 100%;
+    max-width: 400px;
+    box-shadow: 0 10px 25px rgba(0, 0, 0, 0.3);
+    animation: popupZoom 0.3s ease;
+    text-align: center;
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.product-popup img {
+    width: 100%;
+    max-height: 160px;
+    object-fit: contain;
+    background-color: #f8f8f8;
+}
+
+@media (max-width: 768px) {
+    .product-popup {
+        max-width: 90%;
+        padding: 16px;
+    }
+}
+
+@keyframes popupZoom {
+    from {
+        transform: scale(0.85);
+        opacity: 0;
+    }
+
+    to {
+        transform: scale(1);
+        opacity: 1;
+    }
+}
+
+
+.product-image {
+    width: 100%;
+    height: 120px;
+    object-fit: cover;
+}
+
+.product-details {
+    padding: 10px;
+}
+
+.product-details h4 {
+    margin: 0 0 4px;
+    font-size: 14px;
+}
+
+.product-details p {
+    font-size: 12px;
+    color: #555;
+    margin: 0 0 6px;
+}
+
+.price-discount {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.price {
+    color: #000;
+    font-weight: bold;
+}
+
+.discount {
+    background: #f44336;
+    color: #fff;
+    padding: 2px 6px;
+    border-radius: 4px;
+    font-size: 11px;
+}
+
+.sold-rate {
+    display: flex;
+    justify-content: space-between;
+    margin-top: 6px;
+    font-size: 11px;
+}
+
+.stars {
+    color: #ff9800;
+}
+
+
+/* ===== ChatBot Styles (No Changes) ===== */
 /* تنسيق زرار فتح الشات */
 .chat-button {
     position: fixed;
@@ -21,13 +256,13 @@
     box-shadow: 0 12px 24px rgba(0, 0, 0, 0.5);
 }
 
-/* تنسيق صندوق الشات */
+/* صندوق الشات */
 .chat-box {
     position: fixed;
     bottom: 90px;
     right: 20px;
-    width: 400px;
-    height: 460px;
+    width: 500px;
+    height: 500px;
     background-color: #1c2b3c;
     background-image: url('../../../assets/images/photo-1634973357973-f2ed2657db3c.avif');
     background-size: cover;
@@ -51,7 +286,7 @@
     pointer-events: auto;
 }
 
-/* تنسيق الهيدر */
+/* الهيدر */
 .chat-header {
     background-color: rgba(0, 150, 255, 0.8);
     color: white;
@@ -73,7 +308,7 @@
     cursor: pointer;
 }
 
-/* تنسيق الرسائل */
+/* الرسائل */
 .chat-messages {
     max-height: 400px;
     scroll-behavior: smooth;
@@ -87,38 +322,26 @@
     display: flex;
     flex-direction: column;
     gap: 12px;
-    /* تنسيق شريط التمرير */
     scrollbar-width: thin;
-    /* شريط تمرير أرفع */
     scrollbar-color: #007bff #1b263b;
-    /* اللون الرئيسي و الخلفية */
 }
 
 .chat-messages::-webkit-scrollbar {
     width: 8px;
-    /* سمك شريط التمرير */
-}
-
-.chat-messages::-webkit-scrollbar {
-    width: 8px;
-    /* سمك شريط التمرير */
 }
 
 .chat-messages::-webkit-scrollbar-thumb {
     background-color: #007bff;
-    /* اللون الرئيسي */
     border-radius: 10px;
     transition: background-color 0.3s ease;
 }
 
 .chat-messages::-webkit-scrollbar-thumb:hover {
     background-color: #0056b3;
-    /* تغيير اللون عند التمرير */
 }
 
 .chat-messages::-webkit-scrollbar-track {
     background-color: #1b263b;
-    /* الخلفية */
     border-radius: 10px;
 }
 
@@ -176,7 +399,7 @@
     }
 }
 
-/* تنسيق إدخال الرسالة */
+/* الإدخال */
 .chat-input {
     display: flex;
     gap: 10px;
@@ -216,7 +439,7 @@
     background-color: #0056b3;
 }
 
-/* تأثير النقاط عند الكتابة */
+/* النقاط عند الكتابة */
 .typing-dots {
     display: flex;
     justify-content: center;
@@ -261,75 +484,4 @@
     100% {
         opacity: 0;
     }
-}
-
-.recommended-container {
-    display: flex;
-    flex-wrap: wrap;
-    gap: 12px;
-    margin-top: 16px;
-}
-
-.product-card {
-    background: #fff;
-    border-radius: 16px;
-    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
-    overflow: hidden;
-    width: 160px;
-    transition: 0.3s;
-}
-
-.product-card:hover {
-    transform: translateY(-5px);
-}
-
-.product-image {
-    width: 100%;
-    height: 120px;
-    object-fit: cover;
-}
-
-.product-details {
-    padding: 10px;
-}
-
-.product-details h4 {
-    margin: 0 0 4px;
-    font-size: 14px;
-}
-
-.product-details p {
-    font-size: 12px;
-    color: #555;
-    margin: 0 0 6px;
-}
-
-.price-discount {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-}
-
-.price {
-    color: #000;
-    font-weight: bold;
-}
-
-.discount {
-    background: #f44336;
-    color: #fff;
-    padding: 2px 6px;
-    border-radius: 4px;
-    font-size: 11px;
-}
-
-.sold-rate {
-    display: flex;
-    justify-content: space-between;
-    margin-top: 6px;
-    font-size: 11px;
-}
-
-.stars {
-    color: #ff9800;
 }

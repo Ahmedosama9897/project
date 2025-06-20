@@ -4,42 +4,86 @@
 <!-- صندوق الشات -->
 <div class="chat-box" [class.open]="isOpen">
     <div class="chat-header">
-        ChatBot 🦾
+        ChatBot 🧫
         <button class="clear-btn" (click)="clearChat()">🗑️</button>
     </div>
 
     <div class="chat-messages" #messageContainer>
         <div [innerHTML]="renderMessages()"></div>
 
+        <!-- فلتر المنتجات -->
+        <div style="padding: 10px; display: flex; gap: 10px; flex-wrap: wrap;">
+            <input type="number" placeholder="Min Price" [value]="minPrice" (input)="onMinPriceChange($event)" />
+            <input type="number" placeholder="Max Price" [value]="maxPrice" (input)="onMaxPriceChange($event)" />
+            <select [value]="selectedCategoryId" (change)="onCategoryChange($event)">
+                <option value="">All Categories</option>
+                <option *ngFor="let cat of categoriesList" [value]="cat.Category_ID">{{ cat.Category_Name }}</option>
+            </select>
 
-        <!-- سلايدر المنتجات الموصى بها -->
-        <div *ngIf="recommendedItems.length > 0">
-            <owl-carousel-o [options]="customOptionsCat">
-                <ng-template carouselSlide *ngFor="let item of recommendedItems">
-                    <div class="recommended-container">
-                        <div class="product-card">
-                            <div *ngIf="item.Discount" class="discount-badge">-{{item.Discount}}%</div>
-                            <img [src]="item.Image_Cover" alt="{{item.Item_Name}}" class="product-image" />
-                            <div class="product-details">
-                                <h4>{{ item.Item_Name }}</h4>
-                                <p>{{ item.Description.split(' ', 2).join(' ') }}</p>
-                                <div class="price-discount">
-                                    <span class="price">${{ item.Price_out }}</span>
-                                </div>
-                                <div class="sold-rate">
-                                    <span>🔥 {{ item.Sold_Count }} sold</span>
-                                    <span class="stars">⭐ {{ item.Rate }}</span>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </ng-template>
-            </owl-carousel-o>
+            <!-- Sorting -->
+            <select [value]="sortOption" (change)="onSortChange($event)">
+                <option value="">Sort by</option>
+                <option value="price-asc">Price: Low to High</option>
+                <option value="price-desc">Price: High to Low</option>
+                <option value="rating-asc">Rating: Low to High</option>
+                <option value="rating-desc">Rating: High to Low</option>
+            </select>
+
+            <button (click)="applyFilter()">Filter</button>
+            <button (click)="resetFilter()" style="background-color: #ccc;">Reset</button>
         </div>
 
+        <!-- منتجات موصى بها -->
+        <div *ngIf="recommendedItems.length > 0" class="recommended-scroll-wrapper">
+            <button class="scroll-btn left" (click)="scrollLeft()">←</button>
 
+            <div class="recommended-scroll" #scrollContainer>
+                <div class="product-card" *ngFor="let item of recommendedItems" (click)="openPopup(item)">
+                    <img [src]="'https://sm-ecommerce.runasp.net/' + item.images" alt="{{ item.Data.Item_Name }}"
+                        class="product-image" />
+                    <div class="product-details">
+                        <h4>{{ item.Data.Item_Name }}</h4>
+                        <p>{{ item.Data.Description.split(' ', 2).join(' ') }}</p>
+                        <div class="price-discount">
+                            <span class="price">${{ item.Data.Price_out }}</span>
+                        </div>
+                        <div class="sold-rate">
+                            <span>🔥 {{ item.Data.Sold_Count }} sold</span>
+                            <span class="stars">⭐ {{ item.Rating.AverageRating || 0 }} ({{ item.Rating.TotalReviews || 0
+                                }})</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
 
+            <button class="scroll-btn right" (click)="scrollRight()">→</button>
+        </div>
 
+        <!-- Popup تفاصيل المنتج -->
+        <div *ngIf="selectedProduct" class="product-popup-backdrop" (click)="closePopup()">
+            <div class="product-popup" (click)="$event.stopPropagation()">
+                <h3>{{ selectedProduct.Data.Item_Name }}</h3>
+                <p style="font-weight: bold;">{{ selectedProduct.Data.Description }}</p>
+
+                <img [src]="'https://sm-ecommerce.runasp.net/' + selectedProduct.images"
+                    alt="{{ selectedProduct.Data.Item_Name }}"
+                    style="width: 100%; border-radius: 8px; margin: 12px 0;" />
+
+                <p><strong>Price:</strong> ${{ selectedProduct.Data.Price_out }}</p>
+                <p><strong>Sold:</strong> {{ selectedProduct.Data.Sold_Count }}</p>
+                <p><strong>Rating:</strong> ⭐ {{ selectedProduct.Rating.AverageRating || 0 }}</p>
+                <p><strong>Total Reviews:</strong> {{ selectedProduct.Rating.TotalReviews }}</p>
+                <!-- <p><strong>First Review:</strong> {{ selectedProduct.Rating.FirstReviewDate | date: 'mediumDate' }}</p>
+        <p><strong>Last Review:</strong> {{ selectedProduct.Rating.LastReviewDate | date: 'mediumDate' }}</p> -->
+
+                <button (click)="closePopup()"
+                    style="margin-top: 12px; padding: 8px 16px; background-color: #dc3545; color: white; border: none; border-radius: 6px; cursor: pointer;">
+                    Close
+                </button>
+            </div>
+        </div>
+
+        <!-- نقاط الكتابة -->
         <div class="typing-dots" [class.show]="isTyping">
             <span>.</span><span>.</span><span>.</span>
         </div>
@@ -49,7 +93,4 @@
         <input [value]="newMessage" (input)="onInputChange($event)" placeholder="Send message..." />
         <button (click)="sendMessage()">Send</button>
     </div>
-
-
-
 </div>

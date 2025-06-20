@@ -1,5 +1,7 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, inject, OnInit } from '@angular/core';
 import { ToastrService } from 'ngx-toastr';
+import { Iprofile } from '../../core/interfaces/IProfile';
+import { ProfileService } from '../../core/services/profile.service';
 
 @Component({
   selector: 'app-prof',
@@ -8,20 +10,39 @@ import { ToastrService } from 'ngx-toastr';
 })
 export class ProfComponent implements OnInit {
 
+  private readonly _ProfileService = inject(ProfileService);
+
+  profileDetails!: Iprofile;
+  userId: string = '';
+
+
+
+
+
   user = {
-    name: 'Ahmed osama',
-    email: 'ahmedos@gmail.com',
-    phone: '+20 1157543949',
-    address: 'Cairo, Egypt',
     avatar: 'https://api.dicebear.com/9.x/adventurer/svg?seed=Jocelyn',
-    bio: 'Front-end developer passionate about Angular and clean UI.'
   };
 
-  constructor(private toastr: ToastrService) { }
+  ngOnInit(): void {
+    const storedUserId = localStorage.getItem('userID');
+    if (!storedUserId) {
+      console.warn('User ID not found in localStorage!');
+      return;
+    }
 
-  ngOnInit(): void { }
+    this.userId = storedUserId;
 
-  updateprof() {
-    this.toastr.success('Profile updated successfully!', 'Success');
+    this._ProfileService.getUserProfile(this.userId).subscribe({
+      next: (res) => {
+        console.log("✅ profile", res);
+        this.profileDetails = res;
+      },
+      error: (err) => {
+        console.log("❌", err);
+      }
+    });
   }
+
+
+
 }

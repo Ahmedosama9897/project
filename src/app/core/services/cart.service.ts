@@ -1,6 +1,6 @@
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Injectable } from '@angular/core';
-import { BehaviorSubject, Observable } from 'rxjs';
+import { BehaviorSubject, Observable, tap } from 'rxjs';
 import { environment } from '../environments/environment';
 
 @Injectable({
@@ -33,8 +33,15 @@ export class CartService {
         headers,
         responseType: 'text' as 'json' // 👈
       }
-    );
 
+    ).pipe(
+      tap(() => {
+        // بعد الإضافة، جيب cart جديدة وحدّث العدد
+        this.getProductCart(buyerId).subscribe(res => {
+          this.cartNumber.next(res.length); // ✅ تحديث العدد
+        });
+      })
+    );
 
   }
 

@@ -1,17 +1,27 @@
 <div class="profile-container">
     <div class="profile-card">
         <div class="flex items-center justify-center">
-            <img [src]="user.avatar" alt="Avatar" class="avatar">
-        </div>
-        <h2>{{ user.name }}</h2>
-        <p class="bio">{{ user.bio }}</p>
-
-        <div class="info">
-            <p><strong>Email:</strong> {{ user.email }}</p>
-            <p><strong>Phone:</strong> {{ user.phone }}</p>
-            <p><strong>Address:</strong> {{ user.address }}</p>
+            <img [src]="user.avatar" alt="Avatar" class="avatar" />
         </div>
 
-        <!-- <button (click)="updateprof()" class="update-btn">Update Profile</button> -->
+        <h2 class="text-center text-xl font-semibold mt-2">
+            {{ profileDetails.UserProfile.Buyer_Name }}
+        </h2>
+
+        <p class="bio text-center text-gray-500">
+            E-commerce platform user
+        </p>
+
+        <div class="info mt-4 space-y-2">
+            <p><strong>Email:</strong> {{ profileDetails.UserProfile.Email }}</p>
+            <p><strong>Phone:</strong> {{ profileDetails.UserProfile.phone }}</p>
+            <p><strong>Address:</strong>
+                {{ profileDetails.Adresses.Building }}, {{ profileDetails.Adresses.Street }},
+                {{ profileDetails.Adresses.City }}, {{ profileDetails.Adresses.State }},
+                {{ profileDetails.Adresses.Country }} - {{ profileDetails.Adresses.PostalCode }}
+            </p>
+        </div>
+
+        <!-- <button (click)="updateprof()" class="update-btn mt-4">Update Profile</button> -->
     </div>
 </div>

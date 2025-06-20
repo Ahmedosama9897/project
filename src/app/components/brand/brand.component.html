@@ -3,65 +3,25 @@
         <p class="text-white">brand</p>
     </div>
     <h1 class="text-center  my-3 font-extrabold text-2xl">All Brands</h1>
-    <div class="container mx-auto px-4 ">
-        <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6 my-6">
-            
-            <div class="p-2 bg-white shadow-md rounded-lg">
-                <img src="../../../assets/images/1678286824747.png" alt="Brand Name" class="w-full rounded-md">
-                <div class="flex justify-center items-center my-3 bg-green-100 p-2 rounded-md">
-                    <h3 class="text-main font-bold text-xl">Canon</h3>
-                </div>
-            </div>
-           
-             <div class="p-2 bg-white shadow-md rounded-lg">
-                <img src="../../../assets/images/Lenovo.png" alt="Brand Name" class="w-full rounded-md">
-                <div class="flex justify-center items-center my-3 bg-green-100 p-2 rounded-md">
-                    <h3 class="text-main font-bold text-xl">Lenovo</h3>
-                </div>
-            </div>
 
-            <div class="p-2 bg-white shadow-md rounded-lg">
-                <img src="../../../assets/images/adidas1678285881943.png" alt="Brand Name" class="w-full rounded-md">
-                <div class="flex justify-center items-center my-3 bg-green-100 p-2 rounded-md">
-                    <h3 class="text-main font-bold text-xl">Adidas</h3>
-                </div>
-            </div>
+    <!-- ألجديد  -->
 
-            <div class="p-2 bg-white shadow-md rounded-lg">
-                <img src="../../../assets/images/nike1678285837630.png" alt="Brand Name" class="w-full rounded-md">
-                <div class="flex justify-center items-center my-3 bg-green-100 p-2 rounded-md">
-                    <h3 class="text-main font-bold text-xl">Nike</h3>
+    <div class="product slick-list px-4 py-6">
+        <div class="grid gap-6 grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 xl:grid-cols-5">
+            @for (item of BrandDetails ; track item.Brand_ID) {
+            <a [routerLink]="['/brand-details', item.Brand_ID]">
+                <div class="group rounded-xl shadow-md p-4 hover:shadow-lg transition-all duration-300 
+      flex flex-col justify-between relative overflow-hidden">
+                    <div class="p-2 bg-white shadow-md rounded-lg">
+                        <img [src]="'https://sm-ecommerce.runasp.net/' + item.Brand_Image" alt="Brand Name"
+                            class="w-full rounded-md">
+                        <div class="flex justify-center items-center my-3 bg-green-100 p-2 rounded-md">
+                            <h3 class="text-main font-bold text-xl">{{ item.Brand_Name }}</h3>
+                        </div>
+                    </div>
                 </div>
-            </div>
-
-
-            <div class="p-2 bg-white shadow-md rounded-lg">
-                <img src="../../../assets/images/sony.png" alt="Brand Name" class="w-full rounded-md">
-                <div class="flex justify-center items-center my-3 bg-green-100 p-2 rounded-md">
-                    <h3 class="text-main font-bold text-xl">Sony</h3>
-                </div>
-            </div>
-           
-             <div class="p-2 bg-white shadow-md rounded-lg">
-                <img src="../../../assets/images/infinix.png" alt="Brand Name" class="w-full rounded-md">
-                <div class="flex justify-center items-center my-3 bg-green-100 p-2 rounded-md">
-                    <h3 class="text-main font-bold text-xl">Infinix</h3>
-                </div>
-            </div>
-
-            <div class="p-2 bg-white shadow-md rounded-lg">
-                <img src="../../../assets/images/hawei1678286421517.png" alt="Brand Name" class="w-full rounded-md">
-                <div class="flex justify-center items-center my-3 bg-green-100 p-2 rounded-md">
-                    <h3 class="text-main font-bold text-xl">HUAWEI</h3>
-                </div>
-            </div>
-
-            <div class="p-2 bg-white shadow-md rounded-lg">
-                <img src="../../../assets/images/apple.png" alt="Brand Name" class="w-full rounded-md">
-                <div class="flex justify-center items-center my-3 bg-green-100 p-2 rounded-md">
-                    <h3 class="text-main font-bold text-xl">Apple</h3>
-                </div>
-            </div>
+            </a>
+            }
 
         </div>
     </div>

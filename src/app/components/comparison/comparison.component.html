@@ -1,82 +1,92 @@
-<!-- ✅ comparison.component.html -->
-<div class="mb-4 flex gap-4">
-    <button (click)="activeTab = 'phones'" [ngClass]="{ 'bg-blue-600 text-white': activeTab === 'phones' }"
-        class="px-4 py-2 border rounded-md">Phones</button>
-    <button (click)="activeTab = 'pcs'" [ngClass]="{ 'bg-blue-600 text-white': activeTab === 'pcs' }"
-        class="px-4 py-2 border rounded-md">PCs</button>
-    <button (click)="activeTab = 'laptops'" [ngClass]="{ 'bg-blue-600 text-white': activeTab === 'laptops' }"
-        class="px-4 py-2 border rounded-md">Laptops</button>
-</div>
+<div class="p-4 space-y-6 fade-in">
+    <!-- Tabs -->
+    <div class="flex justify-center gap-4 mb-6">
+        <button (click)="selectedTab = 'phones'" [class.active-tab]="selectedTab === 'phones'"
+            class="tab-btn">Phones</button>
+        <button (click)="selectedTab = 'laptops'" [class.active-tab]="selectedTab === 'laptops'"
+            class="tab-btn">Laptops</button>
+        <button (click)="selectedTab = 'pcs'" [class.active-tab]="selectedTab === 'pcs'" class="tab-btn">PCs</button>
+    </div>
 
-<!-- ✅ PCs Tab -->
-<div *ngIf="activeTab === 'pcs'" class="overflow-x-auto rounded-md shadow-lg border dark:border-gray-700">
-    <table class="min-w-full text-sm text-gray-800 dark:text-gray-300">
-        <thead class="text-xs bg-gray-200 dark:bg-gray-800">
-            <tr>
-                <th class="p-4">Image</th>
-                <th class="px-6 py-3">Price</th>
-                <th class="px-6 py-3">Specs</th>
-                <th class="px-6 py-3">Actions</th>
-            </tr>
-        </thead>
-        <tbody>
-            <tr *ngFor="let item of comparisonPcs; trackBy: trackByItemId"
-                class="bg-white dark:bg-gray-900 border-b dark:border-gray-700">
-                <td class="p-4 text-center">
-                    <img [src]="'https://sm-ecommerce.runasp.net/' + item.Image_Cover"
-                        class="w-16 h-16 object-contain rounded shadow-sm" />
-                    <div class="font-semibold mt-2">{{ item.Item_Name }}</div>
-                </td>
-                <td class="px-6 py-4 font-semibold">{{ item.Price | currency:'USD' }}</td>
-                <td class="px-6 py-4 text-sm">
-                    RAM: {{ item.RAM }}<br />
-                    Memory: {{ item.Memory }} {{ item.Memory_Type }}<br />
-                    CPU: {{ item.CPU }}
-                </td>
-                <td class="px-6 py-4">
-                    <button (click)="removeItem(userId, item.Item_ID)"
-                        class="text-red-600 hover:underline">Remove</button>
-                    <button (click)="openDetailsModal(item)"
-                        class="text-blue-600 hover:underline block mt-1">Details</button>
-                </td>
-            </tr>
-        </tbody>
-    </table>
-</div>
+    <!-- Clear All -->
+    <div *ngIf="selectedTabData().length > 0" class="text-center mb-4">
+        <button (click)="clearAll()" class="clear-btn">
+            Clear All
+        </button>
+    </div>
 
-<!-- ✅ Laptops Tab -->
-<div *ngIf="activeTab === 'laptops'" class="overflow-x-auto rounded-md shadow-lg border dark:border-gray-700">
-    <table class="min-w-full text-sm text-gray-800 dark:text-gray-300">
-        <thead class="text-xs bg-gray-200 dark:bg-gray-800">
-            <tr>
-                <th class="p-4">Image</th>
-                <th class="px-6 py-3">Price</th>
-                <th class="px-6 py-3">Specs</th>
-                <th class="px-6 py-3">Actions</th>
-            </tr>
-        </thead>
-        <tbody>
-            <tr *ngFor="let item of comparisonLaptops; trackBy: trackByItemId"
-                class="bg-white dark:bg-gray-900 border-b dark:border-gray-700">
-                <td class="p-4 text-center">
-                    <img [src]="'https://sm-ecommerce.runasp.net/' + item.Image_Cover"
-                        class="w-16 h-16 object-contain rounded shadow-sm" />
-                    <div class="font-semibold mt-2">{{ item.Item_Name }}</div>
-                </td>
-                <td class="px-6 py-4 font-semibold">{{ item.Price | currency:'USD' }}</td>
-                <td class="px-6 py-4 text-sm">
-                    RAM: {{ item.RAM }}<br />
-                    Memory: {{ item.Memory }} {{ item.Memory_Type }}<br />
-                    CPU: {{ item.CPU }}<br />
-                    Screen: {{ item.Screen_Size }}", Weight: {{ item.Weight }}kg
-                </td>
-                <td class="px-6 py-4">
-                    <button (click)="removeItem(userId, item.Item_ID)"
-                        class="text-red-600 hover:underline">Remove</button>
-                    <button (click)="openDetailsModal(item)"
-                        class="text-blue-600 hover:underline block mt-1">Details</button>
-                </td>
-            </tr>
-        </tbody>
-    </table>
+    <!-- Comparison Table -->
+    <div class="overflow-x-auto">
+        <div *ngIf="selectedTabData().length > 0" class="min-w-full overflow-x-auto">
+            <table class="comparison-table">
+                <thead>
+                    <tr>
+                        <th class="feature-col">Feature</th>
+                        <th *ngFor="let item of selectedTabData()" class="product-col fade-in">
+                            <div class="product-card">
+                                <img [src]="'https://sm-ecommerce.runasp.net/' + item.Image_Cover"
+                                    class="product-image" />
+                                <div class="product-name">{{ item.Item_Name }}</div>
+                                <button (click)="removeItem(item.Item_ID)" class="remove-btn">Remove</button>
+
+                                <button (click)="addCart(userId, item.Item_ID , 1)" class="add-btn">
+                                    Add to Cart
+                                </button>
+                            </div>
+                        </th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td class="feature">CPU</td>
+                        <td *ngFor="let item of selectedTabData()" class="value">{{ item.CPU }}</td>
+                    </tr>
+                    <tr>
+                        <td class="feature">RAM</td>
+                        <td *ngFor="let item of selectedTabData()" class="value">{{ item.RAM }} GB</td>
+                    </tr>
+                    <tr *ngIf="selectedTab !== 'phones'">
+                        <td class="feature">Graphics</td>
+                        <td *ngFor="let item of selectedTabData()" class="value">{{ item.Graphics_Card || '—' }}</td>
+                    </tr>
+                    <tr *ngIf="selectedTab === 'phones'">
+                        <td class="feature">Storage</td>
+                        <td *ngFor="let item of selectedTabData()" class="value">{{ item.Memory }} GB</td>
+                    </tr>
+                    <tr>
+                        <td class="feature">Price</td>
+                        <td *ngFor="let item of selectedTabData()" class="value">
+                            <span class="line-through price-old">{{ item.Price }} EGP</span><br />
+                            <span class="price-new">{{ item.Price_After_Sale }} EGP</span>
+                        </td>
+                    </tr>
+
+                    <tr>
+                        <td class="feature">Weight</td>
+                        <td *ngFor="let item of selectedTabData()" class="value">{{ item.Weight ? (item.Weight + ' kg')
+                            : '—' }}</td>
+                    </tr>
+                    <tr>
+                        <td class="feature">Color</td>
+                        <td *ngFor="let item of selectedTabData()" class="value">{{ item.Color || '—' }}</td>
+                    </tr>
+                    <tr>
+                        <td class="feature">Screen Size</td>
+                        <td *ngFor="let item of selectedTabData()" class="value">{{ item.Screen_Size ? (item.Screen_Size
+                            + ' inches') : '—' }}</td>
+                    </tr>
+
+                    <tr>
+                        <td class="feature">Model</td>
+                        <td *ngFor="let item of selectedTabData()" class="value">{{ item.Model || '—' }}</td>
+                    </tr>
+
+                </tbody>
+            </table>
+        </div>
+
+        <div *ngIf="selectedTabData().length === 0" class="text-center text-gray-500 mt-6">
+            No products to compare in this category.
+        </div>
+    </div>
 </div>

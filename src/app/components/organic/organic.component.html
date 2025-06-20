@@ -1,5 +1,125 @@
 <app-chatbot></app-chatbot>
 <section class="mx-5">
+
+    <div class="flex justify-end mb-4">
+        <button (click)="showFilters = true"
+            class="bg-gradient-to-r from-blue-600 to-blue-800 hover:from-blue-700 hover:to-blue-900 text-white px-6 py-2 rounded-full shadow-lg transition-all duration-300">
+            <i class="fa-solid fa-sliders mr-2"></i> Filters
+        </button>
+    </div>
+
+    <!-- Overlay -->
+    <div *ngIf="showFilters"
+        class="fixed inset-0 z-50 bg-black/50 backdrop-blur-sm flex items-center justify-center transition-opacity duration-300">
+        <div class="bg-white w-full max-w-5xl mx-auto p-8 rounded-3xl shadow-2xl relative animate-fade-in">
+            <button (click)="showFilters = false"
+                class="absolute top-5 right-5 text-gray-500 hover:text-red-600 text-xl transition duration-200">
+                <i class="fa-solid fa-xmark"></i>
+            </button>
+
+            <h2 class="text-2xl font-bold text-gray-800 mb-6">
+                <i class="fa-solid fa-filter mr-2 text-blue-600"></i> Advanced Product Filters
+            </h2>
+
+            <form [formGroup]="filterForm">
+                <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+                    <!-- Filter Inputs -->
+                    <div>
+                        <label class="block text-sm text-gray-600 mb-1">Search</label>
+                        <input type="text" formControlName="searchQuery"
+                            class="w-full px-4 py-2 rounded-xl border border-gray-300 focus:ring-2 focus:ring-blue-400 focus:outline-none transition-all" />
+                    </div>
+                    <div>
+                        <label for="countries" for="countries" class="block text-sm text-gray-600 mb-1">Category</label>
+                        <select name="Category_ID" (change)="onCategoryChange($event)" formControlName="categry"
+                            id="countries"
+                            class="w-full px-4 py-2 rounded-xl border border-gray-300 focus:ring-2 focus:ring-blue-400 focus:outline-none transition-all">
+                            <option value=null selected>Select Category</option>
+                            @for (item of categoryList; track $index) {
+                            <option value="{{ item.Category_ID }}">
+                                {{ item.Category_Name }}
+                            </option>
+
+                            }
+
+                        </select>
+                        <div>
+                            <label for="countries2" class="block text-sm text-gray-600 mb-1">SubCategory</label>
+
+                            <select name="Sub_Category_ID" (change)="onSubCategoryChange($event)" id="countries2"
+                                formControlName="subCategry"
+                                class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500">
+                                <option value=null selected>Select Sub Category</option>
+                                @for (item of subCategoryList; track $index) {
+                                <option value="{{ item.Sub_Category_ID }}">
+                                    {{ item.Sub_Category_Name }}
+                                </option>
+
+                                }
+                                <!-- <option value="1">Smartphones</option>
+      <option value="3">Tablets</option>
+      <option value="2">Laptops</option>
+      <option value="FR">Refrigerators</option>
+      <option value="DE">Clothing for Men</option>
+      <option value="7">Tvs</option>
+      <option value="4">SmartWatches</option>
+      <option value="19">PCs</option> -->
+                            </select>
+                        </div>
+                        <div>
+                            <label class="block text-sm text-gray-600 mb-1">Min Price</label>
+                            <input type="number" formControlName="minPrice"
+                                class="w-full px-4 py-2 rounded-xl border border-gray-300 focus:ring-2 focus:ring-blue-400 focus:outline-none transition-all" />
+                        </div>
+                        <div>
+                            <label class="block text-sm text-gray-600 mb-1">Max Price</label>
+                            <input type="number" formControlName="maxPrice"
+                                class="w-full px-4 py-2 rounded-xl border border-gray-300 focus:ring-2 focus:ring-blue-400 focus:outline-none transition-all" />
+                        </div>
+                        <div>
+                            <label class="block text-sm text-gray-600 mb-1">Min Rate</label>
+                            <input type="number" formControlName="minRate" min="0" max="5"
+                                class="w-full px-4 py-2 rounded-xl border border-gray-300 focus:ring-2 focus:ring-blue-400 focus:outline-none transition-all" />
+                        </div>
+                        <!-- Checkboxes -->
+                        <div class="col-span-1 flex items-center space-x-3">
+                            <input type="checkbox" formControlName="mostViewed" class="w-5 h-5 text-blue-600" />
+                            <label class="text-gray-700">Most Viewed</label>
+                        </div>
+                        <div class="col-span-1 flex items-center space-x-3">
+                            <input type="checkbox" formControlName="newwest" class="w-5 h-5 text-blue-600" />
+                            <label class="text-gray-700">Newest</label>
+                        </div>
+                        <div class="col-span-1 flex items-center space-x-3">
+                            <input type="checkbox" formControlName="mostSold" class="w-5 h-5 text-blue-600" />
+                            <label class="text-gray-700">Most Sold</label>
+                        </div>
+                        <div>
+                            <label class="block text-sm text-gray-600 mb-1">Page</label>
+                            <input type="number" formControlName="pageNumber"
+                                class="w-full px-4 py-2 rounded-xl border border-gray-300 focus:ring-2 focus:ring-blue-400 focus:outline-none transition-all" />
+                        </div>
+                        <div>
+                            <label class="block text-sm text-gray-600 mb-1">Page Size</label>
+                            <input type="number" formControlName="pageSize"
+                                class="w-full px-4 py-2 rounded-xl border border-gray-300 focus:ring-2 focus:ring-blue-400 focus:outline-none transition-all" />
+                        </div>
+                    </div>
+
+                    <!-- Apply Button -->
+                    <div class="mt-8 text-right">
+                        <button type="button" (click)="applyFilters()"
+                            class="bg-gradient-to-r from-blue-500 to-indigo-600 hover:from-blue-600 hover:to-indigo-700 text-white px-6 py-2 rounded-xl shadow-md transition hover:scale-105">
+                            <i class="fa-solid fa-check mr-2"></i> Apply Filters
+                        </button>
+                    </div>
+                </div>
+
+
+            </form>
+        </div>
+    </div>
+
     <section>
         <div class="flex-row  ">
 
@@ -26,7 +146,7 @@
             <p class="text-justify text-gray-500 dark:text-gray-400 my-4">Top Categories Of The Week</p>
         </div>
 
-        <div class="grid grid-cols-2 md:grid-cols-2 lg:grid-cols-8 mt-10 gap-6 text-center my-2">
+        <div class="grid grid-cols-2 md:grid-cols-2 lg:grid-cols-8 mt-10 gap-6 text-end my-2">
             <div class="ghost transition-transform duration-300 hover:scale-105 bg-white p-4 rounded-xl shadow-sm">
                 <img src="../../../assets/images/vegetable.svg.png"
                     class="m-auto filter hover:brightness-110 transition duration-300" alt="">
@@ -89,242 +209,112 @@
             </p>
 
         </div>
-        <div class="slick-list mt-8 ">
+        <div class="product slick-list px-4 py-6">
+            <div class="grid gap-6 grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 xl:grid-cols-5">
+                @for (product of productList.slice(0,20) ; track product.Data.Item_ID) {
+                <div
+                    class="group bg-white rounded-xl shadow-md p-4 hover:shadow-lg transition-all duration-300 flex flex-col justify-between relative overflow-hidden">
 
 
-            <div class="gap-10 grid  grid-cols-1 sm:grid-cols-2 lg:grid-cols-6 mb-5">
-                <div [routerLink]="['/p-thumnail' ,]" class="productt pt-3">
-                    <div> <img src="./assets/images/1.jpg.png" width="140px" class="m-auto">
-                    </div>
-                    <p class="p-2">Butter Croissant</p>
-                    <div class="p-2">
-                        <span> <i class="fa-solid fa-star rating-color"></i></span>
-                        <span> <i class="fa-solid fa-star rating-color"></i></span>
-                        <span> <i class="fa-solid fa-star rating-color"></i></span>
-                        <span> <i class="fa-solid fa-star rating-color"></i></span>
-                        <span> <i class="fa-solid fa-star rating-color"></i></span>
-                    </div>
-                    <p class="p-2">1 KG</p>
-                    <div class="flex">
-                        <p class="mt-3"><span class="text-main mx-2">$80.00</span></p>
-                        <button type="button"
-                            class=" w-1/2 btn-mainn ms-10 text-green-700 hover:text-white border border-green-700 hover:bg-green-800 focus:ring-4 focus:outline-none focus:ring-green-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center me-2 mb-2 dark:border-green-500 dark:text-green-500 dark:hover:text-white dark:hover:bg-green-600 dark:focus:ring-green-800">Add
-                            +</button>
-                    </div>
-                </div>
-                <div class="productt pt-3 ">
-                    <img src="../../../assets/images/rice.png" class="m-auto">
-                    <p class="p-2">Bambino Elbow </p>
-                    <div class="p-2">
-                        <span> <i class="fa-solid fa-star rating-color"></i></span>
-                        <span> <i class="fa-solid fa-star rating-color"></i></span>
-                        <span> <i class="fa-solid fa-star rating-color"></i></span>
-                        <span> <i class="fa-solid fa-star rating-color"></i></span>
-                        <span> <i class="fa-solid fa-star rating-color"></i></span>
-                    </div>
-                    <p class="p-2">1 KG</p>
-                    <div class="flex">
-                        <p class="mt-3"><span class="text-main mx-2">$80.00</span></p>
-                        <button type="button"
-                            class="w-1/2 btn-mainn ms-10 text-green-700 hover:text-white border border-green-700 hover:bg-green-800 focus:ring-4 focus:outline-none focus:ring-green-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center me-2 mb-2 dark:border-green-500 dark:text-green-500 dark:hover:text-white dark:hover:bg-green-600 dark:focus:ring-green-800">Add
-                            +</button>
-                    </div>
-                </div>
-                <div class="productt pt-3 ">
+                    <!-- <div *ngIf="product.Data.Discount"
+                        class="absolute top-2 left-2 bg-red-600 text-white text-xs font-bold px-2 py-1 rounded">
+                        <span>sale</span>
 
-                    <img src="../../../assets/images/cheese.png" class="m-auto">
-                    <p class="p-2">Tuffets Britannia </p>
-                    <div class="p-2">
-                        <span> <i class="fa-solid fa-star rating-color"></i></span>
-                        <span> <i class="fa-solid fa-star rating-color"></i></span>
-                        <span> <i class="fa-solid fa-star rating-color"></i></span>
-                        <span> <i class="fa-solid fa-star rating-color"></i></span>
-                        <span> <i class="fa-solid fa-star rating-color"></i></span>
-                    </div>
-                    <p class="p-2">1 KG</p>
-                    <div class="flex">
-                        <p class="mt-3"><span class="text-main mx-2">$80.00</span></p>
-                        <button type="button"
-                            class="w-1/2 btn-mainn ms-10 text-green-700 hover:text-white border border-green-700 hover:bg-green-800 focus:ring-4 focus:outline-none focus:ring-green-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center me-2 mb-2 dark:border-green-500 dark:text-green-500 dark:hover:text-white dark:hover:bg-green-600 dark:focus:ring-green-800">Add
-                            +</button>
-                    </div>
-                </div>
-                <div class="productt pt-3 ">
+                    
+                    </div> -->
 
-                    <img src="../../../assets/images/yog.png" class="m-auto">
-                    <p class="p-2"> Yogurt </p>
-                    <div class="p-2">
-                        <span> <i class="fa-solid fa-star rating-color"></i></span>
-                        <span> <i class="fa-solid fa-star rating-color"></i></span>
-                        <span> <i class="fa-solid fa-star rating-color"></i></span>
-                        <span> <i class="fa-solid fa-star rating-color"></i></span>
-                        <span> <i class="fa-solid fa-star rating-color"></i></span>
+                    <!-- Badge New -->
+                    <div *ngIf="isNew(product.Data.Crate_Date)"
+                        class="absolute top-2 right-2 bg-blue-600 text-white text-xs font-bold px-2 py-1 rounded">
+                        NEW
                     </div>
-                    <p class="p-2">1 KG</p>
-                    <div class="flex">
-                        <p class="mt-3"><span class="text-main mx-2">$80.00</span></p>
-                        <button type="button"
-                            class="w-1/2 btn-mainn ms-10 text-green-700 hover:text-white border border-green-700 hover:bg-green-800 focus:ring-4 focus:outline-none focus:ring-green-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center me-2 mb-2 dark:border-green-500 dark:text-green-500 dark:hover:text-white dark:hover:bg-green-600 dark:focus:ring-green-800">Add
-                            +</button>
-                    </div>
-                </div>
-                <div class="productt pt-3 ">
 
-                    <img src="../../../assets/images/cheese.png" class="m-auto">
-                    <p class="p-2">Tuffets Britannia </p>
-                    <div class="p-2">
-                        <span> <i class="fa-solid fa-star rating-color"></i></span>
-                        <span> <i class="fa-solid fa-star rating-color"></i></span>
-                        <span> <i class="fa-solid fa-star rating-color"></i></span>
-                        <span> <i class="fa-solid fa-star rating-color"></i></span>
-                        <span> <i class="fa-solid fa-star rating-color"></i></span>
-                    </div>
-                    <p class="p-2">1 KG</p>
-                    <div class="flex">
-                        <p class="mt-3"><span class="text-main mx-2">$80.00</span></p>
-                        <button type="button"
-                            class="w-1/2 btn-mainn ms-10 text-green-700 hover:text-white border border-green-700 hover:bg-green-800 focus:ring-4 focus:outline-none focus:ring-green-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center me-2 mb-2 dark:border-green-500 dark:text-green-500 dark:hover:text-white dark:hover:bg-green-600 dark:focus:ring-green-800">Add
-                            +</button>
-                    </div>
-                </div>
-                <div class="productt pt-3 ">
+                    <!-- محتوى المنتج -->
+                    <div [routerLink]="['/p-thumnail', product.Data.Item_ID]" class="cursor-pointer">
 
-                    <img src="../../../assets/images/Link → 13.png.png" class="m-auto">
-                    <p class="p-2">Butter Croissant</p>
-                    <div class="p-2">
-                        <span> <i class="fa-solid fa-star rating-color"></i></span>
-                        <span> <i class="fa-solid fa-star rating-color"></i></span>
-                        <span> <i class="fa-solid fa-star rating-color"></i></span>
-                        <span> <i class="fa-solid fa-star rating-color"></i></span>
-                        <span> <i class="fa-solid fa-star rating-color"></i></span>
+                        <img [src]="'https://sm-ecommerce.runasp.net/' + product.Data.Image_Cover"
+                            alt="{{ product.Data.Category_Name }}" class="w-full h-48 object-fill rounded-lg mb-3" />
+
+                        <p class="text-sm text-blue-700 font-semibold truncate mb-1">{{ product.Data.Item_Name }}
+                        </p>
+                        <p class="text-md font-bold text-gray-800">{{ product.Data.Price_out -
+                            product.Data.Discount | currency: 'GBP' }}
+                            <span class="line-through price-old">{{ product.Data.Price_out| currency: 'GBP' }}
+                            </span>
+                            <!-- <span class="line-through price-old">{{ item.Price }} EGP</span><br /> -->
+                            <!-- <span class="price-new">{{ item.Price_After_Sale }} EGP</span> -->
+                        </p>
+                        <p class="text-sm text-green-600 font-medium">In Stock: {{ product.Data.Quantity }}</p>
+
+                        <!-- التقييم -->
+                        <div class="flex items-center mt-2 space-x-1 text-yellow-400">
+                            @for (num of [1,2,3,4,5].slice(0, product.Data.Rate); track $index) {
+                            <i class="fa-solid fa-star text-sm"></i>
+                            }
+                            @if (product.Data.Rate % 1 !== 0) {
+                            <i class="fa-solid fa-star-half-stroke text-sm"></i>
+                            }
+                            <span class="text-gray-500 text-xs ml-1">({{ product.Data.Rate }})</span>
+                        </div>
                     </div>
-                    <p class="p-2">1 KG</p>
-                    <div class="flex">
-                        <p class="mt-3"><span class="text-main mx-2">$80.00</span></p>
+
+                    <!-- الأزرار -->
+                    <div
+                        class="absolute bottom-0 left-0 w-full bg-white px-4 py-3 flex justify-between items-center space-x-2 opacity-0 translate-y-full group-hover:opacity-100 group-hover:translate-y-0 transition-all duration-300 rounded-b-xl border-t">
                         <button type="button"
-                            class="w-1/2 btn-mainn ms-10 text-green-700 hover:text-white border border-green-700 hover:bg-green-800 focus:ring-4 focus:outline-none focus:ring-green-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center me-2 mb-2 dark:border-green-500 dark:text-green-500 dark:hover:text-white dark:hover:bg-green-600 dark:focus:ring-green-800">Add
-                            +</button>
+                            class="relative flex items-center justify-center w-10 h-10 rounded-full transition-all duration-300 group hover:bg-green-600 hover:text-white"
+                            (click)="addToCart(userId, product.Data.Item_ID)"
+                            [disabled]="cartLoading.has(product.Data.Item_ID)" [attr.title]="cartLoading.has(product.Data.Item_ID)? 'Adding to cart...': cartIds.has(product.Data.Item_ID)? 
+                                'Already in cart': 'Add to cart'"
+                            [style.backgroundColor]="cartIds.has(product.Data.Item_ID) ? '#bbf7d0' : '#e5e7eb'"
+                            [style.color]="cartIds.has(product.Data.Item_ID) ? '#15803d' : '#22c55e' ">
+
+                            <!-- حالة التحميل -->
+                            <i *ngIf="cartLoading.has(product.Data.Item_ID)"
+                                class="fas fa-spinner fa-spin text-green-600 group-hover:text-white transition-colors duration-300"></i>
+
+                            <!-- المنتج موجود في السلة -->
+                            <i *ngIf="!cartLoading.has(product.Data.Item_ID) && cartIds.has(product.Data.Item_ID)"
+                                class="fa-solid fa-cart-shopping animate-ping-once"></i>
+
+                            <!-- المنتج مش في السلة -->
+                            <i *ngIf="!cartLoading.has(product.Data.Item_ID) && !cartIds.has(product.Data.Item_ID)"
+                                class="fa-solid fa-cart-plus group-hover:text-white transition-colors duration-300"></i>
+
+                        </button>
+
+                        <button type="button"
+                            class="relative flex items-center justify-center w-10 h-10 rounded-full transition-all duration-300 group hover:bg-red-500 hover:text-white"
+                            (click)="addWish(userId, product.Data.Item_ID)"
+                            [disabled]="wishlistLoading.has(product.Data.Item_ID)" [attr.title]=" wishlistLoading.has(product.Data.Item_ID)  ? 'Adding...': wishlistIds.has(product.Data.Item_ID)
+                                    ? 'Added to Wishlist ' : 'Add to Wishlist'"
+                            [style.backgroundColor]="wishlistIds.has(product.Data.Item_ID) ? '#fee2e2' : '#e5e7eb'"
+                            [style.color]=" wishlistIds.has(product.Data.Item_ID) ? '#dc2626' : '#ef4444'">
+
+                            <!-- Spinner أثناء التحميل -->
+                            <i *ngIf="wishlistLoading.has(product.Data.Item_ID)"
+                                class="fas fa-spinner fa-spin text-red-500 group-hover:text-white transition-colors duration-300"></i>
+
+                            <!-- المنتج في المفضلة -->
+                            <i *ngIf="!wishlistLoading.has(product.Data.Item_ID) && wishlistIds.has(product.Data.Item_ID)"
+                                class="fa-solid fa-heart text-red-600 animate-ping-once"></i>
+
+                            <!-- المنتج مش في المفضلة -->
+                            <i *ngIf="!wishlistLoading.has(product.Data.Item_ID) && !wishlistIds.has(product.Data.Item_ID)"
+                                class="fa-regular fa-heart text-red-500 group-hover:text-white transition-colors duration-300"></i>
+
+                        </button>
+
+
+
+
+
+
                     </div>
                 </div>
 
+                }
             </div>
-
-
-            <div class="gap-10 grid  grid-cols-1 sm:grid-cols-2 lg:grid-cols-6">
-                <div class="productt pt-3">
-                    <img src="../../../assets/images/Link → 13.png.png" class="m-auto">
-                    <p class="p-2">Butter Croissant</p>
-                    <div class="p-2">
-                        <span> <i class="fa-solid fa-star rating-color"></i></span>
-                        <span> <i class="fa-solid fa-star rating-color"></i></span>
-                        <span> <i class="fa-solid fa-star rating-color"></i></span>
-                        <span> <i class="fa-solid fa-star rating-color"></i></span>
-                        <span> <i class="fa-solid fa-star rating-color"></i></span>
-                    </div>
-                    <p class="p-2">1 KG</p>
-                    <div class="flex">
-                        <p class="mt-3"><span class="text-main  mx-2">$80.00</span></p>
-                        <button type="button"
-                            class=" w-1/2 btn-mainn ms-10 text-green-700 hover:text-white border border-green-700 hover:bg-green-800 focus:ring-4 focus:outline-none focus:ring-green-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center me-2 mb-2 dark:border-green-500 dark:text-green-500 dark:hover:text-white dark:hover:bg-green-600 dark:focus:ring-green-800">Add
-                            +</button>
-                    </div>
-                </div>
-                <div class="productt pt-3 ">
-                    <img src="../../../assets/images/bread.png" class="m-auto">
-                    <p class="p-2">Muffets Burger Bun</p>
-                    <div class="p-2">
-                        <span> <i class="fa-solid fa-star rating-color"></i></span>
-                        <span> <i class="fa-solid fa-star rating-color"></i></span>
-                        <span> <i class="fa-solid fa-star rating-color"></i></span>
-                        <span> <i class="fa-solid fa-star rating-color"></i></span>
-                        <span> <i class="fa-solid fa-star rating-color"></i></span>
-                    </div>
-                    <p class="p-2">1 KG</p>
-                    <div class="flex">
-                        <p class="mt-3"><span class="text-main  mx-2">$80.00</span></p>
-                        <button type="button"
-                            class="w-1/2 btn-mainn ms-10 text-green-700 hover:text-white border border-green-700 hover:bg-green-800 focus:ring-4 focus:outline-none focus:ring-green-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center me-2 mb-2 dark:border-green-500 dark:text-green-500 dark:hover:text-white dark:hover:bg-green-600 dark:focus:ring-green-800">Add
-                            +</button>
-                    </div>
-                </div>
-                <div class="productt pt-3 ">
-
-                    <img src="../../../assets/images/egg.png" class="m-auto">
-                    <p class="p-2">chicken egg</p>
-                    <div class="p-2">
-                        <span> <i class="fa-solid fa-star rating-color"></i></span>
-                        <span> <i class="fa-solid fa-star rating-color"></i></span>
-                        <span> <i class="fa-solid fa-star rating-color"></i></span>
-                        <span> <i class="fa-solid fa-star rating-color"></i></span>
-                        <span> <i class="fa-solid fa-star rating-color"></i></span>
-                    </div>
-                    <p class="p-2">1 KG</p>
-                    <div class="flex">
-                        <p class="mt-3 "><span class="text-main  mx-2"> $80.00</span></p>
-                        <button type="button"
-                            class="w-1/2 btn-mainn ms-10 text-green-700 hover:text-white border border-green-700 hover:bg-green-800 focus:ring-4 focus:outline-none focus:ring-green-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center me-2 mb-2 dark:border-green-500 dark:text-green-500 dark:hover:text-white dark:hover:bg-green-600 dark:focus:ring-green-800">Add
-                            +</button>
-                    </div>
-                </div>
-                <div class="productt pt-3 ">
-
-                    <img src="../../../assets/images/jam.png" class="m-auto">
-                    <p class="p-2">Butter Croissant</p>
-                    <div class="p-2">
-                        <span> <i class="fa-solid fa-star rating-color"></i></span>
-                        <span> <i class="fa-solid fa-star rating-color"></i></span>
-                        <span> <i class="fa-solid fa-star rating-color"></i></span>
-                        <span> <i class="fa-solid fa-star rating-color"></i></span>
-                        <span> <i class="fa-solid fa-star rating-color"></i></span>
-                    </div>
-                    <p class="p-2">1 KG</p>
-                    <div class="flex">
-                        <p class="mt-3 "><span class="text-main  mx-2">$80.00</span></p>
-                        <button type="button"
-                            class="w-1/2 btn-mainn ms-10 text-green-700 hover:text-white border border-green-700 hover:bg-green-800 focus:ring-4 focus:outline-none focus:ring-green-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center me-2 mb-2 dark:border-green-500 dark:text-green-500 dark:hover:text-white dark:hover:bg-green-600 dark:focus:ring-green-800">Add
-                            +</button>
-                    </div>
-                </div>
-                <div class="productt pt-3 ">
-
-                    <img src="../../../assets/images/egg.png" class="m-auto">
-                    <p class="p-2">chicken egg</p>
-                    <div class="p-2">
-                        <span> <i class="fa-solid fa-star rating-color"></i></span>
-                        <span> <i class="fa-solid fa-star rating-color"></i></span>
-                        <span> <i class="fa-solid fa-star rating-color"></i></span>
-                        <span> <i class="fa-solid fa-star rating-color"></i></span>
-                        <span> <i class="fa-solid fa-star rating-color"></i></span>
-                    </div>
-                    <p class="p-2">1 KG</p>
-                    <div class="flex">
-                        <p class="mt-3"><span class="text-main  mx-2">$80.00</span></p>
-                        <button type="button"
-                            class="w-1/2 btn-mainn ms-10 text-green-700 hover:text-white border border-green-700 hover:bg-green-800 focus:ring-4 focus:outline-none focus:ring-green-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center me-2 mb-2 dark:border-green-500 dark:text-green-500 dark:hover:text-white dark:hover:bg-green-600 dark:focus:ring-green-800">Add
-                            +</button>
-                    </div>
-                </div>
-                <div class="productt pt-3">
-                    <img src="../../../assets/images/orange.png" class="m-auto ">
-                    <p class="p-2">Frooti Mango Drink</p>
-                    <div class="p-2">
-                        <span> <i class="fa-solid fa-star rating-color"></i></span>
-                        <span> <i class="fa-solid fa-star rating-color"></i></span>
-                        <span> <i class="fa-solid fa-star rating-color"></i></span>
-                        <span> <i class="fa-solid fa-star rating-color"></i></span>
-                        <span> <i class="fa-solid fa-star rating-color"></i></span>
-                    </div>
-                    <p class="p-2">1 KG</p>
-                    <div class="flex">
-                        <p class="mt-3"><span class="text-main  mx-2">$80.00</span></p>
-                        <button type="button"
-                            class="w-1/2 btn-mainn ms-10 text-green-700 hover:text-white border border-green-700 hover:bg-green-800 focus:ring-4 focus:outline-none focus:ring-green-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center me-2 mb-2 dark:border-green-500 dark:text-green-500 dark:hover:text-white dark:hover:bg-green-600 dark:focus:ring-green-800">Add
-                            +</button>
-                    </div>
-                </div>
-
-            </div>
-
         </div>
 
 
@@ -332,121 +322,35 @@
 
     </section>
 
-    <section class="bg-green-50 rounded-2xl shadow-lg px-3 py-1 ">
-        <div class=" my-10  grid  grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 p-2 ">
+    <section class="bg-green-50 rounded-2xl shadow-lg px-3 py-1">
+        <!-- سلايدر عمودي موحد لكل الأقسام -->
+        <div
+            class="vertical-scroll-container-single grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 p-2 space-y-6 lg:space-y-0 lg:gap-6">
 
-
-            <div class="top-Selling ">
-                <h1 class="font-bold text-xl text-green-800">Top Selling</h1>
-                <div class=" my-6">
-
-                    @for (product of productList.slice(0, 4); track product.Data.Item_ID){
-                    <div [routerLink]="['/p-thumnail', product.Data.Item_ID]" class="cursor-pointer">
-
-                        <div class="flex my-6">
-
-                            <div class="mx-2">
-
-                                <img [src]="'https://sm-ecommerce.runasp.net/' + product.Data.Image_Cover"
-                                    alt="{{ product.Data.Category_Name }}"
-                                    class="w-24 h-24 object-fill rounded-lg mb-3">
-                            </div>
-                            <div>
-                                <p class="text-sm text-blue-700 font-semibold truncate mb-1">{{ product.Data.Item_Name
-                                    }}
-                                <div class="my-1">
-                                    <div class="flex items-center mt-2 space-x-1 text-yellow-400">
-                                        @for (num of [1,2,3,4,5].slice(0, product.Data.Rate); track $index) {
-                                        <i class="fa-solid fa-star text-sm"></i>
-                                        }
-                                        @if (product.Data.Rate % 1 !== 0) {
-                                        <i class="fa-solid fa-star-half-stroke text-sm"></i>
-                                        }
-                                        <span class="text-gray-500 text-xs ml-1">({{ product.Data.Rate }})</span>
-                                    </div>
-                                </div>
-                                <p class="text-md font-bold text-gray-800">{{ product.Data.Price_out | currency: 'GBP'
-                                    }}
-                                </p>
-                            </div>
-                        </div>
-                    </div>
-                    }
-                </div>
-
-
-            </div>
-
-
-
-
-
-            <div class="Trending-p col-span-1  w-full">
-                <h1 class="font-bold text-xl">Trending products</h1>
-                <div class=" my-6">
-                    @for (product of productList.slice(5, 9); track product.Data.Item_ID){
-                    <div [routerLink]="['/p-thumnail', product.Data.Item_ID]" class="cursor-pointer">
-
+            <!-- Top Selling -->
+            <div class="top-Selling">
+                <h1 class="font-bold text-xl text-green-800 sticky-title text-end">Top Selling</h1>
+                <div class="space-y-4 mt-4">
+                    @for (product of TopSolddDetails; track product.Item_ID) {
+                    <div [routerLink]="['/p-thumnail', product.Item_ID]" class="cursor-pointer" style="direction: ltr;">
                         <div class="flex my-6">
                             <div class="mx-2">
-                                <img [src]="'https://sm-ecommerce.runasp.net/' + product.Data.Image_Cover"
-                                    alt="{{ product.Data.Category_Name }}"
-                                    class="w-24 h-24 object-fill rounded-lg mb-3">
+                                <img [src]="'https://sm-ecommerce.runasp.net/' + product.Image_Cover"
+                                    alt="{{ product.Item_Name }}" class="w-24 h-24 object-fill rounded-lg mb-3" />
                             </div>
                             <div>
-                                <p class="text-sm text-blue-700 font-semibold truncate mb-1">{{ product.Data.Item_Name
-                                    }}
+                                <p class="text-sm text-blue-700 font-semibold truncate mb-1">{{ product.Item_Name }}</p>
                                 <div class="my-1">
                                     <div class="flex items-center mt-2 space-x-1 text-yellow-400">
-                                        @for (num of [1,2,3,4,5].slice(0, product.Data.Rate); track $index) {
+                                        @for (num of [1, 2, 3, 4, 5].slice(0, product.Rate); track $index) {
                                         <i class="fa-solid fa-star text-sm"></i>
                                         }
-                                        @if (product.Data.Rate % 1 !== 0) {
+                                        @if (product.Rate % 1 !== 0) {
                                         <i class="fa-solid fa-star-half-stroke text-sm"></i>
                                         }
-                                        <span class="text-gray-500 text-xs ml-1">({{ product.Data.Rate }})</span>
+                                        <span class="text-gray-500 text-xs ml-1">({{ product.Rate }})</span>
                                     </div>
                                 </div>
-                                <p class="text-md font-bold text-gray-800">{{ product.Data.Price_out | currency: 'GBP'
-                                    }}
-                                </p>
-                            </div>
-                        </div>
-                    </div>
-                    }
-
-                </div>
-            </div>
-            <div class="Recently col-span-1  w-full">
-                <h1 class="font-bold text-xl">Recently added</h1>
-                <div class=" my-6">
-                    @for (product of productList.slice(0, 4 ); track product.Data.Item_ID){
-                    <div [routerLink]="['/p-thumnail', product.Data.Item_ID]" class="cursor-pointer">
-
-                        <div class="flex my-6">
-
-                            <div class="mx-2">
-                                <img [src]="'https://sm-ecommerce.runasp.net/' + product.Data.Image_Cover"
-                                    alt="{{ product.Data.Category_Name }}"
-                                    class="w-24 h-24 object-fill rounded-lg mb-3">
-                            </div>
-                            <div>
-                                <p class="text-sm text-blue-700 font-semibold truncate mb-1">{{ product.Data.Item_Name
-                                    }}
-                                <div class="my-1">
-                                    <div class="flex items-center mt-2 space-x-1 text-yellow-400">
-                                        @for (num of [1,2,3,4,5].slice(0, product.Data.Rate); track $index) {
-                                        <i class="fa-solid fa-star text-sm"></i>
-                                        }
-                                        @if (product.Data.Rate % 1 !== 0) {
-                                        <i class="fa-solid fa-star-half-stroke text-sm"></i>
-                                        }
-                                        <span class="text-gray-500 text-xs ml-1">({{ product.Data.Rate }})</span>
-                                    </div>
-                                </div>
-                                <p class="text-md font-bold text-gray-800">{{ product.Data.Price_out | currency: 'GBP'
-                                    }}
-                                </p>
                             </div>
                         </div>
                     </div>
@@ -454,26 +358,25 @@
                 </div>
             </div>
 
-
-
-            <div class="top-Rated col-span-1  w-full">
-                <h1 class="font-bold text-xl">Top Rated</h1>
-                <div class=" my-6">
-                    @for (product of productList.slice(6, 11 ); track product.Data.Item_ID){
-                    <div [routerLink]="['/p-thumnail', product.Data.Item_ID]" class="cursor-pointer">
-
+            <!-- Trending Products -->
+            <div class="Trending-p">
+                <h1 class="font-bold text-xl text-green-800 sticky-title text-end">Trending products</h1>
+                <div class="space-y-4 mt-4">
+                    @for (product of productList.slice(5, 11); track product.Data.Item_ID) {
+                    <div [routerLink]="['/p-thumnail', product.Data.Item_ID]" class="cursor-pointer"
+                        style="direction: ltr;">
                         <div class="flex my-6">
                             <div class="mx-2">
                                 <img [src]="'https://sm-ecommerce.runasp.net/' + product.Data.Image_Cover"
                                     alt="{{ product.Data.Category_Name }}"
-                                    class="w-24 h-24 object-fill rounded-lg mb-3">
+                                    class="w-24 h-24 object-fill rounded-lg mb-3" />
                             </div>
                             <div>
                                 <p class="text-sm text-blue-700 font-semibold truncate mb-1">{{ product.Data.Item_Name
-                                    }}
+                                    }}</p>
                                 <div class="my-1">
                                     <div class="flex items-center mt-2 space-x-1 text-yellow-400">
-                                        @for (num of [1,2,3,4,5].slice(0, product.Data.Rate); track $index) {
+                                        @for (num of [1, 2, 3, 4, 5].slice(0, product.Data.Rate); track $index) {
                                         <i class="fa-solid fa-star text-sm"></i>
                                         }
                                         @if (product.Data.Rate % 1 !== 0) {
@@ -483,8 +386,61 @@
                                     </div>
                                 </div>
                                 <p class="text-md font-bold text-gray-800">{{ product.Data.Price_out | currency: 'GBP'
-                                    }}
-                                </p>
+                                    }}</p>
+                            </div>
+                        </div>
+                    </div>
+                    }
+                </div>
+            </div>
+
+            <!-- Most View -->
+            <div class="MostView">
+                <h1 class="font-bold text-xl text-green-800 sticky-title text-end">Most View</h1>
+                <div class="space-y-4 mt-4">
+                    @for (product of TopMostviewedDetails.slice(0, 6); track $index) {
+                    <div [routerLink]="['/p-thumnail',]" class="cursor-pointer" style="direction: ltr;">
+                        <div class="flex my-6">
+                            <div class="mx-2">
+                                <img [src]="'https://sm-ecommerce.runasp.net/' + product.Image_Cover"
+                                    alt="{{ product.Item_Name }}" class="w-24 h-24 object-fill rounded-lg mb-3" />
+                            </div>
+                            <div>
+                                <p class="text-sm text-blue-700 font-semibold truncate mb-1">{{ product.Item_Name }}</p>
+                                <p class="text-md font-bold text-gray-800">{{ product.Price_out | currency: 'GBP' }}</p>
+                            </div>
+                        </div>
+                    </div>
+                    }
+                </div>
+            </div>
+
+            <!-- Top Rated -->
+            <div class="top-Rated">
+                <h1 class="font-bold text-xl text-green-800 sticky-title text-end ">Top Rated</h1>
+                <div class="space-y-4 mt-4">
+                    @for (product of TopRatedDetails.slice(0, 6); track product.Item_ID) {
+                    <div [routerLink]="['/p-thumnail', product.Item_ID]" class="cursor-pointer" style="direction: ltr;">
+                        <div class="flex my-6">
+                            <div class="mx-2">
+                                <img [src]="'https://sm-ecommerce.runasp.net/' + product.Image_Cover"
+                                    alt="{{ product.Item_Name }}" class="w-24 h-24 object-fill rounded-lg mb-3" />
+                            </div>
+                            <div>
+                                <p class="text-sm text-blue-700 font-semibold truncate mb-1">{{ product.Item_Name }}</p>
+                                <div class="my-1">
+                                    <div class="flex items-center mt-2 space-x-1 text-yellow-400">
+                                        @for (num of [1, 2, 3, 4, 5].slice(0, product.AvgRating); track $index) {
+                                        <i class="fa-solid fa-star text-sm"></i>
+                                        }
+                                        @if (product.AvgRating % 1 !== 0) {
+                                        <i class="fa-solid fa-star-half-stroke text-sm"></i>
+                                        }
+                                        <span class="text-gray-500 text-xs ml-1">({{ (product.AvgRating + '').slice(0,
+                                            3) }})</span>
+                                    </div>
+                                </div>
+                                <p class="text-md font-bold text-gray-800">{{ product.Price_out | currency: 'GBP' }}</p>
                             </div>
                         </div>
                     </div>

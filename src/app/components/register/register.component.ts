@@ -58,6 +58,9 @@ export class RegisterComponent implements OnDestroy {
           // move to login
           if (res.message == "success") {
 
+
+            localStorage.setItem('justRegistered', 'true');
+
             localStorage.setItem('userToken', res.Token) // 1-save token
             this._Router.navigate(['/home'])
 

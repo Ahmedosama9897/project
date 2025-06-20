@@ -40,18 +40,24 @@ export class WishlistComponent implements OnInit {
   wishDetails: Iwish[] = [] // ✅ Array
 
 
-  userId: string = this._AuthService.userData.nameid; // أو ضع القيمة المناسبة
-
+  userId: string = '';
 
 
 
   ngOnInit(): void {
+    const storedUserId = localStorage.getItem('userID');
+
+    if (!storedUserId) {
+      console.warn('User ID not found in localStorage!');
+      return;
+    }
+
+    this.userId = storedUserId;
+
     this._WishListService.getProductWish(this.userId).subscribe({
       next: (res) => {
         console.log("wish", res);
-        this.wishDetails = res;
-
-        // ✅ تحديث العدد
+        this.wishDetails = res.data;
         this._WishListService.WishNumber.set(res.length);
       },
       error: (err) => {

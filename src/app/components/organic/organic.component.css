@@ -8,6 +8,39 @@
 }
 
 
+.vertical-scroll-container-single {
+    max-height: 700px;
+    overflow-y: auto;
+    direction: rtl;
+    padding-left: 8px;
+    scrollbar-width: thin;
+    scrollbar-color: #16a34a #e5e7eb;
+    border-left: 2px solid #e5e7eb;
+}
+
+.vertical-scroll-container-single::-webkit-scrollbar {
+    width: 6px;
+}
+
+.vertical-scroll-container-single::-webkit-scrollbar-thumb {
+    background-color: #16a34a;
+    border-radius: 6px;
+}
+
+.vertical-scroll-container-single::-webkit-scrollbar-track {
+    background-color: #e5e7eb;
+}
+
+.sticky-title {
+    position: sticky;
+    top: 0;
+    z-index: 10;
+    background-color: #f0fdf4;
+    padding: 8px 0;
+    border-bottom: 1px solid #d1fae5;
+    text-align: center;
+}
+
 
 .ghost {
     width: auto;
@@ -111,6 +144,8 @@
 
 /* ============= FRUIT =========== */
 .BREAKFAST {
+
+
     width: auto;
     height: auto;
     top: 124px;
@@ -156,15 +191,23 @@
 
 }
 
+
 .slick-list {
+
     width: auto;
     height: auto;
-    top: 124px;
-    left: 160px;
-    padding: 1px 0px 0px 0px;
+    top: 22px;
+    left: 12px;
+    /* padding: 1px 0px 0px 0px; */
     gap: 0px;
-    border-radius: 10px 0px 0px 0px;
-    border: 1px 0px 0px 0px;
+    /* border-radius: 10px 10px 10px 10px; */
+    /* border: 1px 0px 0px 0px; */
     opacity: 0px;
+    /* border: 1px solid #4A55684D */
+}
 
+.line-through {
+    text-decoration: line-through;
+    font-size: 0.8rem;
+    color: #9ca3af;
 }

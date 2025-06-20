@@ -1,49 +1,224 @@
 <div class="testt">
 
+    <div *ngIf="welcomeVisible" class="bg-green-100 text-green-800 p-3 rounded-md text-center shadow mb-4">
+        👋 Welcome back, we’ve got great deals for you today!
+    </div>
+
+    <!-- ✅ Welcome Popup (register only) -->
+    <!-- <div class="custom-popup" *ngIf="showPopup">
+    <div class="custom-popup-content">
+      <img src="assets/images/welcome-illustration.png" class="w-32 mx-auto mb-4" alt="Welcome" />
+      <h2 class="text-2xl font-bold text-blue-700 mb-2">Welcome to Your New Favorite Place! 💙</h2>
+      <p class="text-gray-600 mb-4">Your journey starts here. Discover, shop, and enjoy!</p>
+      <button class="popup-btn" (click)="closePopup()">Let's Go</button>
+    </div>
+  </div> -->
 
 
-    <section class="">
-        <div class="flex flex-wrap p-5 ">
-            <div class="w-full md:w-8/12">
-                <div>
-                    <owl-carousel-o [options]="customOptionsMain">
-                        <ng-template carouselSlide>
-                            <img src="./assets/images/slider-2.jpeg" class="w-full h-[300px] object-fill" alt="">
-                        </ng-template>
-                        <ng-template carouselSlide>
-                            <img src="../../../assets/images/pexels-elletakesphotos-1660030.jpg"
-                                class="w-full h-[300px] object-fill" alt="">
-                        </ng-template>
-                        <ng-template carouselSlide>
-                            <img src="./assets/images/blog-img-2.jpeg" class="w-full h-[300px] object-fill" alt="">
-                        </ng-template>
-                        <ng-template carouselSlide>
-                            <img src="../../../assets/images/pexels-ella-olsson-572949-1640777.jpg"
-                                class="w-full h-[300px] object-fill" alt="">
-                        </ng-template>
-                        <ng-template carouselSlide>
-                            <img src="./assets/images/slider-image-3.jpeg" class="w-full h-[300px] object-fill" alt="">
-                        </ng-template>
-                        <ng-template carouselSlide>
-                            <img src="./assets/images/slider-image-2.jpeg" class="w-full h-[300px] object-fill" alt="">
-                        </ng-template>
-                        <ng-template carouselSlide>
-                            <img src="./assets/images/slider-image-1.jpeg" class="w-full h-[300px] object-fill" alt="">
-                        </ng-template>
-                    </owl-carousel-o>
+    <div class="flex justify-end mb-4">
+        <button (click)="showFilters = true"
+            class="bg-gradient-to-r from-blue-600 to-blue-800 hover:from-blue-700 hover:to-blue-900 text-white px-6 py-2 rounded-full shadow-lg transition-all duration-300">
+            <i class="fa-solid fa-sliders mr-2"></i> Filters
+        </button>
+    </div>
+
+    <!-- Overlay -->
+    <div *ngIf="showFilters"
+        class="fixed inset-0 z-50 bg-black/50 backdrop-blur-sm flex items-center justify-center transition-opacity duration-300">
+        <div class="bg-white w-full max-w-5xl mx-auto p-8 rounded-3xl shadow-2xl relative animate-fade-in">
+            <button (click)="showFilters = false"
+                class="absolute top-5 right-5 text-gray-500 hover:text-red-600 text-xl transition duration-200">
+                <i class="fa-solid fa-xmark"></i>
+            </button>
+
+            <h2 class="text-2xl font-bold text-gray-800 mb-6">
+                <i class="fa-solid fa-filter mr-2 text-blue-600"></i> Advanced Product Filters
+            </h2>
+
+            <form [formGroup]="filterForm">
+                <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+                    <!-- Filter Inputs -->
+                    <div>
+                        <label class="block text-sm text-gray-600 mb-1">Search</label>
+                        <input type="text" formControlName="searchQuery"
+                            class="w-full px-4 py-2 rounded-xl border border-gray-300 focus:ring-2 focus:ring-blue-400 focus:outline-none transition-all" />
+                    </div>
+                    <div>
+                        <label for="countries" for="countries" class="block text-sm text-gray-600 mb-1">Category</label>
+                        <select name="Category_ID" (change)="onCategoryChange($event)" formControlName="categry"
+                            id="countries"
+                            class="w-full px-4 py-2 rounded-xl border border-gray-300 focus:ring-2 focus:ring-blue-400 focus:outline-none transition-all">
+                            <option value=null selected>Select Category</option>
+                            @for (item of categoryList; track $index) {
+                            <option value="{{ item.Category_ID }}">
+                                {{ item.Category_Name }}
+                            </option>
+
+                            }
+
+                        </select>
+                        <div>
+                            <label for="countries2" class="block text-sm text-gray-600 mb-1">SubCategory</label>
+
+                            <select name="Sub_Category_ID" (change)="onSubCategoryChange($event)" id="countries2"
+                                formControlName="subCategry"
+                                class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500">
+                                <option value=null selected>Select Sub Category</option>
+                                @for (item of subCategoryList; track $index) {
+                                <option value="{{ item.Sub_Category_ID }}">
+                                    {{ item.Sub_Category_Name }}
+                                </option>
+
+                                }
+                                <!-- <option value="1">Smartphones</option>
+      <option value="3">Tablets</option>
+      <option value="2">Laptops</option>
+      <option value="FR">Refrigerators</option>
+      <option value="DE">Clothing for Men</option>
+      <option value="7">Tvs</option>
+      <option value="4">SmartWatches</option>
+      <option value="19">PCs</option> -->
+                            </select>
+                        </div>
+                        <div>
+                            <label class="block text-sm text-gray-600 mb-1">Min Price</label>
+                            <input type="number" formControlName="minPrice"
+                                class="w-full px-4 py-2 rounded-xl border border-gray-300 focus:ring-2 focus:ring-blue-400 focus:outline-none transition-all" />
+                        </div>
+                        <div>
+                            <label class="block text-sm text-gray-600 mb-1">Max Price</label>
+                            <input type="number" formControlName="maxPrice"
+                                class="w-full px-4 py-2 rounded-xl border border-gray-300 focus:ring-2 focus:ring-blue-400 focus:outline-none transition-all" />
+                        </div>
+                        <div>
+                            <label class="block text-sm text-gray-600 mb-1">Min Rate</label>
+                            <input type="number" formControlName="minRate" min="0" max="5"
+                                class="w-full px-4 py-2 rounded-xl border border-gray-300 focus:ring-2 focus:ring-blue-400 focus:outline-none transition-all" />
+                        </div>
+                        <!-- Checkboxes -->
+                        <div class="col-span-1 flex items-center space-x-3">
+                            <input type="checkbox" formControlName="mostViewed" class="w-5 h-5 text-blue-600" />
+                            <label class="text-gray-700">Most Viewed</label>
+                        </div>
+                        <div class="col-span-1 flex items-center space-x-3">
+                            <input type="checkbox" formControlName="newwest" class="w-5 h-5 text-blue-600" />
+                            <label class="text-gray-700">Newest</label>
+                        </div>
+                        <div class="col-span-1 flex items-center space-x-3">
+                            <input type="checkbox" formControlName="mostSold" class="w-5 h-5 text-blue-600" />
+                            <label class="text-gray-700">Most Sold</label>
+                        </div>
+                        <div>
+                            <label class="block text-sm text-gray-600 mb-1">Page</label>
+                            <input type="number" formControlName="pageNumber"
+                                class="w-full px-4 py-2 rounded-xl border border-gray-300 focus:ring-2 focus:ring-blue-400 focus:outline-none transition-all" />
+                        </div>
+                        <div>
+                            <label class="block text-sm text-gray-600 mb-1">Page Size</label>
+                            <input type="number" formControlName="pageSize"
+                                class="w-full px-4 py-2 rounded-xl border border-gray-300 focus:ring-2 focus:ring-blue-400 focus:outline-none transition-all" />
+                        </div>
+                    </div>
+
+                    <!-- Apply Button -->
+                    <div class="mt-8 text-right">
+                        <button type="button" (click)="applyFilters()"
+                            class="bg-gradient-to-r from-blue-500 to-indigo-600 hover:from-blue-600 hover:to-indigo-700 text-white px-6 py-2 rounded-xl shadow-md transition hover:scale-105">
+                            <i class="fa-solid fa-check mr-2"></i> Apply Filters
+                        </button>
+                    </div>
                 </div>
-            </div>
-            <div class="w-full md:w-4/12 flex flex-col gap-0">
 
-                <img src="../../../assets/images/pexels-element5-775031.jpg" class="w-full h-[150px] object-fill"
-                    alt="">
-                <img src="../../../assets/images/the-fruit-splash-wallpapers-hd-wallpapers_274326-695.avif"
-                    class="w-full h-[150px] object-fill" alt="">
+
+            </form>
+        </div>
+    </div>
+
+    <section class="recommendlist px-5">
+        <h2 class="text-xl font-bold mb-4">
+            <i class="fa-solid fa-bolt text-yellow-400 mr-2"></i>
+            Recommended For You
+        </h2>
+
+        <div class="overflow-x-auto scroll-smooth snap-x snap-mandatory">
+            <div class="flex gap-4 min-w-full pb-4">
+                @for (product of recommendlist; track product.Data.Item_ID) {
+                <div
+                    class="fade-card snap-start min-w-[250px] max-w-[260px] flex-shrink-0 bg-white rounded-xl shadow-md p-4 hover:shadow-lg transition-all duration-300 flex flex-col justify-between relative overflow-hidden">
+
+                    <!-- Discount -->
+
+
+                    <!-- New Badge -->
+                    <div *ngIf="isNew(product.Data.Crate_Date)"
+                        class="absolute top-2 right-2 bg-blue-600 text-white text-xs font-bold px-2 py-1 rounded">NEW
+                    </div>
+
+                    <!-- Info -->
+                    <div [routerLink]="['/p-thumnail', product.Data.Item_ID]" class="cursor-pointer">
+                        <img [src]="'https://sm-ecommerce.runasp.net/' + product.Data.Image_Cover"
+                            alt="{{ product.Data.Item_Name }}" class="w-full h-40 object-cover rounded-lg mb-3" />
+
+                        <p class="text-sm text-blue-700 font-semibold truncate mb-1">{{ product.Data.Description }}</p>
+                        <p class="text-md font-bold text-gray-800">
+                            {{ product.Data.Price_out - product.Data.Discount | currency: 'GBP' }}
+                            <span class="line-through price-old">{{ product.Data.Price_out | currency: 'GBP' }}</span>
+                        </p>
+                        <p class="text-sm text-green-600 font-medium">In Stock: {{ product.Data.Quantity }}</p>
+
+                        <!-- Rating -->
+                        <div class="flex items-center mt-2 space-x-1 text-yellow-400">
+                            @for (num of [1,2,3,4,5].slice(0, product.Rating.AverageRating); track $index) {
+                            <i class="fa-solid fa-star text-sm"></i>
+                            }
+                            @if (product.Rating.AverageRating % 1 !== 0) {
+                            <i class="fa-solid fa-star-half-stroke text-sm"></i>
+                            }
+                            <span class="text-gray-500 text-xs ml-1">({{ product.Rating.TotalReviews }})</span>
+                        </div>
+                    </div>
+
+                    <!-- Actions -->
+                    <div class="mt-4 flex justify-between items-center">
+                        <!-- Cart -->
+                        <button type="button"
+                            class="w-10 h-10 rounded-full bg-gray-200 hover:bg-green-600 hover:text-white transition-all"
+                            (click)="addToCart(userId, product.Data.Item_ID)"
+                            [disabled]="cartLoading.has(product.Data.Item_ID)"
+                            [attr.title]="cartLoading.has(product.Data.Item_ID)? 'Adding to cart...': cartIds.has(product.Data.Item_ID)? 'Already in cart': 'Add to cart'">
+                            <i *ngIf="cartLoading.has(product.Data.Item_ID)"
+                                class="fas fa-spinner fa-spin text-green-600 group-hover:text-white"></i>
+                            <i *ngIf="!cartLoading.has(product.Data.Item_ID) && cartIds.has(product.Data.Item_ID)"
+                                class="fa-solid fa-cart-shopping animate-ping-once"></i>
+                            <i *ngIf="!cartLoading.has(product.Data.Item_ID) && !cartIds.has(product.Data.Item_ID)"
+                                class="fa-solid fa-cart-plus"></i>
+                        </button>
+
+                        <!-- Wishlist -->
+                        <button type="button"
+                            class="w-10 h-10 rounded-full bg-gray-200 hover:bg-red-500 hover:text-white transition-all"
+                            (click)="addWish(userId, product.Data.Item_ID)"
+                            [disabled]="wishlistLoading.has(product.Data.Item_ID)"
+                            [attr.title]=" wishlistLoading.has(product.Data.Item_ID)  ? 'Adding...': wishlistIds.has(product.Data.Item_ID) ? 'Added to Wishlist ' : 'Add to Wishlist'">
+                            <i *ngIf="wishlistLoading.has(product.Data.Item_ID)"
+                                class="fas fa-spinner fa-spin text-red-500 group-hover:text-white"></i>
+                            <i *ngIf="!wishlistLoading.has(product.Data.Item_ID) && wishlistIds.has(product.Data.Item_ID)"
+                                class="fa-solid fa-heart text-red-600 animate-ping-once"></i>
+                            <i *ngIf="!wishlistLoading.has(product.Data.Item_ID) && !wishlistIds.has(product.Data.Item_ID)"
+                                class="fa-regular fa-heart"></i>
+                        </button>
+                    </div>
+
+                </div>
+                }
             </div>
         </div>
-
-
     </section>
+
+
+
+
+
     <section>
         <h2 class="font-bold fa-2x p-5">popular categories</h2>
         <div class="px-5">
@@ -52,7 +227,7 @@
 
                 @for ( cat of categoriesList; track cat.Category_ID) {
                 <ng-template carouselSlide>
-                    <div>
+                    <div class="w-64 ">
                         <img [src]="'https://sm-ecommerce.runasp.net/' + cat.Category_Image" height="250px"
                             class="w-100" [alt]="cat.Category_Name">
                         <h3 class="h6 text-main fw-bold">{{cat.Category_Name}}</h3>
@@ -74,14 +249,13 @@
                 <div class="grid gap-6 grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 xl:grid-cols-5">
                     @for (product of productList ; track product.Data.Item_ID) {
                     <div
-                        class="group bg-white rounded-xl shadow-md p-4 hover:shadow-lg transition-all duration-300 flex flex-col justify-between relative overflow-hidden">
+                        class="fade-card group bg-white rounded-xl shadow-md p-4 hover:shadow-lg transition-all duration-300 flex flex-col justify-between relative overflow-hidden">
 
-                        <!-- Badge الخصم -->
-                        <div *ngIf="product.Data.Discount"
-                            class="absolute top-2 left-2 bg-red-600 text-white text-xs font-bold px-2 py-1 rounded">
-                            -{{ product.Data.Discount }}
-                            <!-- طرح من ال price out -->
+                        <div *ngIf="product.Data.Discount > 0"
+                            class="absolute sale top-2 left-2 bg-red-600 text-white text-xs px-2 py-1 rounded">
+                            -{{ product.Data.Discount }}$
                         </div>
+
 
                         <!-- Badge New -->
                         <div *ngIf="isNew(product.Data.Crate_Date)"
@@ -91,13 +265,19 @@
 
                         <!-- محتوى المنتج -->
                         <div [routerLink]="['/p-thumnail', product.Data.Item_ID]" class="cursor-pointer">
+
                             <img [src]="'https://sm-ecommerce.runasp.net/' + product.Data.Image_Cover"
                                 alt="{{ product.Data.Category_Name }}"
                                 class="w-full h-48 object-fill rounded-lg mb-3" />
 
                             <p class="text-sm text-blue-700 font-semibold truncate mb-1">{{ product.Data.Item_Name }}
                             </p>
-                            <p class="text-md font-bold text-gray-800">{{ product.Data.Price_out | currency: 'GBP' }}
+                            <p class="text-md font-bold text-gray-800">{{ product.Data.Price_out -
+                                product.Data.Discount | currency: 'GBP' }}
+                                <span class="line-through price-old">{{ product.Data.Price_out| currency: 'GBP' }}
+                                </span>
+                                <!-- <span class="line-through price-old">{{ item.Price }} EGP</span><br /> -->
+                                <!-- <span class="price-new">{{ item.Price_After_Sale }} EGP</span> -->
                             </p>
                             <p class="text-sm text-green-600 font-medium">In Stock: {{ product.Data.Quantity }}</p>
 
@@ -116,24 +296,51 @@
                         <!-- الأزرار -->
                         <div
                             class="absolute bottom-0 left-0 w-full bg-white px-4 py-3 flex justify-between items-center space-x-2 opacity-0 translate-y-full group-hover:opacity-100 group-hover:translate-y-0 transition-all duration-300 rounded-b-xl border-t">
-                            <button type="button" title="Add this product to your cart"
-                                class="flex-1 text-green-700 border border-green-700 hover:bg-green-700 hover:text-white font-medium rounded-md text-sm px-4 py-2 transition"
-                                (click)="addCart(userId, product.Data.Item_ID, 1)">
-                                Add To Cart
+                            <button type="button"
+                                class="relative flex items-center justify-center w-10 h-10 rounded-full transition-all duration-300 group hover:bg-green-600 hover:text-white"
+                                (click)="addToCart(userId, product.Data.Item_ID)"
+                                [disabled]="cartLoading.has(product.Data.Item_ID)" [attr.title]="cartLoading.has(product.Data.Item_ID)? 'Adding to cart...': cartIds.has(product.Data.Item_ID)? 
+                                'Already in cart': 'Add to cart'"
+                                [style.backgroundColor]="cartIds.has(product.Data.Item_ID) ? '#bbf7d0' : '#e5e7eb'"
+                                [style.color]="cartIds.has(product.Data.Item_ID) ? '#15803d' : '#22c55e' ">
+
+                                <!-- حالة التحميل -->
+                                <i *ngIf="cartLoading.has(product.Data.Item_ID)"
+                                    class="fas fa-spinner fa-spin text-green-600 group-hover:text-white transition-colors duration-300"></i>
+
+                                <!-- المنتج موجود في السلة -->
+                                <i *ngIf="!cartLoading.has(product.Data.Item_ID) && cartIds.has(product.Data.Item_ID)"
+                                    class="fa-solid fa-cart-shopping animate-ping-once"></i>
+
+                                <!-- المنتج مش في السلة -->
+                                <i *ngIf="!cartLoading.has(product.Data.Item_ID) && !cartIds.has(product.Data.Item_ID)"
+                                    class="fa-solid fa-cart-plus group-hover:text-white transition-colors duration-300"></i>
+
+                            </button>
+
+                            <button type="button"
+                                class="relative flex items-center justify-center w-10 h-10 rounded-full transition-all duration-300 group hover:bg-red-500 hover:text-white"
+                                (click)="addWish(userId, product.Data.Item_ID)"
+                                [disabled]="wishlistLoading.has(product.Data.Item_ID)" [attr.title]=" wishlistLoading.has(product.Data.Item_ID)  ? 'Adding...': wishlistIds.has(product.Data.Item_ID)
+                                    ? 'Added to Wishlist ' : 'Add to Wishlist'"
+                                [style.backgroundColor]="wishlistIds.has(product.Data.Item_ID) ? '#fee2e2' : '#e5e7eb'"
+                                [style.color]=" wishlistIds.has(product.Data.Item_ID) ? '#dc2626' : '#ef4444'">
+
+                                <!-- Spinner أثناء التحميل -->
+                                <i *ngIf="wishlistLoading.has(product.Data.Item_ID)"
+                                    class="fas fa-spinner fa-spin text-red-500 group-hover:text-white transition-colors duration-300"></i>
+
+                                <!-- المنتج في المفضلة -->
+                                <i *ngIf="!wishlistLoading.has(product.Data.Item_ID) && wishlistIds.has(product.Data.Item_ID)"
+                                    class="fa-solid fa-heart text-red-600 animate-ping-once"></i>
+
+                                <!-- المنتج مش في المفضلة -->
+                                <i *ngIf="!wishlistLoading.has(product.Data.Item_ID) && !wishlistIds.has(product.Data.Item_ID)"
+                                    class="fa-regular fa-heart text-red-500 group-hover:text-white transition-colors duration-300"></i>
+
                             </button>
 
 
-
-
-                            <button type="button" title="Add to Wishlist"
-                                class="text-red-600 border border-red-600 hover:bg-red-600 hover:text-white font-medium rounded-md text-sm px-3 py-2 transition"
-                                (click)="addWish(userId , product.Data.Item_ID)">
-                                <i class="fa-heart fa-lg"
-                                    [class.fa-solid]="wishlistIds.has(getCleanItemId(product.Data.Item_ID))"
-                                    [class.fa-regular]="!wishlistIds.has(getCleanItemId(product.Data.Item_ID))">
-                                </i>
-
-                            </button>
 
 
 
@@ -324,4 +531,21 @@
             </div>
         </div>
     </section>
+
+    <!-- ===== Popup Modal ===== -->
+    <div class="custom-popup" *ngIf="showPopup">
+        <div class="custom-popup-content">
+            <h2 class="text-2xl font-bold mb-2 text-blue-700">Welcome to Your New Favorite Place! 🌟</h2>
+            <p class="text-gray-700 mb-4">
+                We're thrilled to have you here! Dive into a world of top deals, trusted products,
+                and a shopping experience made just for you.
+            </p>
+            <p class="text-sm text-gray-500">Let’s make your first visit unforgettable 💙</p>
+
+            <img src="../../../assets/images/welcom3.jpg" class="rounded-lg mb-4" alt="Offer" />
+            <button class="popup-btn" (click)="closePopup()">Got it</button>
+        </div>
+    </div>
+
+
 </div>

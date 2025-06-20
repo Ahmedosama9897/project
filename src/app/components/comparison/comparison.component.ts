@@ -1,87 +1,127 @@
-// ✅ comparison.component.ts
-import { CurrencyPipe, NgClass, NgFor, NgIf } from '@angular/common';
-import { Component, inject, OnInit } from '@angular/core';
-import { CartService } from '../../core/services/cart.service';
-import { AuthService } from '../../core/services/auth.service';
+import { Component, OnInit, inject } from '@angular/core';
+import { NgIf, NgFor } from '@angular/common';
 import { ComparisonService } from '../../core/services/comparison.service';
 import { ComparisonGroup } from '../../core/interfaces/icomparisonAll';
-import { PhoneProduct } from '../../core/interfaces/icomparisonPhones';
-import { PcProduct } from '../../core/interfaces/icomparisonPCs';
-import { labtopProduct } from '../../core/interfaces/icomparisonLabtop';
+import { AuthService } from '../../core/services/auth.service';
+import { CartService } from '../../core/services/cart.service';
+import { ToastrService } from 'ngx-toastr';
 
 @Component({
   selector: 'app-comparison',
   standalone: true,
-  imports: [CurrencyPipe, NgIf, NgFor, NgClass],
+  imports: [NgIf, NgFor],
   templateUrl: './comparison.component.html',
-  styleUrl: './comparison.component.css'
+  styleUrls: ['./comparison.component.css'],
 })
 export class ComparisonComponent implements OnInit {
-  private readonly _comparisonService = inject(ComparisonService);
-  private readonly _cartService = inject(CartService);
-  private readonly _authService = inject(AuthService);
+  private readonly comparisonService = inject(ComparisonService);
+  private readonly authService = inject(AuthService);
+  private readonly _CartService = inject(CartService);
+  private readonly _ToastrService = inject(ToastrService);
 
-  comparisonphone: PhoneProduct[] = [];
-  comparisonPcs: PcProduct[] = [];
-  comparisonLaptops: labtopProduct[] = [];
-  userId: string = this._authService.userData.nameid;
-  selectedProduct: PcProduct | PhoneProduct | labtopProduct | null = null;
 
-  activeTab: 'phones' | 'pcs' | 'laptops' = 'phones';
+  phones: any[] = [];
+  laptops: any[] = [];
+  pcs: any[] = [];
+
+  selectedTab: 'phones' | 'laptops' | 'pcs' = 'phones';
+
+  userId: string = '';
 
   ngOnInit(): void {
-    this._comparisonService.getProductComparison(this.userId).subscribe({
-      next: (res: ComparisonGroup) => {
-        this.comparisonphone = res.phones?.Data ?? [];
-        this.comparisonPcs = res.pCs?.Data ?? [];
-        this.comparisonLaptops = res.laptops?.Data ?? [];
+    const storedUserId = localStorage.getItem('userID');
+
+    if (!storedUserId) {
+      console.warn('User ID not found in localStorage!');
+      return;
+    }
+
+    this.userId = storedUserId;
+
+    this.loadComparisonFromAPI(); // ✅ دايمًا نجيب الجديد
+  }
+
+
+
+
+
+  loadComparisonFromAPI(): void {
+    if (!this.userId) return;
+
+    this.comparisonService.getProductComparison(this.userId).subscribe({
+      next: (response: any) => {
+        const parsed: ComparisonGroup = JSON.parse(response);
+        this.phones = parsed.phones.Data;
+        this.laptops = parsed.laptops.Data;
+        this.pcs = parsed.pCs.Data;
+        this.saveToLocalStorage();
       },
-      error: (err) => {
-        console.error('❌ Failed to fetch comparison items:', err);
-      }
+      error: err => console.error(err)
     });
   }
 
-  trackByItemId(index: number, item: any): string {
-    return item.Item_ID;
-  }
-
-  openDetailsModal(item: PcProduct | PhoneProduct | labtopProduct): void {
-    this.selectedProduct = item;
-  }
-
-  closeDetailsModal(): void {
-    this.selectedProduct = null;
-  }
-
-  removeItem(buyerId: string, itemId: string): void {
-    this._comparisonService.deleteSpecificComparisonItem(buyerId, itemId).subscribe({
-      next: (res: any) => {
-        const updatedData = res?.data ?? [];
-
-        if (this.activeTab === 'pcs') {
-          this.comparisonPcs = updatedData;
-        } else if (this.activeTab === 'phones') {
-          this.comparisonphone = updatedData;
-        } else if (this.activeTab === 'laptops') {
-          this.comparisonLaptops = updatedData;
-        }
+  removeItem(itemId: string): void {
+    this.comparisonService.deleteSpecificComparisonItem(this.userId, itemId).subscribe({
+      next: () => {
+        this.phones = this.phones.filter(p => p.Item_ID !== itemId);
+        this.laptops = this.laptops.filter(p => p.Item_ID !== itemId);
+        this.pcs = this.pcs.filter(p => p.Item_ID !== itemId);
+        this.saveToLocalStorage();
       },
-      error: (err) => {
-        console.error('❌ Failed to remove item:', err);
-      }
+      error: err => console.error(err)
     });
   }
+
+
 
   addCart(buyerId: string, itemId: string, quantity: number): void {
-    this._cartService.addProductToCart(buyerId, itemId, quantity).subscribe({
+    console.log(buyerId);
+    console.log(itemId);
+    console.log(quantity);
+
+    this._CartService.addProductToCart(buyerId, itemId, quantity).subscribe({
       next: (res) => {
-        console.log('🛒 Added to cart:', res);
+        console.log('✅ Response from API:', res);
+        this._ToastrService.success('Added to Cart', res.message);
+
+        this.loadComparisonFromAPI();
+
+        this.saveToLocalStorage();
+        // if (res && typeof res === 'number') {
+        //   this._CartService.cartNumber.set(res);
+        //   console.log('🛒 عدد المنتجات في السلة الآن:', this._CartService.cartNumber());
+        // } else {
+        //   console.log('⚠️ `cartCount` غير موجود في الـ API Response، تحقق من الاستجابة!');
+        // }
       },
       error: (err) => {
-        console.error('❌ Failed to add to cart:', err);
+        console.error('❌ خطأ أثناء إضافة المنتج إلى السلة:', err);
       }
     });
   }
 
+
+  selectedTabData() {
+    switch (this.selectedTab) {
+      case 'phones': return this.phones;
+      case 'laptops': return this.laptops;
+      case 'pcs': return this.pcs;
+      default: return [];
+    }
+  }
+
+  clearAll() {
+    const currentList = this.selectedTabData();
+    const ids = currentList.map(item => item.Item_ID);
+    ids.forEach(id => this.removeItem(id));
+  }
+
+  saveToLocalStorage() {
+    const data = {
+      phones: this.phones,
+      laptops: this.laptops,
+      pcs: this.pcs
+    };
+    localStorage.setItem('comparisonData', JSON.stringify(data));
+  }
 }

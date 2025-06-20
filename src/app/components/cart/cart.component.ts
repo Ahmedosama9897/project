@@ -6,6 +6,7 @@ import { AuthService } from '../../core/services/auth.service';
 import { CompareService } from '../../core/services/compare.service';
 import { ComparisonService } from '../../core/services/comparison.service';
 import { ToastrService } from 'ngx-toastr';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-cart',
@@ -23,6 +24,10 @@ export class CartComponent implements OnInit {
 
   // cartDetails: Icart = {} as Icart;
 
+  constructor(private router: Router) { }
+
+
+
   get totalPrice(): number {
     return this.cartDetails.reduce((acc, item) => acc + (item.Price_out * item.Quantity), 0);
   }
@@ -30,25 +35,29 @@ export class CartComponent implements OnInit {
 
   cartDetails: Icart[] = []; // ✅ Array
 
-  userId: string = this._AuthService.userData.nameid; // أو ضع القيمة المناسبة
-
+  userId: string = '';
 
   ngOnInit(): void {
+    const storedUserId = localStorage.getItem('userID');
+
+    if (!storedUserId) {
+      console.warn('User ID not found in localStorage!');
+      return;
+    }
+
+    this.userId = storedUserId;
 
     this._CartService.getProductCart(this.userId).subscribe({
       next: (res) => {
         console.log("cart", res);
-        this.cartDetails = res
-
+        this.cartDetails = res;
       },
       error: (err) => {
         console.log(err);
-
       }
-    })
-
-
+    });
   }
+
 
 
 
@@ -140,5 +149,18 @@ export class CartComponent implements OnInit {
     });
   }
 
+
+
+  // داخل الكلاس
+
+  goToCheckout(): void {
+    this.router.navigate(['cart/checkout'], {
+      state: {
+        cartDetails: this.cartDetails,
+        totalPrice: this.totalPrice,
+        userId: this.userId
+      }
+    });
+  }
 }
 

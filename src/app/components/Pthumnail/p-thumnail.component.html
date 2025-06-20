@@ -100,7 +100,7 @@
 
             <div>
 
-                <div class="p-10">
+                <div class="m-10">
                     <img src="./assets/images/div.vendor-contain.png" alt="">
                     <p class="my-4 p-noodles">Noodles & Company is an American fast-casual
                         restaurant that offers international and
@@ -132,56 +132,78 @@
                         powder candy sesame snaps jelly beans candy canes marshmallow
                         gingerbread pie.</p> -->
                     <div>
-                        <h2 class="text-black mt-8">Organic:</h2>
-                        <p>vitae et leo duis ut diam quam nulla porttitor massa id neque aliquam vestibulum morbi
-                            blandit cursus
-                            risus at ultrices mi tempus imperdiet nulla malesuada pellentesque
-                            elit eget gravida cum sociis natoque penatibus et magnis dis parturient montes nascetur
-                            ridiculus
-                            mus
-                            mauris vitae ultricies leo integer malesuada nunc vel risus commodo
-                            viverra maecenas accumsan lacus vel facilisis volutpat est velit egestas dui id ornare arcu
-                            odio ut
-                            sem
-                            nulla pharetra diam sit amet nisl suscipit adipiscing bibendum est
-                            ultricies integer quis auctor elit sed vulputate mi sit amet mauris commodo quis imperdiet
-                            massa
-                            tincidunt nunc pulvinar sapien et ligula ullamcorper malesuada proin libero
-                            nunc consequat interdum varius sit amet mattis vulputate enim nulla aliquet porttitor lacus
-                            luctus
-                            accumsan.</p>
+                        <div class="mt-16 bg-white p-6 rounded-lg shadow-xl border border-gray-200">
+                            <h2 class="text-2xl font-bold text-gray-800 mb-6 flex items-center gap-2">
+                                💬 Product Reviews
+                            </h2>
+
+                            <!-- ✅ No Reviews Message -->
+                            <div *ngIf="productReviews.length === 0" class="text-gray-500 italic mb-6 text-center">
+                                No reviews yet. Be the first to leave one!
+                            </div>
+
+                            <!-- ✅ Reviews List with Scroll -->
+                            <div *ngIf="productReviews.length > 0" class="mb-4 space-y-4 overflow-y-auto"
+                                style="max-height: 400px; padding-right: 8px;">
+
+                                <div *ngFor="let review of productReviews" [@fadeSlideIn]
+                                    class="p-5 bg-gray-50 rounded-lg border border-gray-100 shadow-sm hover:shadow-md transition">
+
+                                    <div class="flex items-center gap-3 mb-2">
+                                        <div
+                                            class="bg-green-100 text-green-700 w-8 h-8 flex items-center justify-center rounded-full text-sm font-bold">
+                                            {{ review.Buyer_Name[0] || '?' }}
+                                        </div>
+                                        <p class="font-medium text-green-700">
+                                            {{ review.Buyer_Name || 'Anonymous' }}
+                                        </p>
+                                    </div>
+
+                                    <p class="text-gray-800 mb-1">{{ review.Comment }}</p>
+
+                                    <div class="text-yellow-400">
+                                        <ng-container *ngFor="let star of [1,2,3,4,5]">
+                                            <i class="fa-solid fa-star transition-all duration-300"
+                                                [class.opacity-30]="review.Rating < star"></i>
+                                        </ng-container>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <!-- ✅ Add New Review -->
+                            <div class="mt-10 p-5 bg-gray-50 rounded-lg border border-gray-100 shadow-inner">
+                                <h3 class="text-lg font-semibold mb-3 text-gray-700">Add your comment</h3>
+
+                                <textarea #commentBox rows="3"
+                                    class="w-full border border-gray-300 rounded-md p-3 mb-4 focus:outline-none focus:ring-2 focus:ring-green-500"
+                                    placeholder="Write your review here..."></textarea>
+
+                                <div class="flex items-center gap-3 mb-4">
+                                    <label class="text-sm text-gray-600">Rating:</label>
+                                    <div class="text-yellow-400 text-xl flex gap-1">
+                                        <ng-container *ngFor="let star of [1, 2, 3, 4, 5]">
+                                            <i class="fa-solid fa-star cursor-pointer transition-all duration-300"
+                                                [class.opacity-30]="newRating < star" (click)="setRating(star)">
+                                            </i>
+                                        </ng-container>
+                                    </div>
+                                </div>
+
+                                <button (click)="submitReview(commentBox.value, newRating.toString())"
+                                    class="bg-green-600 hover:bg-green-700 text-white font-medium px-6 py-2 rounded-md transition duration-300">
+                                    Submit Review
+                                </button>
+                            </div>
+
+                        </div>
+
+
+
                     </div>
 
-                    <div class="my-4">
-                        <img src="../../../assets/images/div.banner-contain.png" alt="">
-                    </div>
 
-                    <div>
-                        <h2 class="text-black">From The Manufactuer:</h2>
-                        <p class="mt-2 mb-6">Jelly beans shortbread chupa chups carrot cake jelly-o halvah apple pie
-                            pudding
-                            gingerbread. Apple pie
-                            halvah cake tiramisu shortbread cotton candy croissant chocolate
-                            cake. Tart cupcake caramels gummi bears macaroon gingerbread fruitcake marzipan wafer.
-                            Marzipan
-                            dessert
-                            cupcake ice cream tootsie roll. Brownie chocolate cake
-                            pudding cake powder candy ice cream ice cream cake. Jujubes soufflé chupa chups cake candy
-                            halvah
-                            donut.
-                            Tart tart icing lemon drops fruitcake apple pie.</p>
-                        <p class="mt-2 mb-6"> Dessert liquorice tart soufflé chocolate bar apple pie pastry danish
-                            soufflé. Gummi bears
-                            halvah
-                            gingerbread jelly icing. Chocolate cake chocolate bar pudding chupa chups
-                            bear claw pie dragée donut halvah. Gummi bears cookie ice cream jelly-o jujubes sweet
-                            croissant.
-                            Marzipan cotton candy gummi bears lemon drops lollipop lollipop
-                            chocolate. Ice cream cookie dragée cake sweet roll sweet roll.Lemon drops cookie muffin
-                            carrot cake
-                            chocolate marzipan gingerbread topping chocolate bar. Soufflé
-                            tiramisu pastry sweet dessert.</p>
-                    </div>
+
+
                 </div>
             </div>
 
@@ -195,7 +217,7 @@
 
 
                 </div>
-                <div class="type2 mt-5">
+                <div class=" mt-5">
                     <div class="Fresh ">
                         <div>
                             <img src="./assets/images/div.home-contain 3.png" alt="">
@@ -207,118 +229,55 @@
     </div>
 
 
-    <div class="my-20 mx-5">
-        <div class=" Related py-5 mx-16 ">
-            <h1 class="h-Related text-black my-3">Related Product</h1>
-            <div class="flex gap-8 ">
-                <div class=" productt grid-cols-1 md:grid-cols-2 lg:grid-cols-5 w-full bgre">
-                    <div class="mx-10">
-                        <img src="../../../assets/images/Link → cake.png">
-                    </div>
-                    <p class="p-2">cake</p>
-                    <p class="p-2">Chocolate chip cookies 250g</p>
-                    <div class="p-2">
-                        <span> <i class="fa-solid fa-star rating-color"></i></span>
-                        <span> <i class="fa-solid fa-star rating-color"></i></span>
-                        <span> <i class="fa-solid fa-star rating-color"></i></span>
-                        <span> <i class="fa-solid fa-star rating-color"></i></span>
-                        <span> <i class="fa-solid fa-star rating-color"></i></span>
-                    </div>
-                    <p class="p-2">1 KG</p>
-                    <p class="px-2">$ 80.00</p>
-                    <div class="text-center">
-                        <button type="button"
-                            class="btn-mainn w-48 text-green-700 hover:text-white border border-green-700 hover:bg-green-800 focus:ring-4 focus:outline-none focus:ring-green-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center me-2 mb-2 dark:border-green-500 dark:text-green-500 dark:hover:text-white dark:hover:bg-green-600 dark:focus:ring-green-800">Add
-                            +</button>
-                    </div>
-                </div>
-                <div class="productt col-span-1 w-full">
-                    <div class="mx-10">
-                        <img src="../../../assets/images/pastry.png">
-                    </div>
-                    <p class="p-2">vegetable </p>
-                    <p class="p-2">Fresh Bread and Pastry Flour 200g </p>
-                    <div class="p-2">
-                        <span> <i class="fa-solid fa-star rating-color"></i></span>
-                        <span> <i class="fa-solid fa-star rating-color"></i></span>
-                        <span> <i class="fa-solid fa-star rating-color"></i></span>
-                        <span> <i class="fa-solid fa-star rating-color"></i></span>
-                        <span> <i class="fa-solid fa-star rating-color"></i></span>
-                    </div>
-                    <p class="p-2">1 KG</p>
-                    <p class="px-2">$ 80.00</p>
-                    <div class="text-center">
-                        <button type="button"
-                            class="btn-mainn w-48 text-green-700 hover:text-white border border-green-700 hover:bg-green-800 focus:ring-4 focus:outline-none focus:ring-green-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center me-2 mb-2 dark:border-green-500 dark:text-green-500 dark:hover:text-white dark:hover:bg-green-600 dark:focus:ring-green-800">Add
-                            +</button>
-                    </div>
-                </div>
-                <div class="productt col-span-1 w-full">
-                    <div class="mx-10">
-                        <img src="../../../assets/images/snacks.png">
-                    </div>
-                    <p class="p-2">vegetable</p>
-                    <p class="p-2">peanut Butter Bite Cookies 600 g </p>
-                    <div class="p-2">
-                        <span> <i class="fa-solid fa-star rating-color"></i></span>
-                        <span> <i class="fa-solid fa-star rating-color"></i></span>
-                        <span> <i class="fa-solid fa-star rating-color"></i></span>
-                        <span> <i class="fa-solid fa-star rating-color"></i></span>
-                        <span> <i class="fa-solid fa-star rating-color"></i></span>
-                    </div>
-                    <p class="p-2">1 KG</p>
-                    <p class="px-2">$ 80.00</p>
-                    <div class="text-center">
-                        <button type="button"
-                            class="btn-mainn w-48 text-green-700 hover:text-white border border-green-700 hover:bg-green-800 focus:ring-4 focus:outline-none focus:ring-green-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center me-2 mb-2 dark:border-green-500 dark:text-green-500 dark:hover:text-white dark:hover:bg-green-600 dark:focus:ring-green-800">Add
-                            +</button>
-                    </div>
-                </div>
-                <div class="productt col-span-1 w-full">
-                    <div class="mx-10">
-                        <img src="../../../assets/images/snacks2.png">
-                    </div>
-                    <p class="p-2">Snacks </p>
-                    <p class="p-2">SnackAmor Combo pack of Jower </p>
-                    <div class="p-2">
-                        <span> <i class="fa-solid fa-star rating-color"></i></span>
-                        <span> <i class="fa-solid fa-star rating-color"></i></span>
-                        <span> <i class="fa-solid fa-star rating-color"></i></span>
-                        <span> <i class="fa-solid fa-star rating-color"></i></span>
-                        <span> <i class="fa-solid fa-star rating-color"></i></span>
-                    </div>
-                    <p class="p-2">1 KG</p>
-                    <p class="px-2">$ 80.00</p>
-                    <div class="text-center">
-                        <button type="button"
-                            class="btn-mainn w-48 text-green-700 hover:text-white border border-green-700 hover:bg-green-800 focus:ring-4 focus:outline-none focus:ring-green-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center me-2 mb-2 dark:border-green-500 dark:text-green-500 dark:hover:text-white dark:hover:bg-green-600 dark:focus:ring-green-800">Add
-                            +</button>
+    <div class="my-20 px-6">
+        <div class="bg-white p-6 rounded-lg shadow-md border">
+            <h2 class="text-2xl font-bold text-gray-800 mb-6">🛒 Related Products</h2>
+
+            <!-- ✅ شبكة المنتجات -->
+            <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-5 gap-6">
+
+                <!-- ✅ كرت منتج -->
+                <div class="border rounded-lg shadow-sm hover:shadow-md p-4 transition">
+                    <img src="../../../assets/images/Link → cake.png" alt="cake"
+                        class="w-full h-36 object-contain mb-3">
+                    <p class="text-sm font-semibold text-gray-700">Cake</p>
+                    <p class="text-xs text-gray-500 mb-1">Chocolate chip cookies 250g</p>
+
+                    <div class="text-yellow-400 text-sm mb-2">
+                        <i class="fa-solid fa-star" *ngFor="let i of [1,2,3,4,5]"></i>
                     </div>
 
+                    <p class="text-sm text-gray-600 mb-1">1 KG</p>
+                    <p class="font-bold text-black mb-3">$80.00</p>
+
+                    <button type="button"
+                        class="w-full text-green-700 hover:text-white border border-green-700 hover:bg-green-800 font-medium rounded-md text-sm px-4 py-2 transition">
+                        Add +
+                    </button>
                 </div>
-                <div class="productt col-span-1 w-full">
-                    <div class="mx-10">
-                        <img src="../../../assets/images/chip.png">
+
+                <!-- 🔁 كرر الكرت مع تغيير البيانات والصورة لكل منتج -->
+                <div class="border rounded-lg shadow-sm hover:shadow-md p-4 transition">
+                    <img src="../../../assets/images/pastry.png" alt="pastry" class="w-full h-36 object-contain mb-3">
+                    <p class="text-sm font-semibold text-gray-700">Vegetable</p>
+                    <p class="text-xs text-gray-500 mb-1">Fresh Bread and Pastry Flour 200g</p>
+                    <div class="text-yellow-400 text-sm mb-2">
+                        <i class="fa-solid fa-star" *ngFor="let i of [1,2,3,4,5]"></i>
                     </div>
-                    <p class="p-2"> vegetable </p>
-                    <p class="p-2"> Fantasy Crunchy chip Cookies</p>
-                    <div class="p-2">
-                        <span> <i class="fa-solid fa-star rating-color"></i></span>
-                        <span> <i class="fa-solid fa-star rating-color"></i></span>
-                        <span> <i class="fa-solid fa-star rating-color"></i></span>
-                        <span> <i class="fa-solid fa-star rating-color"></i></span>
-                        <span> <i class="fa-solid fa-star rating-color"></i></span>
-                    </div>
-                    <p class="p-2">1 KG</p>
-                    <p class="px-2">$ 80.00</p>
-                    <div class="text-center">
-                        <button type="button"
-                            class="btn-mainn w-48 text-green-700 hover:text-white border border-green-700 hover:bg-green-800 focus:ring-4 focus:outline-none focus:ring-green-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center me-2 mb-2 dark:border-green-500 dark:text-green-500 dark:hover:text-white dark:hover:bg-green-600 dark:focus:ring-green-800">Add
-                            +</button>
-                    </div>
+                    <p class="text-sm text-gray-600 mb-1">1 KG</p>
+                    <p class="font-bold text-black mb-3">$80.00</p>
+                    <button
+                        class="w-full text-green-700 hover:text-white border border-green-700 hover:bg-green-800 font-medium rounded-md text-sm px-4 py-2 transition">Add
+                        +</button>
                 </div>
+
+                <!-- ⬇️ باقي المنتجات بنفس التنسيق -->
+                <!-- snacks.png -->
+                <!-- snacks2.png -->
+                <!-- chip.png -->
 
             </div>
         </div>
     </div>
+
 </section>
